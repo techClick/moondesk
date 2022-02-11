@@ -1,13 +1,19 @@
 /* eslint-disable react/jsx-no-bind */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import * as htmlToImage from 'html-to-image';
 import {
   PieChart, Pie, Cell, Tooltip,
 } from 'recharts';
 import * as S from './PieChart.styled';
+import { setPDFFileSrc } from '../../redux/store';
 
 const PieChartApp = function PieChartApp() {
+  const dispatch = useDispatch();
+  const [start, setStart] = useState<boolean>(false);
+
   const data = [
-    { name: 'Group A', value: 4 },
+    { name: 'Group A', value: 1 },
     { name: 'Group B', value: 300 },
     { name: 'Group C', value: 300 },
     { name: 'Group D', value: 200 },
@@ -33,8 +39,23 @@ const PieChartApp = function PieChartApp() {
       </text>
     );
   };
+
+  useEffect(() => {
+    const node = document.getElementById('chart');
+    if (node && start) {
+      htmlToImage.toPng(node)
+        .then((dataUrl) => {
+          dispatch(setPDFFileSrc(dataUrl));
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log('oops, something went wrong!', error);
+        });
+    }
+  }, [start]);
+
   return (
-    <S.Container width={400}>
+    <S.Container width={400} id="chart">
       <PieChart width={400} height={400}>
         <Pie
           data={data}
@@ -45,9 +66,17 @@ const PieChartApp = function PieChartApp() {
           outerRadius={120}
           fill="#25011a"
           dataKey="value"
+          isAnimationActive={false}
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} onClick={() => console.log(entry.name)} />
+            <Cell
+              key={`cell-${index}`}
+              fill={COLORS[index % COLORS.length]}
+              onClick={() => {
+                setStart(true);
+                // console.log(entry.name);
+              }}
+            />
           ))}
         </Pie>
         <Tooltip />

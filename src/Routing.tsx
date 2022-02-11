@@ -6,7 +6,8 @@ import {
 import Loader from './views/Loader/Loader';
 
 // const HomePage = lazy(() => import('./views/HomePage/HomePage'));
-const PieChart = lazy(() => import('./views/PieChart/PieChart'));
+const PieChart = lazy(() => import('./components/PieChart/PieChart'));
+const PDFDownloadButton = lazy(() => import('./components/PDFDownloadButton/PDFDownloadButton'));
 
 const Routing = function Routing() {
   return (
@@ -14,6 +15,7 @@ const Routing = function Routing() {
       <Suspense fallback={<Loader />}>
         <Route path="/">
           <PieChart />
+          <PDFDownloadButton />
           {/* <HomePage /> */}
         </Route>
       </Suspense>

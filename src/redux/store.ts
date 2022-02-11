@@ -3,24 +3,30 @@ import viewsReducer from '../views/redux';
 
 export interface AppState {
   loggedIn: boolean,
+  PDFFileSrc: any,
 }
 
 const initialState: AppState = {
   loggedIn: false,
+  PDFFileSrc: null,
 };
 
 export const counterSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    loggedIn: (state, action: PayloadAction<boolean>) => {
+    setLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.loggedIn = action.payload;
+    },
+    setPDFFileSrc: (state, action: PayloadAction<any>) => {
+      console.log('CALLED');
+      state.PDFFileSrc = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { loggedIn } = counterSlice.actions;
+export const { setLoggedIn, setPDFFileSrc } = counterSlice.actions;
 
 export const store = configureStore({
   reducer: {
@@ -34,3 +40,5 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
 
 export const selectIsLoggedIn = (state: RootState) => state.app.loggedIn;
+
+export const selectPDFFileSrc = (state: RootState) => state.app.PDFFileSrc;
