@@ -5,14 +5,16 @@ import {
 } from 'react-router-dom';
 import Loader from './views/Loader/Loader';
 
-const HomePage = lazy(() => import('./views/HomePage/HomePage'));
+// const HomePage = lazy(() => import('./views/HomePage/HomePage'));
+const PieChart = lazy(() => import('./views/PieChart/PieChart'));
 
 const Routing = function Routing() {
   return (
     <Router>
       <Suspense fallback={<Loader />}>
         <Route path="/">
-          <HomePage />
+          <PieChart />
+          {/* <HomePage /> */}
         </Route>
       </Suspense>
     </Router>
