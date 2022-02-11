@@ -5,11 +5,14 @@ import './index.css';
 import Routing from './Routing';
 import reportWebVitals from './reportWebVitals';
 import { store } from './redux/store';
+import Navigation from './views/Navigation/Navigation';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Routing />
+      <Navigation>
+        <Routing />
+      </Navigation>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

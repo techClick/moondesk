@@ -2,22 +2,29 @@ import React, { lazy, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  Switch,
 } from 'react-router-dom';
 import Loader from './views/Loader/Loader';
 
-// const HomePage = lazy(() => import('./views/HomePage/HomePage'));
-const PieChart = lazy(() => import('./components/PieChart/PieChart'));
-const PDFDownloadButton = lazy(() => import('./components/PDFDownloadButton/PDFDownloadButton'));
+const HomePage = lazy(() => import('./views/HomePage/HomePage'));
+const App = lazy(() => import('./views/App/App'));
+const PieChart = lazy(() => import('./views/App/components/PieChart/PieChart'));
 
 const Routing = function Routing() {
   return (
     <Router>
       <Suspense fallback={<Loader />}>
-        <Route path="/">
-          <PieChart />
-          <PDFDownloadButton />
-          {/* <HomePage /> */}
-        </Route>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route exact path="/app">
+            <App />
+          </Route>
+          <Route exact path="/app/2">
+            <PieChart />
+          </Route>
+        </Switch>
       </Suspense>
     </Router>
   );

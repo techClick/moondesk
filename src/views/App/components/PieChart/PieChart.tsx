@@ -6,7 +6,7 @@ import {
   PieChart, Pie, Cell, Tooltip,
 } from 'recharts';
 import * as S from './PieChart.styled';
-import { setPDFFileSrc } from '../../redux/store';
+import { setPDFFileSrc } from '../../../../redux/store';
 
 const PieChartApp = function PieChartApp() {
   const dispatch = useDispatch();
