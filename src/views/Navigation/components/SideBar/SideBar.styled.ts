@@ -5,11 +5,12 @@ export const Container = styled.div<any>`
   width: 148px;
   height: 100%;
   padding: 12px;
-  position: ${(props) => props.isMobile && 'absolute'};
+  position: ${(props) => { return props.isMobile ? 'absolute' : 'relative'; }};
   left: 0;
   top: 0;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
   transform: translateX(${(props) => props.isMobile && '-100%'});
+  z-index: 2;
 `;

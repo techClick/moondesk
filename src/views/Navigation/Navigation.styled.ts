@@ -11,13 +11,13 @@ export const BottomPanel = styled.div`
   display: flex;
   width: 100%;
   height: 100vh;
+  position: relative;
 `;
 
 export const BottomRightPanel = styled.div`
   overflow: auto;
   width: 100%;
   height: 100vh;
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 `;
