@@ -1,5 +1,6 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import viewsReducer from '../views/redux';
+import navigationReducer from '../views/Navigation/redux';
 
 export interface AppState {
   loggedIn: boolean,
@@ -19,7 +20,6 @@ export const counterSlice = createSlice({
       state.loggedIn = action.payload;
     },
     setPDFFileSrc: (state, action: PayloadAction<any>) => {
-      console.log('CALLED');
       state.PDFFileSrc = action.payload;
     },
   },
@@ -32,6 +32,7 @@ export const store = configureStore({
   reducer: {
     app: counterSlice.reducer,
     views: viewsReducer,
+    navigation: navigationReducer,
   },
 });
 

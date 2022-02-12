@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import MediaQuery from 'react-responsive';
 import * as S from './SideBar.styled';
-import { tabOptions } from './utils/utils';
-
+import Tabs from './components/Tabs';
+import { bigRes } from '../../../styles';
 
 const SideBar = function SideBar() {
-  const [selectedTab, setSelectedTab] = useState<number>(0);
-  // background: #02396d;
   return (
-    <S.Container>
-      {
-        tabOptions.map((tab, index) => (
-          <S.Tab
-            key={`tab${index}`}
-            isSelected={index === selectedTab}
-            onClick={() => setSelectedTab(index)}
-          >
-            <S.Icon>{tab.icon}</S.Icon>
-            {tab.label}
-          </S.Tab>
-        ))
-      }
-    </S.Container>
+    <>
+      <MediaQuery minWidth={bigRes + 0.0001}>
+        <S.Container isMobile={false} id="sideBar">
+          <Tabs />
+        </S.Container>
+      </MediaQuery>
+      <MediaQuery maxWidth={bigRes}>
+        <S.Container isMobile id="sideBar">
+          <Tabs />
+        </S.Container>
+      </MediaQuery>
+    </>
   );
 };
 

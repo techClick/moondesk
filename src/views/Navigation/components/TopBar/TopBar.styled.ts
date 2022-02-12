@@ -6,4 +6,11 @@ export const Container = styled.div`
   height: ${topBarHeight};
   width: 100%;
   display: block;
+  padding: 15px;
+`;
+
+export const Menu = styled.div`
+  color: white;
+  height: 100%;
+  width: 35px;
 `;

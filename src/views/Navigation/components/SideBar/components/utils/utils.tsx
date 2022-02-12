@@ -7,22 +7,22 @@ import {
 export const tabOptions = [
   {
     label: 'Analytics',
-    route: '/analytics',
+    route: '/app/analytics',
     icon: <FontAwesomeIcon icon={faChartLine} />,
   },
   {
     label: 'Income',
-    route: '/income',
+    route: '/app/income',
     icon: <FontAwesomeIcon icon={faCreditCard} />,
   },
   {
     label: 'Resources',
-    route: '/resources',
+    route: '/app/resources',
     icon: <FontAwesomeIcon icon={faDatabase} />,
   },
   {
     label: 'Reports',
-    route: '/reports',
+    route: '/app/reports',
     icon: <FontAwesomeIcon icon={faFileWaveform} />,
   },
 ];
