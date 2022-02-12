@@ -1,23 +1,32 @@
 import React from 'react';
 import * as S from './Navigation.styled';
+import TopBar from './components/TopBar/TopBar';
+import SideBar from './components/SideBar/SideBar';
+import Header from './components/Header/Header';
 
-const NavPanel = function NavPanel({ children }:{ children: any}) {
+const Navigation = function Navigation({ children }:{ children: any}) {
   return (
     <>
       {
         window.location.toString().includes('/app') ? (
           <S.Container>
-            {children}
-            <button type="button" onClick={() => { window.location.href = '/app/2'; }}>GO</button>
+            <TopBar />
+            <S.BottomPanel>
+              <SideBar />
+              <S.BottomRightPanel>
+                {children}
+              </S.BottomRightPanel>
+            </S.BottomPanel>
           </S.Container>
         ) : (
           <>
+            <Header />
             {children}
           </>
         )
-        }
+      }
     </>
   );
 };
 
-export default NavPanel;
+export default Navigation;

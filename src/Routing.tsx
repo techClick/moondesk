@@ -8,7 +8,6 @@ import Loader from './views/Loader/Loader';
 
 const HomePage = lazy(() => import('./views/HomePage/HomePage'));
 const App = lazy(() => import('./views/App/App'));
-const PieChart = lazy(() => import('./views/App/components/PieChart/PieChart'));
 
 const Routing = function Routing() {
   return (
@@ -20,9 +19,6 @@ const Routing = function Routing() {
           </Route>
           <Route exact path="/app">
             <App />
-          </Route>
-          <Route exact path="/app/2">
-            <PieChart />
           </Route>
         </Switch>
       </Suspense>
