@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../../redux/hooks';
 import { selectShowSheetBuilder, setShowSheetBuilder } from '../../redux';
 import { Button } from '../../styles';
 import * as S from './SheetBuilder.styled';
-import TopPart from './components/TopPart';
+import TopPart from './components/TopPart/TopPart';
 
 const SheetBuilder = function SheetBuilder({ page }:{ page: string}) {
   const dispatch = useDispatch();

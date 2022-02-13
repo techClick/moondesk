@@ -1,5 +1,6 @@
 import React from 'react';
 import * as S from './TopPart.styled';
+import ColumnBuilder from '../ColumnBuilder/ColumnBuilder';
 
 const TopPart = function TopPart({ page }:{ page: string}) {
   return (
@@ -18,13 +19,7 @@ const TopPart = function TopPart({ page }:{ page: string}) {
       </S.TopInfo>
       <S.InfoBottom>
         <S.IBLeftPart>
-          {
-            ['Group', 'Name', 'amount'].map((fileHeader) => (
-              <S.section>
-
-              </S.section>
-            ))
-          }
+          <ColumnBuilder />
         </S.IBLeftPart>
       </S.InfoBottom>
       <S.Line />

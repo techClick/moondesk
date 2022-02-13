@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { textColor } from '../../../styles';
+import { textColor } from '../../../../styles';
 
-const containerHeight = '150px';
+const containerHeight = '160px';
 export const Container = styled.div`
   height: ${containerHeight};
   display: flex;
@@ -13,16 +13,15 @@ export const WCBottomPart = styled.div`
 `;
 
 export const TopInfo = styled.div`
-  padding: 10px;
+  padding: 10px 0;
+  padding-left: 20px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  background: lightblue;
 `;
 
 export const InfoBottom = styled.div`
   flex: 1;
-  background: lightgreen;
   display: flex;
 `;
 
@@ -38,14 +37,8 @@ export const TIRightPart = styled.div`
 `;
 
 export const IBLeftPart = styled.div`
-  width: 60%;
-  background: grey;
+  width: 500px;
   display: flex;
-`;
-
-export const section = styled.div`
-  width: calc(100% / 3);
-  color: lightgrey;
 `;
 
 export const Line = styled.hr`
