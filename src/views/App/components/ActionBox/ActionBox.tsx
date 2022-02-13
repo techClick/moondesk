@@ -1,29 +1,28 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoneyCheckDollar, faDatabase } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../../../redux/hooks';
 import * as S from './ActionBox.styled';
-
-const pagesAction: any = {
-  income: {
-    icon: <FontAwesomeIcon icon={faMoneyCheckDollar} size="3x" />,
-    button: 'New income data',
-  },
-  resources: {
-    icon: <FontAwesomeIcon icon={faDatabase} size="3x" />,
-    button: 'New resource data',
-  },
-};
+import { selectShowSheetBuilder, setShowSheetBuilder } from '../../redux';
+import { MainButton } from '../../styles';
+import { pagesAction } from './utils/utils';
 
 const ActionBox = function ActionBox({ page }:{ page: string }) {
+  const dispatch = useDispatch();
+  const showSheetBuilder = useAppSelector(selectShowSheetBuilder);
+
   return (
     <S.FlexCont>
       <S.Icon isResources={page === 'resources'}>
         {pagesAction[page].icon}
       </S.Icon>
       <S.Action isResources={page === 'resources'}>
-        <S.Button>
-          {pagesAction[page].button}
-        </S.Button>
+        <MainButton onClick={() => dispatch(setShowSheetBuilder({
+          income: true,
+          resources: showSheetBuilder.resources,
+        }))}
+        >
+          {pagesAction[page].buttonText}
+        </MainButton>
       </S.Action>
     </S.FlexCont>
   );

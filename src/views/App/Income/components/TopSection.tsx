@@ -4,7 +4,7 @@ import ActionBox from '../../components/ActionBox/ActionBox';
 
 const TopSection = function TopSection() {
   return (
-    <S.Container>
+    <S.Container id="topSection">
       <S.DialogueCont>
         <ActionBox page="income" />
       </S.DialogueCont>

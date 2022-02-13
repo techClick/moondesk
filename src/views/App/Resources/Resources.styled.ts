@@ -1,6 +1,6 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { panelBorderColor } from '../../styles';
+import { panelBorderColor } from '../styles';
 
 export const Container = styled.div<any>`
   width: 100%;

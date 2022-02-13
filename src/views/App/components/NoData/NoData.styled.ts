@@ -1,10 +1,11 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { bigRes, panelBorderColor } from '../../../styles';
+import { bigRes } from '../../../styles';
+import { panelBorderColor } from '../../styles';
 
 export const Container = styled.div<any>`
   width: 100%;
-  height: 100%;
+  flex: 1;
   padding-top: 120px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
@@ -27,13 +28,13 @@ export const Icon = styled.div<any>`
 
 export const ALertIcon = styled.div<any>`
   position: absolute;
-  bottom: 12px;
-  right: 3px;
+  bottom: ${(props) => { return props.isResources ? '5px' : '12px'; }};
+  right: ${(props) => { return props.isResources ? '10px' : '3px'; }};
   display: flex;
   align-items: center;
   justify-content: center;
   transform: scale(${(props) => { return props.isResources ? '0.9' : '0.7'; }});
-  color: ${Color(panelBorderColor).darken(0.15).toString()};
+  color: ${Color(panelBorderColor).darken(0.12).toString()};
 `;
 
 export const NoDataInfo = styled.div<any>`

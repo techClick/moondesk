@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Color from 'color';
-import { panelBorderColor, topBarColor } from '../../../styles';
+import { panelBorderColor } from '../../styles';
 
 export const FlexCont = styled.div<any>`
   display: flex;
@@ -20,21 +20,4 @@ export const Action = styled.div<any>`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-`;
-
-export const Button = styled.div<any>`
-  color: ${topBarColor};
-  background: ${Color(topBarColor).lighten(0.87).toString()};
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
-  &:hover {
-    background: ${Color(topBarColor).lighten(0.55).toString()};
-    color: ${Color(topBarColor).darken(0.35).toString()};
-  }
 `;

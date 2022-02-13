@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../redux/store';
+import { RootState } from '../../../redux/store';
 
-export interface ViewsState {
+export interface NavigationState {
   isProductInterest: boolean
 }
 
-const initialState: ViewsState = {
+const initialState: NavigationState = {
   isProductInterest: false,
 };
 

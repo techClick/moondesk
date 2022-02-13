@@ -1,11 +1,13 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { panelBorderColor } from '../../styles';
+import { panelBorderColor } from '../styles';
 
 export const Container = styled.div<any>`
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const HRLine = styled.div<any>`

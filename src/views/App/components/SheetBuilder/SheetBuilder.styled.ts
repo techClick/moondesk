@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { containerPadding } from '../../styles';
 
 const breatheAnimation = keyframes`
  0% { opacity: 0 }
@@ -6,23 +7,22 @@ const breatheAnimation = keyframes`
 
 export const Container = styled.div<any>`
   width: 100%;
-  height: 80%;
-  padding: 0 20px 20px 20px;
+  height: 100%;
+  padding: ${containerPadding};
   position: relative;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const WhiteCard = styled.div`
   background-color: white;
-  padding: 0px;
-  padding-bottom: 70px;
+  padding-bottom: 40px;
   border-radius: 8px;
-  margin-top: 40px;
-  margin-bottom: 0px;
   width: 800px;
-  height: 100%;
+  max-height: 100%;
   border: 1px solid #c9c9c9;
   text-align: center;
   position: relative;
@@ -34,12 +34,12 @@ export const WhiteCard = styled.div`
   animation-iteration-count: 1;
 `;
 
-export const Line = styled.hr`
-  height: 1px;
+export const ButtonDiv = styled.div`
+  margin-bottom: ${containerPadding};
+`;
+
+export const BuilderDiv = styled.div`
+  overflow: auto;
   width: 100%;
-  position:absolute;
-  border:0;
-  background-color: #c9c9c9;
-  top: 66px;
-  left:0;
+  flex: 1;
 `;
