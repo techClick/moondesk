@@ -1,6 +1,6 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import viewsReducer from '../views/redux';
-import navigationReducer from '../views/Navigation/redux';
+import navigationReducer from '../views/App/Navigation/redux';
 
 export interface AppState {
   loggedIn: boolean,

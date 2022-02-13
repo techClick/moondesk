@@ -2,7 +2,7 @@ import React from 'react';
 import MediaQuery from 'react-responsive';
 import * as S from './SideBar.styled';
 import Tabs from './components/Tabs';
-import { bigRes } from '../../../styles';
+import { bigRes } from '../../../../styles';
 
 const SideBar = function SideBar() {
   return (

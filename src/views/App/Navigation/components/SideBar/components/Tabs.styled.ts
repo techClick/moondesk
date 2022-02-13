@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { topBarColor } from '../../../../styles';
+import { topBarColor } from '../../../../../styles';
 
 export const Icon = styled.div<any>`
   width: 23px;

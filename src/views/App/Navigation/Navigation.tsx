@@ -4,7 +4,7 @@ import * as S from './Navigation.styled';
 import TopBar from './components/TopBar/TopBar';
 import SideBar from './components/SideBar/SideBar';
 import { moveSideBar } from './components/utils/utils';
-import { bigRes } from '../styles';
+import { bigRes } from '../../styles';
 
 const Navigation = function Navigation({ children }:{ children: any}) {
   return (

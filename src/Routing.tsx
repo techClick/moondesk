@@ -5,7 +5,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Loader from './views/Loader/Loader';
-import Navigation from './views/Navigation/Navigation';
+import Navigation from './views/App/Navigation/Navigation';
 
 const HomePage = lazy(() => import('./views/Public/HomePage/HomePage'));
 const Income = lazy(() => import('./views/App/Income/Income'));
