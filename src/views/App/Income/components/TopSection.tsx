@@ -6,7 +6,7 @@ const TopSection = function TopSection() {
   return (
     <S.Container>
       <S.DialogueCont>
-        <ActionBox />
+        <ActionBox page="income" />
       </S.DialogueCont>
     </S.Container>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faCreditCard, faFileWaveform, faDatabase, faChartLine,
+  faWallet, faFileWaveform, faDatabase, faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const tabOptions = [
@@ -13,7 +13,7 @@ export const tabOptions = [
   {
     label: 'Income',
     route: '/app/income',
-    icon: <FontAwesomeIcon icon={faCreditCard} />,
+    icon: <FontAwesomeIcon icon={faWallet} />,
   },
   {
     label: 'Resources',

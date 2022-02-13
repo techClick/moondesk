@@ -1,36 +1,25 @@
 import styled from 'styled-components';
 import Color from 'color';
-import { panelBorderColor, topBarColor } from '../../styles';
-
-export const ActionCont = styled.div<any>`
-  border-radius: 8px;
-  border: 1px solid ${panelBorderColor};
-`;
+import { panelBorderColor, topBarColor } from '../../../styles';
 
 export const FlexCont = styled.div<any>`
   display: flex;
   align-items: center;
 `;
 
-export const Action = styled.div<any>`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 20px;
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
-  text-align: center;
+export const Icon = styled.div<any>`
+  padding-left: ${(props) => { return props.isResources ? '5px' : '10px'; }};
+  color: ${Color(panelBorderColor).darken(0.075).toString()};
+  height: 100%;
+  transform: scale(${(props) => { return props.isResources ? '0.8' : '1'; }});
 `;
 
-export const Info = styled.div<any>`
-  font-size: 13px;
-  color: grey; 
-  padding-bottom: 15px;
+export const Action = styled.div<any>`
+  display: flex;
+  padding-left: ${(props) => { return props.isResources ? '0' : '5px'; }};
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  max-width: 160px;
 `;
 
 export const Button = styled.div<any>`

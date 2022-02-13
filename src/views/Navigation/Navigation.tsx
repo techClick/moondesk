@@ -3,7 +3,6 @@ import MediaQuery from 'react-responsive';
 import * as S from './Navigation.styled';
 import TopBar from './components/TopBar/TopBar';
 import SideBar from './components/SideBar/SideBar';
-import Header from './components/Header/Header';
 import { moveSideBar } from './components/utils/utils';
 import { bigRes } from '../styles';
 
@@ -27,7 +26,6 @@ const Navigation = function Navigation({ children }:{ children: any}) {
           </S.Container>
         ) : (
           <>
-            <Header />
             {children}
           </>
         )
