@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { containerPadding } from '../../styles';
+import { containerPadding, panelBorderColor } from '../../styles';
 
 const breatheAnimation = keyframes`
  0% { opacity: 0 }
@@ -9,7 +9,6 @@ export const Container = styled.div<any>`
   width: 100%;
   height: 100%;
   padding: ${containerPadding};
-  position: relative;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
@@ -18,19 +17,19 @@ export const Container = styled.div<any>`
 `;
 
 export const WhiteCard = styled.div`
-  background-color: white;
-  padding-bottom: 40px;
-  border-radius: 8px;
-  width: 800px;
+  padding-bottom: 20px; // should be changed for table
+  border-radius: 2px;
+  width: 755px;
+  height: max-content;
   max-height: 100%;
-  border: 1px solid #c9c9c9;
+  border: 1px solid ${panelBorderColor};
   text-align: center;
   position: relative;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
   animation-name: ${breatheAnimation};
-  animation-duration: 0.45s;
+  animation-duration: 0.225s;
   animation-iteration-count: 1;
 `;
 
@@ -42,4 +41,24 @@ export const BuilderDiv = styled.div`
   overflow: auto;
   width: 100%;
   flex: 1;
+`;
+
+export const BuilderDiv2 = styled.div`
+  overflow: auto;
+  width: 100%;
+  flex: 1;
+`;
+
+export const WhiteCard2 = styled.div`
+  padding: ${containerPadding};
+  border-radius: 2px;
+  width: 755px;
+  height: max-content;
+  max-height: 100%;
+  border: 1px solid ${panelBorderColor};
+  text-align: center;
+  position: relative;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
 `;

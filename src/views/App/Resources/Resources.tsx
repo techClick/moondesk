@@ -8,7 +8,7 @@ const Resources = function Resources() {
     <S.Container>
       <TopSection />
       <S.HRLine />
-      <NoData page="resources" />
+      <NoData />
     </S.Container>
   );
 };

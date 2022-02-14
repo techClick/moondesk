@@ -18,6 +18,7 @@ export const MainButton = styled.div`
   font-weight: 500;
   font-size: 14px;
   width: max-content;
+  height: max-content;
   cursor: pointer;
   &:hover {
     background: ${Color(topBarColor).lighten(0.55).toString()};
@@ -36,6 +37,7 @@ export const Button = styled.div`
   font-weight: 500;
   font-size: 14px;
   width: max-content;
+  height: max-content;
   cursor: pointer;
   &:hover {
     background: ${Color(topBarColor).lighten(0.55).toString()};

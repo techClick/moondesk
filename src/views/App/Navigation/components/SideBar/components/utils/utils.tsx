@@ -8,21 +8,25 @@ export const tabOptions = [
   {
     label: 'Analytics',
     route: '/app/analytics',
+    path: 'analytics',
     icon: <FontAwesomeIcon icon={faChartLine} />,
   },
   {
     label: 'Income',
     route: '/app/income',
+    path: 'income',
     icon: <FontAwesomeIcon icon={faWallet} />,
   },
   {
     label: 'Resources',
     route: '/app/resources',
+    path: 'resources',
     icon: <FontAwesomeIcon icon={faDatabase} />,
   },
   {
     label: 'Reports',
     route: '/app/reports',
+    path: 'reports',
     icon: <FontAwesomeIcon icon={faFileWaveform} />,
   },
 ];

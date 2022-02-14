@@ -1,7 +1,8 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import viewsReducer from '../views/redux';
-import navigationReducer from '../views/App/Navigation/redux';
-import appReducer from '../views/App/redux';
+import viewsReducer from 'views/redux';
+import navigationReducer from 'views/App/Navigation/redux';
+import appReducer from 'views/App/redux';
+import sheetBuilderReducer from 'views/App/components/SheetBuilder/redux';
 
 export interface AppState {
   loggedIn: boolean,
@@ -35,6 +36,7 @@ export const store = configureStore({
     views: viewsReducer,
     navigation: navigationReducer,
     app: appReducer,
+    sheetBuilder: sheetBuilderReducer,
   },
 });
 

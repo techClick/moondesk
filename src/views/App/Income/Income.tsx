@@ -16,10 +16,10 @@ const Income = function Income() {
           <>
             <TopSection />
             <S.HRLine />
-            <NoData page="income" />
+            <NoData />
           </>
         ) : (
-          <SheetBuilder page="income" />
+          <SheetBuilder />
         )
       }
     </S.Container>

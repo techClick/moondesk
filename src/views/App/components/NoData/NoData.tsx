@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBill1 } from '@fortawesome/free-regular-svg-icons';
 import { faTriangleExclamation, faCoins } from '@fortawesome/free-solid-svg-icons';
 import * as S from './NoData.styled';
+import { getCurrentTab } from '../utils/utils';
 
 const pagesNoData: any = {
   income: {
@@ -15,17 +16,19 @@ const pagesNoData: any = {
   },
 };
 
-const NoData = function NoData({ page }:{ page: string }) {
+const NoData = function NoData() {
+  const thisTab = getCurrentTab();
+
   return (
     <S.Container>
-      <S.Icon isResources={page === 'resources'}>
-        {pagesNoData[page].icon}
-        <S.ALertIcon isResources={page === 'resources'}>
+      <S.Icon isResources={thisTab === 'resources'}>
+        {pagesNoData[thisTab].icon}
+        <S.ALertIcon isResources={thisTab === 'resources'}>
           <FontAwesomeIcon icon={faTriangleExclamation} size="2x" />
         </S.ALertIcon>
       </S.Icon>
-      <S.NoDataInfo isResources={page === 'resources'}>
-        {pagesNoData[page].label}
+      <S.NoDataInfo isResources={thisTab === 'resources'}>
+        {pagesNoData[thisTab].label}
       </S.NoDataInfo>
     </S.Container>
   );

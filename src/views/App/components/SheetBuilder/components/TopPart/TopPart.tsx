@@ -1,28 +1,29 @@
 import React from 'react';
+import { getCurrentTab } from 'views/App/components/utils/utils';
 import * as S from './TopPart.styled';
 import ColumnBuilder from '../ColumnBuilder/ColumnBuilder';
+import DateSection from '../DateSection/DateSection';
 
-const TopPart = function TopPart({ page }:{ page: string}) {
+const TopPart = function TopPart() {
+  const thisPage = getCurrentTab();
+
   return (
     <S.Container>
       <S.TopInfo>
         <S.TILeftPart>
-          New
-          {' '}
-          {page}
-          {' '}
-          sheet
+          <S.TILPTopPart>
+            New
+            {` ${thisPage} `}
+            sheet
+          </S.TILPTopPart>
+          <DateSection />
         </S.TILeftPart>
-        <S.TIRightPart>
-
-        </S.TIRightPart>
+        <S.TIRightPart />
       </S.TopInfo>
       <S.InfoBottom>
-        <S.IBLeftPart>
-          <ColumnBuilder />
-        </S.IBLeftPart>
+        <ColumnBuilder />
       </S.InfoBottom>
-      <S.Line />
+      {/* <S.Line /> */}
     </S.Container>
   );
 };
