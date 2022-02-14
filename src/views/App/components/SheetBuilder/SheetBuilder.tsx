@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../../../redux/hooks';
+import { useAppSelector } from 'redux/hooks';
 import { selectShowSheetBuilder, setShowSheetBuilder } from '../../redux';
 import { Button } from '../../styles';
 import * as S from './SheetBuilder.styled';

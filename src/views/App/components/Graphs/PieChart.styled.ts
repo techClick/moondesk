@@ -7,9 +7,3 @@ export const Container = styled.div<any>`
   display: flex;
   background: lightgreen;
 `;
-
-export const ChartDetails = styled.div`
-  width: 300px;
-  height: 100%;
-  background: lightgrey;
-`;
