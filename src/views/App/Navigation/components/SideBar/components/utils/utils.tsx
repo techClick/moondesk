@@ -26,3 +26,11 @@ export const tabOptions = [
     icon: <FontAwesomeIcon icon={faFileWaveform} />,
   },
 ];
+
+export const getInitialIndex = function getInitialIndex() {
+  const initialTab = tabOptions.find((tab) => (
+    window.location.href.includes(tab.label.toLowerCase())
+  ));
+  if (initialTab) return tabOptions.indexOf(initialTab);
+  return 0;
+};

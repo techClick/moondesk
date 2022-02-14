@@ -28,7 +28,7 @@ export const Icon = styled.div<any>`
 
 export const ALertIcon = styled.div<any>`
   position: absolute;
-  bottom: ${(props) => { return props.isResources ? '5px' : '12px'; }};
+  bottom: ${(props) => { return props.isResources ? '7px' : '12px'; }};
   right: ${(props) => { return props.isResources ? '10px' : '3px'; }};
   display: flex;
   align-items: center;

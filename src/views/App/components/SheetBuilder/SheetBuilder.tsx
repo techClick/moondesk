@@ -5,21 +5,19 @@ import { selectShowSheetBuilder, setShowSheetBuilder } from '../../redux';
 import { Button } from '../../styles';
 import * as S from './SheetBuilder.styled';
 import TopPart from './components/TopPart/TopPart';
+import { getExitSheetBuilder } from './utils/utils';
 
 const SheetBuilder = function SheetBuilder({ page }:{ page: string}) {
   const dispatch = useDispatch();
   const showSheetBuilder = useAppSelector(selectShowSheetBuilder);
 
-  const exitShowSheetBuilder: typeof showSheetBuilder = {
-    income: showSheetBuilder.income,
-    resources: showSheetBuilder.resources,
-  };
-  exitShowSheetBuilder[page] = null;
-
   return (
     <S.Container>
       <S.ButtonDiv>
-        <Button onClick={() => dispatch(setShowSheetBuilder(exitShowSheetBuilder))}>
+        <Button onClick={() => dispatch(
+          setShowSheetBuilder(getExitSheetBuilder(showSheetBuilder, page)),
+        )}
+        >
           Back to income data
         </Button>
       </S.ButtonDiv>
