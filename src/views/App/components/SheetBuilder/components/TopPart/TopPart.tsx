@@ -1,11 +1,15 @@
 import React from 'react';
+import { useAppSelector } from 'redux/hooks';
 import { getCurrentTab } from 'views/App/components/utils/utils';
+import { selectShowUploadPage } from '../../redux';
 import * as S from './TopPart.styled';
 import ColumnBuilder from '../ColumnBuilder/ColumnBuilder';
 import DateSection from '../DateSection/DateSection';
+import FileUploader from '../FileUploader/FileUploader';
 
 const TopPart = function TopPart() {
-  const thisPage = getCurrentTab();
+  const thisTab = getCurrentTab();
+  const showUploadPage = useAppSelector(selectShowUploadPage);
 
   return (
     <S.Container>
@@ -13,7 +17,7 @@ const TopPart = function TopPart() {
         <S.TILeftPart>
           <S.TILPTopPart>
             New
-            {` ${thisPage} `}
+            {` ${thisTab} `}
             sheet
           </S.TILPTopPart>
           <DateSection />
@@ -21,7 +25,9 @@ const TopPart = function TopPart() {
         <S.TIRightPart />
       </S.TopInfo>
       <S.InfoBottom>
-        <ColumnBuilder />
+        { showUploadPage[thisTab]
+          ? <FileUploader />
+          : <ColumnBuilder /> }
       </S.InfoBottom>
       {/* <S.Line /> */}
     </S.Container>

@@ -31,13 +31,12 @@ const ButtonSection = function ButtonSection(
 
   return (
     <S.ButtonDiv>
-      <input disabled type="file" id="fileToUpload" className="form-control" />
       <S.RelativeDiv>
         <Button onClick={() => uploadCSV()}>
           Upload CSV
         </Button>
         <S.Button>
-          Fill manually
+          Use directly
         </S.Button>
         <S.MainButtonDiv>
           <MainButton>

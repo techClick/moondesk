@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/hooks';
 import { selectShowSheetBuilder, setShowSheetBuilder } from '../../redux';
-import { selectShowUploadPage, setShowUploadPage } from './redux';
+import { setShowUploadPage } from './redux';
 import { Button } from '../../styles';
 import * as S from './SheetBuilder.styled';
 import TopPart from './components/TopPart/TopPart';
@@ -13,7 +13,6 @@ import { getCurrentTab } from '../utils/utils';
 const SheetBuilder = function SheetBuilder() {
   const dispatch = useDispatch();
   const showSheetBuilder = useAppSelector(selectShowSheetBuilder);
-  const showUploadPage = useAppSelector(selectShowUploadPage);
   const thisTab = getCurrentTab();
 
   return (
@@ -28,18 +27,12 @@ const SheetBuilder = function SheetBuilder() {
           {`Back to ${thisTab} data`}
         </Button>
       </S.ButtonDiv>
-      { showUploadPage[thisTab] ? (
-        <S.BuilderDiv>
-          <S.WhiteCard2 />
-        </S.BuilderDiv>
-      ) : (
-        <S.BuilderDiv2>
-          <S.WhiteCard>
-            <TopPart />
-            <TablePart />
-          </S.WhiteCard>
-        </S.BuilderDiv2>
-      )}
+      <S.BuilderDiv>
+        <S.WhiteCard>
+          <TopPart />
+          <TablePart />
+        </S.WhiteCard>
+      </S.BuilderDiv>
     </S.Container>
   );
 };

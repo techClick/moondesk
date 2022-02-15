@@ -29,7 +29,7 @@ export const WhiteCard = styled.div`
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
   animation-name: ${breatheAnimation};
-  animation-duration: 0.125s;
+  animation-duration: 0.1s;
   animation-iteration-count: 1;
 `;
 
@@ -52,7 +52,7 @@ export const BuilderDiv2 = styled.div`
 export const WhiteCard2 = styled.div`
   padding: ${containerPadding};
   border-radius: 2px;
-  width: 755px;
+  width: 555px;
   height: max-content;
   max-height: 100%;
   border: 1px solid ${panelBorderColor};
