@@ -7,11 +7,11 @@ import { getCurrentTab } from '../utils/utils';
 
 const pagesNoData: any = {
   income: {
-    icon: <FontAwesomeIcon icon={faMoneyBill1} size="7x" />,
+    icon: <FontAwesomeIcon icon={faMoneyBill1} size="6x" />,
     label: 'No income data',
   },
   resources: {
-    icon: <FontAwesomeIcon icon={faCoins} size="7x" />,
+    icon: <FontAwesomeIcon icon={faCoins} size="6x" />,
     label: 'No resource data',
   },
 };

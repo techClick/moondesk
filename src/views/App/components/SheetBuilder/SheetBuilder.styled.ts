@@ -29,7 +29,7 @@ export const WhiteCard = styled.div`
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
   animation-name: ${breatheAnimation};
-  animation-duration: 0.225s;
+  animation-duration: 0.125s;
   animation-iteration-count: 1;
 `;
 

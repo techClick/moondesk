@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/hooks';
 import { selectShowSheetBuilder, setShowSheetBuilder } from '../../redux';
-import { selectShowUploadPage } from './redux';
+import { selectShowUploadPage, setShowUploadPage } from './redux';
 import { Button } from '../../styles';
 import * as S from './SheetBuilder.styled';
 import TopPart from './components/TopPart/TopPart';
@@ -19,9 +19,11 @@ const SheetBuilder = function SheetBuilder() {
   return (
     <S.Container>
       <S.ButtonDiv>
-        <Button onClick={() => dispatch(
-          setShowSheetBuilder(getExitSheetBuilder(showSheetBuilder)),
-        )}
+        <Button onClick={() => {
+          dispatch(setShowSheetBuilder(getExitSheetBuilder(showSheetBuilder)));
+          const exitShowUploadPage = { income: false, resources: false };
+          dispatch(setShowUploadPage(exitShowUploadPage));
+        }}
         >
           {`Back to ${thisTab} data`}
         </Button>

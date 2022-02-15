@@ -23,23 +23,23 @@ export const Icon = styled.div<any>`
   color: ${Color(panelBorderColor).lighten(0.08).toString()};
   display: block;
   position: relative;
-  transform: scale(${(props) => { return props.isResources ? '0.8' : '1'; }});
+  transform: scale(${(props) => { return props.isResources ? '0.825' : '1'; }});
 `;
 
 export const ALertIcon = styled.div<any>`
   position: absolute;
-  bottom: ${(props) => { return props.isResources ? '7px' : '12px'; }};
-  right: ${(props) => { return props.isResources ? '10px' : '3px'; }};
+  bottom: ${(props) => { return props.isResources ? '1px' : '12px'; }};
+  right: ${(props) => { return props.isResources ? '-7px' : '3px'; }};
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: scale(${(props) => { return props.isResources ? '0.9' : '0.7'; }});
+  transform: scale(${(props) => { return props.isResources ? '0.8' : '0.7'; }});
   color: ${Color(panelBorderColor).darken(0.12).toString()};
 `;
 
 export const NoDataInfo = styled.div<any>`
   font-size: 16px;
   font-weight: 600;
-  margin-top: ${(props) => { return props.isResources ? '-11px' : '-13px'; }};
+  margin-top: ${(props) => { return props.isResources ? '-10px' : '-13px'; }};
   color: ${Color(panelBorderColor).darken(0.12).toString()}
 `;

@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
+import { setShowUploadPage } from 'views/App/components/SheetBuilder/redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as S from './Tabs.styled';
 import { getInitialIndex, tabOptions } from './utils/utils';
 import { moveSideBar } from '../../utils/utils';
 
 const SideBar = function SideBar() {
+  const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState<number>(getInitialIndex());
+
+  const tabPressAction = function tabPressAction() {
+    const exitShowUploadPage = { income: false, resources: false };
+    dispatch(setShowUploadPage(exitShowUploadPage));
+  };
 
   return (
     <>
@@ -17,6 +25,7 @@ const SideBar = function SideBar() {
               isSelected={i === selectedTab}
               onClick={() => {
                 setTimeout(() => moveSideBar(true), 300);
+                tabPressAction();
                 setSelectedTab(i);
               }}
             >
