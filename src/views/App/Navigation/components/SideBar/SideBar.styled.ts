@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div<any>`
   background: #1c3f5f;
-  width: 148px;
+  width: max-content;
   height: 100%;
-  padding: 12px;
+  padding: 12px 10px;
   position: ${(props) => { return props.isMobile ? 'absolute' : 'relative'; }};
   left: 0;
   top: 0;

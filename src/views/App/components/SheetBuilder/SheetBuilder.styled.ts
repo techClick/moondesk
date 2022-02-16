@@ -1,3 +1,4 @@
+import Color from 'color';
 import styled, { keyframes } from 'styled-components';
 import { containerPadding, panelBorderColor } from '../../styles';
 
@@ -21,22 +22,25 @@ export const ButtonDiv = styled.div`
 `;
 
 export const BuilderDiv = styled.div`
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex: 1;
 `;
 
-export const WhiteCard = styled.div`
-  padding-bottom: 0; //23.5px;
-  border-radius: 2px;
-  width: 80%;
-  background: white;
-  min-width: 740px;
+export const contentDiv = styled.div`
   height: max-content;
   max-height: 100%;
-  border: 1px solid ${panelBorderColor};
-  border-bottom: 0;
+  overflow: auto;
+`;
+
+export const WhiteCard = styled.div`
+  padding-bottom: 0; //23.5px;
+  border-radius: 4px;
+  width: 70%;
+  background: white;
+  min-width: 830px;
+  height: max-content;
+  max-height: 100%;
   text-align: center;
   position: relative;
   animation-name: ${breatheAnimation};
@@ -46,6 +50,7 @@ export const WhiteCard = styled.div`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
+  border: 1px solid ${Color('white').darken(0.09).toString()}
 `;
 
 export const Line = styled.div`

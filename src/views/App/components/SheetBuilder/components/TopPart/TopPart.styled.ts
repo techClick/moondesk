@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import { panelBorderColor, textColor } from '../../../../styles';
+import { panelBorderColor, textColor } from 'views/App/styles';
 
-const containerHeight = '167px';
+const containerHeight = '165.4px';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
 export const TopInfo = styled.div`
-  padding: 12px 0;
-  padding-left: 20px;
+  padding-top: 19px;
+  padding-left: 25px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
@@ -18,7 +18,7 @@ export const TopInfo = styled.div`
 export const InfoBottom = styled.div`
   width: 100%;
   display: flex;
-  padding-left: 5px;
+  padding-left: 12px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;

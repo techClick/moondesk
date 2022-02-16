@@ -8,7 +8,7 @@ const getTableHeight = function getTableHeight() {
   const tableHeightInt = (window.innerHeight - 290)
     - (window.innerWidth < (bigRes + 0.0001) ? topBarHeightInt : 0);
   const tableHeight = `${tableHeightInt}px`;
-  console.log('tableHeight', window.innerWidth, tableHeight);
+  // console.log('tableHeight', window.innerWidth, tableHeight);
   return tableHeight;
 };
 
@@ -18,7 +18,7 @@ export const Container = styled.div`
   display: flex;
   max-height: ${() => getTableHeight()};
   overflow: auto;
-  margin-top: 18px;
+  margin-top: 23px;
   padding: 0 0px;
   position: relative;
   z-index: 2;

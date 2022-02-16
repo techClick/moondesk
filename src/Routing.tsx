@@ -10,11 +10,11 @@ import Navigation from './views/App/Navigation/Navigation';
 const HomePage = lazy(() => import('./views/Public/HomePage/HomePage'));
 const Income = lazy(() => import('./views/App/Income/Income'));
 const Resources = lazy(() => import('./views/App/Resources/Resources'));
+const Settings = lazy(() => import('./views/App/Settings/Settings'));
 
 const Routing = function Routing() {
   return (
     <Router>
-      <Route render={() => (
         <Navigation>
           <Suspense fallback={<Loader />}>
             <Switch>
@@ -27,11 +27,12 @@ const Routing = function Routing() {
               <Route exact path="/app/resources">
                 <Resources />
               </Route>
+              <Route exact path="/app/settings">
+                <Settings />
+              </Route>
             </Switch>
           </Suspense>
         </Navigation>
-      )}
-      />
     </Router>
   );
 };

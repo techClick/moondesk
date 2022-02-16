@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { bigRes } from 'views/styles';
+import MediaQuery from 'react-responsive';
+import { setShowSheetBuilder } from 'views/App/redux';
 import { setShowUploadPage } from 'views/App/components/SheetBuilder/redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -6,13 +9,15 @@ import * as S from './Tabs.styled';
 import { getInitialIndex, tabOptions } from './utils/utils';
 import { moveSideBar } from '../../utils/utils';
 
-const SideBar = function SideBar() {
+const Tabs = function Tabs() {
   const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState<number>(getInitialIndex());
 
   const tabPressAction = function tabPressAction() {
     const exitShowUploadPage = { income: false, resources: false };
     dispatch(setShowUploadPage(exitShowUploadPage));
+    const exitSheetBuilder = { income: false, resources: false };
+    dispatch(setShowSheetBuilder(exitSheetBuilder));
   };
 
   return (
@@ -30,7 +35,9 @@ const SideBar = function SideBar() {
               }}
             >
               <S.Icon>{tab.icon}</S.Icon>
-              {tab.label}
+              <MediaQuery maxWidth={bigRes}>
+                {tab.label}
+              </MediaQuery>
             </S.Tab>
           </Link>
         ))
@@ -39,4 +46,4 @@ const SideBar = function SideBar() {
   );
 };
 
-export default SideBar;
+export default Tabs;

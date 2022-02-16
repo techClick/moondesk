@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../../../redux/hooks';
+import { useAppSelector } from 'redux/hooks';
 import * as S from './ActionBox.styled';
 import { selectShowSheetBuilder, setShowSheetBuilder } from '../../redux';
 import { MainButton } from '../../styles';

@@ -1,6 +1,6 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { bigRes } from '../../../styles';
+import { bigRes } from 'views/styles';
 import { panelBorderColor } from '../../styles';
 
 export const Container = styled.div<any>`

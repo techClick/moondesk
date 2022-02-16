@@ -1,6 +1,6 @@
 import React from 'react';
+import { useAppSelector } from 'redux/hooks';
 import * as S from './Income.styled';
-import { useAppSelector } from '../../../redux/hooks';
 import { selectShowSheetBuilder } from '../redux';
 import TopSection from './components/TopSection';
 import NoData from '../components/NoData/NoData';

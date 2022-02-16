@@ -26,7 +26,7 @@ export const ColumnName = styled.div`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   width: 100%;
   text-align: left;

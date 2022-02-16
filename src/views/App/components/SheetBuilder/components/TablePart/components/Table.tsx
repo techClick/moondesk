@@ -10,7 +10,7 @@ const Table = function Table() {
       <S.Table data-testid="forecastsTable">
         <thead>
           <tr>
-            <S.TH>#</S.TH>
+            <S.TH isIndex>#</S.TH>
             <S.TH>GROUP</S.TH>
             <S.TH>SOURCE</S.TH>
             <S.TH>AMOUNT</S.TH>
@@ -19,7 +19,7 @@ const Table = function Table() {
         <tbody>
           { newIncomeSheet.map((entry: any, index: number) => (
             <S.TR>
-              <S.TD>
+              <S.TD isIndex>
                 {index + 1}
               </S.TD>
               <S.TD>

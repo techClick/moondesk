@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faWallet, faFileWaveform, faDatabase, faChartLine,
+  faWallet, faFileWaveform, faDatabase, faChartLine, faGear,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const tabOptions = [
@@ -28,6 +28,12 @@ export const tabOptions = [
     route: '/app/reports',
     path: 'reports',
     icon: <FontAwesomeIcon icon={faFileWaveform} />,
+  },
+  {
+    label: 'Settings',
+    route: '/app/settings',
+    path: 'settings',
+    icon: <FontAwesomeIcon icon={faGear} />,
   },
 ];
 

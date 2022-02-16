@@ -3,7 +3,7 @@ import { useAppSelector } from 'redux/hooks';
 import { useDispatch } from 'react-redux';
 import { Button, MainButton } from 'views/App/styles';
 import { getCurrentTab } from 'views/App/components/utils/utils';
-import { selectShowUploadPage, setShowUploadPage } from '../../../redux';
+import { selectShowUploadPage, setShowUploadPage } from 'views/App/components/SheetBuilder/redux';
 import * as S from './ButtonSection.styled';
 import { getError } from './utils/utils';
 
