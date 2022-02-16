@@ -1,35 +1,16 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { panelBorderColor, topBarHeight } from 'views/App/styles';
-import { bigRes } from 'views/styles';
+import { panelBorderColor } from 'views/App/styles';
 
-const getTableHeight = function getTableHeight() {
-  const topBarHeightInt = Number(topBarHeight.replace('px', ''));
-  const tableHeightInt = (window.innerHeight - 290)
-    - (window.innerWidth < (bigRes + 0.0001) ? topBarHeightInt : 0);
-  const tableHeight = `${tableHeightInt}px`;
-  console.log('tableHeight', window.innerWidth, tableHeight);
-  return tableHeight;
-};
-
-export const Container = styled.div`
-  width: max-content;
-  max-width: 100%;
-  display: flex;
-  max-height: ${() => getTableHeight()};
-  overflow: auto;
-  margin-top: 18px;
-  padding: 0 0px;
-  position: relative;
-  z-index: 2;
+export const TableDiv = styled.div<any>`
+  text-align: left;
+  margin-left: -1px;
+  width: 100%;
 `;
 
 const tableBorderColor = Color(panelBorderColor).lighten(0.1).toString();
 const getScreenCalc = function getBigScreenCalc(): string {
-  const bool = window.innerWidth > 700;
-  const tenary = window.innerWidth - 700 > 400 ? 400 : window.innerWidth - 700;
-  console.log(window.innerWidth, `${bool ? tenary : 0}px`);
-  return `${bool ? tenary : 0}px`;
+  return window.innerWidth > 600 ? '150px' : '0px';
 };
 export const Table = styled.table`
   max-width: 100%;

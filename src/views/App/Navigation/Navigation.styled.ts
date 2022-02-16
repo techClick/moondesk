@@ -1,25 +1,30 @@
+import Color from 'color';
 import styled from 'styled-components';
-import { textColor } from '../styles';
+import { panelBorderColor, textColor } from '../styles';
 
 export const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
-  color: ${textColor}
+  display: flex;
+  flex-direction: column;
+  color: ${textColor};
 `;
 
 export const BottomPanel = styled.div`
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  flex: 1;
   position: relative;
+  overflow: hidden;
 `;
 
 export const BottomRightPanel = styled.div`
   overflow: auto;
-  width: 100%;
-  height: 100vh;
+  height: 100%;
   position: relative;
+  flex-grow: 1;
   z-index: 1;
+  background: ${Color(panelBorderColor).lighten(0.2).toString()};
 `;

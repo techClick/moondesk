@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { textColor } from '../../../../styles';
+import { panelBorderColor, textColor } from '../../../../styles';
 
 const containerHeight = '167px';
 export const Container = styled.div`
@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const TopInfo = styled.div`
-  padding: 10px 0;
+  padding: 12px 0;
   padding-left: 20px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
@@ -47,7 +47,7 @@ export const Line = styled.hr`
   width: 100%;
   position:absolute;
   border:0;
-  background-color: #c9c9c9;
+  background-color: ${panelBorderColor};
   top: ${containerHeight};
   left:0;
 `;

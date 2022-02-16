@@ -29,7 +29,7 @@ const TopPart = function TopPart() {
           ? <FileUploader />
           : <ColumnBuilder /> }
       </S.InfoBottom>
-      {/* <S.Line /> */}
+      <S.Line />
     </S.Container>
   );
 };

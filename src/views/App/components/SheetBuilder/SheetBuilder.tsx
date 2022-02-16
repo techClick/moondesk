@@ -31,6 +31,7 @@ const SheetBuilder = function SheetBuilder() {
         <S.WhiteCard>
           <TopPart />
           <TablePart />
+          <S.Line />
         </S.WhiteCard>
       </S.BuilderDiv>
     </S.Container>

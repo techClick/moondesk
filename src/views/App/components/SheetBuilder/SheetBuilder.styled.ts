@@ -16,23 +16,6 @@ export const Container = styled.div<any>`
   flex-direction: column;
 `;
 
-export const WhiteCard = styled.div`
-  padding-bottom: 20px; // should be changed for table
-  border-radius: 2px;
-  width: 755px;
-  height: max-content;
-  max-height: 100%;
-  border: 1px solid ${panelBorderColor};
-  text-align: center;
-  position: relative;
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
-  animation-name: ${breatheAnimation};
-  animation-duration: 0.1s;
-  animation-iteration-count: 1;
-`;
-
 export const ButtonDiv = styled.div`
   margin-bottom: ${containerPadding};
 `;
@@ -40,7 +23,40 @@ export const ButtonDiv = styled.div`
 export const BuilderDiv = styled.div`
   overflow: auto;
   width: 100%;
+  height: 100%;
   flex: 1;
+`;
+
+export const WhiteCard = styled.div`
+  padding-bottom: 0; //23.5px;
+  border-radius: 2px;
+  width: 80%;
+  background: white;
+  min-width: 740px;
+  height: max-content;
+  max-height: 100%;
+  border: 1px solid ${panelBorderColor};
+  border-bottom: 0;
+  text-align: center;
+  position: relative;
+  animation-name: ${breatheAnimation};
+  animation-duration: 0.1s;
+  animation-iteration-count: 1;
+  overflow: hidden;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+`;
+
+export const Line = styled.div`
+  height: 2px;
+  width: 100%;
+  background: white;
+  position:absolute;
+  border-top: 1px solid ${panelBorderColor};
+  bottom: -2px;;
+  left:0;
+  z-index: 3;
 `;
 
 export const BuilderDiv2 = styled.div`

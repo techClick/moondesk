@@ -12,7 +12,7 @@ const Navigation = function Navigation({ children }:{ children: any}) {
       {
         window.location.toString().includes('/app') ? (
           <S.Container>
-            <MediaQuery maxWidth={bigRes}>
+            <MediaQuery maxWidth={bigRes + 0.0001}>
               <TopBar />
             </MediaQuery>
             <S.BottomPanel>

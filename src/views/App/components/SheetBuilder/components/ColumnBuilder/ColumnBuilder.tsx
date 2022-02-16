@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { getStorageItem } from 'views/App/utils/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
 import * as S from './ColumnBuilder.styled';
 import ButtonSection from './components/ButtonSection';
+import { saveColumnEntry } from './utils/utils';
 
 const ColumnBuilder = function ColumnBuilder() {
-  const [input, setInput] = useState<any>({ Group: '', Source: '', Amount: '' });
-  const [error, setError] = useState<any>({ Source: false, Amount: false });
+  const [input, setInput] = useState<any>(
+    JSON.parse(getStorageItem('columnEntry_Income') || JSON.stringify({ group: '', source: '', amount: '' })),
+  );
+  const [error, setError] = useState<any>({ source: false, amount: false });
 
   return (
     <>
@@ -19,26 +23,28 @@ const ColumnBuilder = function ColumnBuilder() {
                 {fileHeader !== 'Group' && <> *</>}
                 <S.FillColumn
                   onClick={() => {
-                    let thisInput: any = [...fileHeader];
-                    thisInput[0] = thisInput[0].toLowerCase();
-                    thisInput = thisInput.join('');
-                    setError({ ...error, [fileHeader]: false });
-                    setInput({ ...input, [fileHeader]: thisInput });
+                    const thisInput: any = fileHeader.toLowerCase();
+                    saveColumnEntry(thisInput, thisInput);
+                    setError({ ...error, [thisInput]: false });
+                    setInput({ ...input, [thisInput]: thisInput });
                   }}
                 >
                   <FontAwesomeIcon icon={faSquareCaretDown} size="2x" />
                 </S.FillColumn>
               </S.ColumnName>
-              <S.InputDiv isError={error[fileHeader]}>
+              <S.InputDiv isError={error[fileHeader.toLowerCase()]}>
                 <S.Input
-                  isError={error[fileHeader]}
-                  value={input[fileHeader]}
+                  isError={error[fileHeader.toLowerCase()]}
+                  value={input[fileHeader.toLowerCase()]}
                   onChange={(e: any) => {
-                    setError({ ...error, [fileHeader]: false });
-                    setInput({ ...input, [fileHeader]: e.target.value });
+                    const thisInput: any = fileHeader.toLowerCase();
+                    saveColumnEntry(thisInput, e.target.value);
+                    setError({ ...error, [thisInput]: false });
+                    setInput({ ...input, [thisInput]: e.target.value });
                   }}
                 />
-                { error[fileHeader] && <S.Required>Required</S.Required>}
+                { error[fileHeader.toLowerCase()]
+                  && <S.Required>{error[fileHeader.toLowerCase()]}</S.Required>}
               </S.InputDiv>
             </S.ColumnBuild>
           </S.Container>

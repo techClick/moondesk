@@ -1,6 +1,6 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { textColor, topBarColor } from '../../../../styles';
+import { textColor, topBarColor } from 'views/App/styles';
 
 export const Container = styled.div`
   width: 120px;
@@ -15,7 +15,7 @@ export const ColumnBuild = styled.div`
   border-radius: 2px;
   padding-left: 14px;
   -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 `;
 
@@ -73,7 +73,7 @@ export const Input = styled.input<any>`
 
 export const Required = styled.div`
   display: flex;
-  font-size: 9px;
+  font-size: 10px;
   height: 14px;
   position: absolute;
   bottom: -13px;

@@ -18,21 +18,25 @@ const FileUploader = function FileUploader() {
       <S.Header>
         {`Uploading ${getCurrentTab()} file`}
       </S.Header>
-      <S.UploadCont>
+      <S.InputCont>
         <S.Label>
           <S.Input size={600} type="file" id="uploadSheet" />
         </S.Label>
-        <S.UploadButtonDiv>
-          <MainButton>
-            Upload
-          </MainButton>
-        </S.UploadButtonDiv>
-      </S.UploadCont>
-      <S.BackButtonDiv>
-        <S.Button onClick={() => exitFromUploadPage()}>
-          Back
-        </S.Button>
-      </S.BackButtonDiv>
+        <S.UploadCont>
+          <S.RelativeCont>
+            <S.UploadButtonDiv>
+              <MainButton>
+                Upload
+              </MainButton>
+            </S.UploadButtonDiv>
+            <S.BackButtonDiv>
+              <S.Button onClick={() => exitFromUploadPage()}>
+                Back
+              </S.Button>
+            </S.BackButtonDiv>
+          </S.RelativeCont>
+        </S.UploadCont>
+      </S.InputCont>
     </S.Container>
   );
 };

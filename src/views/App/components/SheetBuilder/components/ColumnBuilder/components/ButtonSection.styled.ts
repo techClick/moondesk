@@ -9,13 +9,13 @@ export const ButtonDiv = styled.div`
 `;
 
 export const RelativeDiv = styled.div`
-  width: 100%;
+  width: 360px;
   display: flex;
   height: 36px;
 `;
 
 export const MainButtonDiv = styled.div`
-  margin-left: 50px;
+  margin-left: 38px;
 `;
 
 export const Button = styled.div`

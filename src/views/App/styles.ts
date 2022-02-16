@@ -2,15 +2,15 @@ import Color from 'color';
 import styled from 'styled-components';
 
 export const topBarColor = '#1685ec';
-export const topBarHeight = '30px';
+export const topBarHeight = '60px';
 export const panelBorderColor = '#c9c9c9';
-export const containerPadding = '20px';
+export const containerPadding = '30px';
 export const textColor = Color(panelBorderColor).darken(0.45).toString();
 
 export const MainButton = styled.div`
   color: ${topBarColor};
   background: ${Color(topBarColor).lighten(0.87).toString()};
-  -moz-box-sizing: border-box; 
+  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
   padding: 10px 20px;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { topBarHeight, topBarColor } from '../../../styles';
+import { topBarHeight, topBarColor } from 'views/App/styles';
 
 export const Container = styled.div`
   background: ${topBarColor};
@@ -7,6 +7,9 @@ export const Container = styled.div`
   width: 100%;
   display: block;
   padding: 15px;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
 `;
 
 export const Menu = styled.div`

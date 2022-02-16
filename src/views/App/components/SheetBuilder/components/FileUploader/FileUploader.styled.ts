@@ -16,14 +16,28 @@ export const Container = styled.div<any>`
 export const Header = styled.div`
   font-size: 12px;
   font-weight: 500;
-  margin-bottom: 40px;
+  margin-bottom: 38px;
   color: ${Color(textColor).lighten(0.5).toString()};
 `;
 
+export const InputCont = styled.div`
+  position: relative;
+  width: max-content;
+`;
+
 export const UploadCont = styled.div`
+  width: max-content;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translateX(100%);
+`;
+
+export const RelativeCont = styled.div`
   display: flex;
   width: max-content;
   position: relative;
+  align-items: center;
 `;
 
 export const Label = styled.div`
@@ -36,10 +50,11 @@ export const Label = styled.div`
 export const Input = styled.input`
 `;
 
+export const UploadButtonDiv = styled.div`
+`;
+
 export const BackButtonDiv = styled.div`
-  position: absolute;
-  right: 20px;
-  bottom: 0;
+  margin-left: 12px;
 `;
 
 export const Button = styled.div`
@@ -53,7 +68,6 @@ export const Button = styled.div`
   font-size: 12px;
   width: max-content;
   height: max-content;
-  margin-left: 13px;
   font-weight: 500;
   font-size: 14px;
   cursor: pointer;
@@ -61,11 +75,4 @@ export const Button = styled.div`
     background: ${Color(panelBorderColor).lighten(0.1).toString()};
     color: ${Color(textColor).darken(0.2).toString()};
   }
-`;
-
-export const UploadButtonDiv = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  transform: translateX(105%);
 `;
