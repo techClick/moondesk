@@ -15,24 +15,24 @@ const Settings = lazy(() => import('./views/App/Settings/Settings'));
 const Routing = function Routing() {
   return (
     <Router>
-        <Navigation>
-          <Suspense fallback={<Loader />}>
-            <Switch>
-              <Route exact path="/">
-                <HomePage />
-              </Route>
-              <Route exact path="/app/income">
-                <Income />
-              </Route>
-              <Route exact path="/app/resources">
-                <Resources />
-              </Route>
-              <Route exact path="/app/settings">
-                <Settings />
-              </Route>
-            </Switch>
-          </Suspense>
-        </Navigation>
+      <Navigation>
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route exact path="/app/income">
+              <Income />
+            </Route>
+            <Route exact path="/app/resources">
+              <Resources />
+            </Route>
+            <Route exact path="/app/settings">
+              <Settings />
+            </Route>
+          </Switch>
+        </Suspense>
+      </Navigation>
     </Router>
   );
 };

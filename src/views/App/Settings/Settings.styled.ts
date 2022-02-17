@@ -1,17 +1,13 @@
 import Color from 'color';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { containerPadding, textColor, topBarColor } from '../styles';
-
-const breatheAnimation = keyframes`
- 0% { opacity: 0 }
- 100% { opacity: 1 }`;
 
 export const Container = styled.div`
   padding: ${containerPadding};
 `;
 
 export const WhiteCard = styled.div`
-  padding: 11px 20px;
+  padding: 11px 19.75px;
   border-radius: 4px;
   width: max-content;
   max-width: 70%;
@@ -27,23 +23,17 @@ export const WhiteCard = styled.div`
 `;
 
 export const WhiteCard2 = styled.div`
-  padding: 18px 20px;
+  padding: 0px 20px; // 18px 20px;
   padding-top: 10px;
   border-radius: 4px;
   width: max-content;
-  max-width: 70%;
   background: white;
-  height: max-content;
-  max-height: 100%;
+  height: 1px;
+  overflow: hidden;
   text-align: center;
   position: relative;
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
   border: 1px solid ${Color('white').darken(0.1).toString()};
-  animation-name: ${breatheAnimation};
-  animation-duration: 0.1s;
-  animation-iteration-count: 1;
+  transition: all 0.05s ease-out;
 `;
 
 export const FlexCont = styled.div`
@@ -84,10 +74,16 @@ export const NewCurrency = styled.div`
   margin-bottom: 25px; 
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<any>`
   width: 80px;
   padding: 4px 0;
   padding-left: 5px;
+  border-radius: 2px;
+  border-color: ${(props) => props.isError && 'red'};
+  outline: ${(props) => props.isError && 'none'};
+  &:focus {
+    border-color: black;
+  }
 `;
 
 export const ButtonDiv = styled.div`
@@ -111,4 +107,10 @@ export const Button = styled.div`
     background: ${Color(topBarColor).lighten(0.55).toString()};
     color: ${Color(topBarColor).darken(0.35).toString()};
   }
+`;
+
+export const Required = styled.div`
+  font-size: 12px;
+  color: red;
+  width: max-content;
 `;
