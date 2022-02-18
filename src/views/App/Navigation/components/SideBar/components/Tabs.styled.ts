@@ -1,8 +1,8 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { topBarColor } from 'views/App/styles';
+import { sideBarColor, textColor, topBarColor } from 'views/App/styles';
 
-export const Tab = styled.div<any>`
+export const BottomTab = styled.div<any>`
   width: max-content;
   min-width: 100%;
   padding: 10px 8px;
@@ -14,9 +14,12 @@ export const Tab = styled.div<any>`
   color: ${(props) => { return props.isSelected ? topBarColor : 'white'; }};
   border-radius: 3px;
   margin-bottom: 1px;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
   cursor: pointer;
   &:hover {
-    background: ${Color('#1c3f5f').lighten(0.25).toString()};
+    background: ${Color(sideBarColor).lighten(0.25).toString()};
   }
 `;
 
@@ -37,4 +40,21 @@ export const Label = styled.div<any>`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
+`;
+
+export const Description = styled.div`
+  padding: 5px 10px;
+  padding-top: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  background: white;
+  position: absolute;
+  right: 0;
+  bottom: 50%;
+  transform: translate(calc(100% + 30px), 50%);
+  color: ${textColor};
+  border-radius: 3px;
+  opacity: 0;
+  border: 1px solid ${Color('white').darken(0.1).toString()}};
+  transition: all 0.1s ease-in;
 `;

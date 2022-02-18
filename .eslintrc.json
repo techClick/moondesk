@@ -31,6 +31,9 @@
       "react/no-array-index-key": 0,
       "react/jsx-no-useless-fragment": 0,
       "arrow-body-style": 0,
-      "no-restricted-globals": 0
+      "no-restricted-globals": 0,
+      "object-curly-newline": 0,
+      "no-restricted-syntax": 0,
+      "guard-for-in": 0
     }
 }

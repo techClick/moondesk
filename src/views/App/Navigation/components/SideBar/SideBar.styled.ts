@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { sideBarColor } from 'views/App/styles';
 
 export const Container = styled.div<any>`
-  background: #1c3f5f;
+  background: ${sideBarColor};
   width: max-content;
   height: 100%;
   padding: 12px 10px;

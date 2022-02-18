@@ -1,4 +1,6 @@
 import React from 'react';
+import { setShowSheetBuilder } from 'views/App/redux';
+import { setShowUploadPage } from 'views/App/components/SheetBuilder/redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faWallet, faFileWaveform, faDatabase, faChartLine, faGear,
@@ -43,4 +45,11 @@ export const getInitialIndex = function getInitialIndex() {
   ));
   if (initialTab) return tabOptions.indexOf(initialTab);
   return 0;
+};
+
+export const tabPressAction = function tabPressAction(dispatch: Function) {
+  const exitShowUploadPage = { income: false, resources: false };
+  dispatch(setShowUploadPage(exitShowUploadPage));
+  const exitSheetBuilder = { income: false, resources: false };
+  dispatch(setShowSheetBuilder(exitSheetBuilder));
 };
