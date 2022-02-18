@@ -34,7 +34,7 @@ export const contentDiv = styled.div`
 `;
 
 export const WhiteCard = styled.div`
-  padding-bottom: 0; //23.5px;
+  padding-bottom: 40px; //23.5px;
   border-radius: 4px;
   width: 70%;
   background: white;
@@ -50,7 +50,7 @@ export const WhiteCard = styled.div`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  border: 1px solid ${Color('white').darken(0.09).toString()}
+  border: 1px solid ${Color('white').darken(0.09).toString()};
 `;
 
 export const Line = styled.div`

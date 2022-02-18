@@ -5,7 +5,6 @@ import * as S from './SideBar.styled';
 import Tabs from './components/Tabs';
 
 const SideBar = function SideBar() {
-  // background: #1c3f5f;
   return (
     <>
       <MediaQuery minWidth={bigRes + 0.0001}>

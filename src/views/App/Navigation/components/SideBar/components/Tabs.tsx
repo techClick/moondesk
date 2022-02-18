@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { bigRes, RelativeContainer } from 'views/styles';
 import MediaQuery from 'react-responsive';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as S from './Tabs.styled';
 import { getInitialIndex, tabOptions, tabPressAction } from './utils/utils';
 import { moveSideBar } from '../../utils/utils';
@@ -10,14 +10,24 @@ import TopTabs from './components/TopTabs';
 
 const Tabs = function Tabs() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [selectedTab, setSelectedTab] = useState<number>(getInitialIndex());
   const [mouseEnter, setMouseEnter] = useState<{ [id: string]: boolean }>({});
+
+  useEffect(() => {
+    return history.listen(() => {
+      if (history.action === 'POP') {
+        setSelectedTab(getInitialIndex());
+      }
+    });
+  }, []);
 
   useEffect(() => {
     for (const key of Object.entries(mouseEnter)) {
       const thisDescDiv = document.getElementById(`tabDesc${key[0]}`);
       if (thisDescDiv) {
-        thisDescDiv.style.opacity = '1';
+        // thisDescDiv.style.opacity = '1';
+        // setTimeout(() => { thisDescDiv.style.opacity = '0'; }, 700);
       }
     }
   }, [mouseEnter]);
@@ -49,12 +59,13 @@ const Tabs = function Tabs() {
                   onMouseEnter={() => setMouseEnter({ settings: true })}
                   onMouseLeave={() => setMouseEnter({})}
                 >
-                  <RelativeContainer>
-                    <S.Icon>{tab.icon}</S.Icon>
+                  <RelativeContainer flex>
                     <MediaQuery maxWidth={bigRes}>
-                      settings
+                      <S.Icon morePadding>{tab.icon}</S.Icon>
+                      Settings
                     </MediaQuery>
                     <MediaQuery minWidth={bigRes + 0.0001}>
+                      <S.Icon>{tab.icon}</S.Icon>
                       <>
                         { mouseEnter.settings && <S.Description id="tabDescsettings">Settings</S.Description>}
                       </>

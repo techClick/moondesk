@@ -3,11 +3,11 @@ import { getStorageItem } from 'views/App/utils/utils';
 import * as S from './Table.styled';
 
 const Table = function Table() {
-  const [newIncomeSheet, setNewIncomeSheet] = useState<any>(JSON.parse(getStorageItem('new_income') || '[]'));
-
+  const [newIncomeSheet1, setNewIncomeSheet] = useState<any>(JSON.parse(getStorageItem('new_income') || '[]'));
+  const newIncomeSheet: any = [newIncomeSheet1[0]];
   return (
     <S.TableDiv>
-      <S.Table data-testid="forecastsTable">
+      <S.Table>
         <thead>
           <tr>
             <S.TH isIndex>#</S.TH>

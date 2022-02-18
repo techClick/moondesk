@@ -1,29 +1,31 @@
 import React from 'react';
 import MediaQuery from 'react-responsive';
 import { bigRes, minRes } from 'views/styles';
-import * as S from './TablePart.styled';
-import Table from './components/Table';
+import * as S from './BottomPart.styled';
+import Table from './components/Table/Table';
+import GrossPart from './components/GrossPart/GrossPart';
 
-const TablePart = function TablePart() {
+const BottomPart = function BottomPart() {
   return (
-    <>
+    <S.Container>
       <MediaQuery minWidth={bigRes + 0.0001}>
-        <S.Container>
+        <S.TableDiv>
           <Table />
-        </S.Container>
+        </S.TableDiv>
       </MediaQuery>
       <MediaQuery maxWidth={bigRes} minWidth={minRes + 0.0001}>
-        <S.Container>
+        <S.TableDiv>
           <Table />
-        </S.Container>
+        </S.TableDiv>
       </MediaQuery>
       <MediaQuery maxWidth={minRes}>
-        <S.Container>
+        <S.TableDiv>
           <Table />
-        </S.Container>
+        </S.TableDiv>
       </MediaQuery>
-    </>
+      <GrossPart />
+    </S.Container>
   );
 };
 
-export default TablePart;
+export default BottomPart;

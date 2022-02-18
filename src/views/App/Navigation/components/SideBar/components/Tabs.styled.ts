@@ -31,6 +31,7 @@ export const Icon = styled.div<any>`
   align-items: center;
   font-weight: 400;
   font-size: 14px;
+  margin-right: ${(props) => props.morePadding && '7px'};
 `;
 
 export const Label = styled.div<any>`

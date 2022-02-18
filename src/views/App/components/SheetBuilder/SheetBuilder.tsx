@@ -8,7 +8,7 @@ import React from 'react';
 // import { getCurrentTab } from '../utils/utils';
 import * as S from './SheetBuilder.styled';
 import TopPart from './components/TopPart/TopPart';
-import TablePart from './components/TablePart/TablePart';
+import BottomPart from './components/BottomPart/BottomPart';
 
 const SheetBuilder = function SheetBuilder() {
   // const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const SheetBuilder = function SheetBuilder() {
         <S.contentDiv>
           <S.WhiteCard>
             <TopPart />
-            <TablePart />
+            <BottomPart />
           </S.WhiteCard>
         </S.contentDiv>
       </S.BuilderDiv>

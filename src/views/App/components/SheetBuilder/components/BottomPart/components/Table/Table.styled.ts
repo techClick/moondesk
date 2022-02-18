@@ -15,18 +15,15 @@ const getScreenCalc = function getBigScreenCalc(): string {
 export const Table = styled.table`
   min-width: calc(320px + ${() => getScreenCalc()});
   border-right: 1px solid ${tableBorderColor};
-  // border-bottom: 1px solid ${tableBorderColor};
   border-collapse: collapse;
   text-align: left;
   color: #3b3b3b;
-    table-layout: max-content;
   tr:nth-of-type(1){
     border-top: 0;
   }
 `;
 
 export const TH = styled.th<any>`
-  border-top: .75px solid ${tableBorderColor};
   border-bottom: .75px solid ${tableBorderColor};
   border-left: .75px solid ${Color(panelBorderColor).lighten(0.2).toString()};
   padding: 10px 13px 10px ${(props) => { return props.isIndex ? '24px' : '13px'; }};
@@ -39,7 +36,6 @@ export const TR = styled.tr<any>`
 
 export const TD = styled.td<any>`
   color: #525252;
-  // border-left: .75px solid ${tableBorderColor};
   padding: 13px 10px 13px ${(props) => { return props.isIndex ? '24px' : '10px'; }};  
   font-size: 13.5px;
   position: relative;

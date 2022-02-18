@@ -27,12 +27,13 @@ const Tabs = function Tabs(
       onMouseEnter={() => setMouseEnter({ [tab.path]: true })}
       onMouseLeave={() => setMouseEnter({})}
     >
-      <RelativeContainer>
-        <S.Icon>{tab.icon}</S.Icon>
+      <RelativeContainer flex>
         <MediaQuery maxWidth={bigRes}>
+          <S.Icon morePadding>{tab.icon}</S.Icon>
           {tab.label}
         </MediaQuery>
         <MediaQuery minWidth={bigRes + 0.0001}>
+          <S.Icon>{tab.icon}</S.Icon>
           <>
             {mouseEnter[tab.path] && <S.Description id={`tabDesc${tab.path}`}>{tab.label}</S.Description>}
           </>
