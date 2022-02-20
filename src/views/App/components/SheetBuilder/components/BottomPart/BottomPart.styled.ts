@@ -26,7 +26,7 @@ export const TableDiv = styled.div`
   padding: 0 0px;
   position: relative;
   z-index: 2;
-  border-bottom: 1px solid ${panelBorderColor};
+  border-bottom: 1px solid ${Color(panelBorderColor).lighten(0.1).toString()};
 `;
 
 const tableBorderColor = Color(panelBorderColor).lighten(0.1).toString();

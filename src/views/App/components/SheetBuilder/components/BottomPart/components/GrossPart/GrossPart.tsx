@@ -14,7 +14,7 @@ const GrossPart = function GrossPart() {
           </S.GrossPart>
           <S.GrossAmtPart>
             <S.GrossAmt>
-              $5000000000000000000
+              $5000000
             </S.GrossAmt>
           </S.GrossAmtPart>
         </S.GrossPartCont1>
