@@ -12,10 +12,7 @@ export const RelativeDiv = styled.div`
   width: 360px;
   display: flex;
   height: 36px;
-`;
-
-export const MainButtonDiv = styled.div`
-  margin-left: 38px;
+  margin-left: 7px;
 `;
 
 export const Button = styled.div`
@@ -37,4 +34,8 @@ export const Button = styled.div`
     background: ${Color(panelBorderColor).lighten(0.1).toString()};
     color: ${Color(textColor).darken(0.2).toString()};
   }
+`;
+
+export const Input = styled.input`
+  display: none;
 `;

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { panelBorderColor, textColor } from 'views/App/styles';
+import { textColor } from 'views/App/styles';
 
-const containerHeight = '165.4px';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,14 +39,4 @@ export const TILPTopPart = styled.div`
   font-size: 24px;
   font-weight: 700;
   color: ${textColor};
-`;
-
-export const Line = styled.hr`
-  height: 1px;
-  width: 100%;
-  position:absolute;
-  border:0;
-  background-color: ${panelBorderColor};
-  top: ${containerHeight};
-  left:0;
 `;

@@ -26,7 +26,9 @@ export const Table = styled.table`
 export const TH = styled.th<any>`
   border-bottom: .75px solid ${tableBorderColor};
   border-left: .75px solid ${Color(panelBorderColor).lighten(0.2).toString()};
-  padding: 10px 13px 10px ${(props) => { return props.isIndex ? '24px' : '13px'; }};
+  padding: 10px 
+    ${(props) => { return props.isIndex ? '6px' : '13px'; }} 
+    10px ${(props) => { return props.isIndex ? '27px' : '13px'; }};
   color: #525252;
 `;
 
@@ -36,7 +38,9 @@ export const TR = styled.tr<any>`
 
 export const TD = styled.td<any>`
   color: #525252;
-  padding: 13px 10px 13px ${(props) => { return props.isIndex ? '24px' : '10px'; }};  
+  padding: 10px 
+    ${(props) => { return props.isIndex ? '6px' : '13px'; }} 
+    10px ${(props) => { return props.isIndex ? '27px' : '10px'; }};
   font-size: 13.5px;
   position: relative;
   overflow: hidden;

@@ -6,7 +6,7 @@ export const saveColumnEntry = function saveColumnEntry(header: string, newEntry
   if (previousEntry) {
     previousEntry = JSON.parse(previousEntry);
     setStorageItem('columnEntry_Income', JSON.stringify({ ...previousEntry, [header]: newEntry }));
-    // setStorageItem('new_income', JSON.stringify(income));
+    // setStorageItem('new_income', JSON.stringify([]));
     return;
   }
   const columnEntry: any = {

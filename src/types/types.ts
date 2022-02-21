@@ -17,3 +17,10 @@ export type CallArgs = {
   noStringify?: boolean;
   noContentType?: boolean;
 };
+
+export type SheetBuilderInput = {
+  [key: string]: any,
+  group?: string | null,
+  source: string | null,
+  amount: number | null,
+};

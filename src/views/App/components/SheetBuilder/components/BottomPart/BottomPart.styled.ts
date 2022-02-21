@@ -78,3 +78,13 @@ export const TD = styled.td<any>`
     word-break: break-all;
   }
 `;
+
+export const Line = styled.hr`
+  height: 1px;
+  width: 100%;
+  position:absolute;
+  border: 0;
+  background-color: ${panelBorderColor};
+  top: 165.4px;
+  left: 0;
+`;

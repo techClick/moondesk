@@ -64,3 +64,10 @@ export const GrossAmt = styled.div`
   max-width: 250px;
   }
 `;
+
+export const MainButtonDiv = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 3px;
+`;

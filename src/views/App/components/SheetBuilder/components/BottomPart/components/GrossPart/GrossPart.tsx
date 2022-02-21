@@ -1,4 +1,5 @@
 import React from 'react';
+import { MainButton } from 'views/App/styles';
 import * as S from './GrossPart.styled';
 
 const GrossPart = function GrossPart() {
@@ -19,6 +20,11 @@ const GrossPart = function GrossPart() {
           </S.GrossAmtPart>
         </S.GrossPartCont1>
       </S.GrossPartCont>
+      <S.MainButtonDiv>
+        <MainButton>
+          Save Sheet
+        </MainButton>
+      </S.MainButtonDiv>
     </S.Container>
   );
 };

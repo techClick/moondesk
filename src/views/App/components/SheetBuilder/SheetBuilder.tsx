@@ -1,37 +1,20 @@
 import React from 'react';
-// import { useDispatch } from 'react-redux';
-// import { useAppSelector } from 'redux/hooks';
-// import { selectShowSheetBuilder, setShowSheetBuilder } from '../../redux';
-// import { setShowUploadPage } from './redux';
-// import { Button } from '../../styles';
-// import { getExitSheetBuilder } from './utils/utils';
-// import { getCurrentTab } from '../utils/utils';
+import { useAppSelector } from 'redux/hooks';
 import * as S from './SheetBuilder.styled';
 import TopPart from './components/TopPart/TopPart';
 import BottomPart from './components/BottomPart/BottomPart';
+import { selectNewIncomeSheet } from './redux';
 
 const SheetBuilder = function SheetBuilder() {
-  // const dispatch = useDispatch();
-  // const showSheetBuilder = useAppSelector(selectShowSheetBuilder);
-  // const thisTab = getCurrentTab();
+  const newIncomeSheet = useAppSelector(selectNewIncomeSheet);
 
   return (
     <S.Container>
-      {/* <S.ButtonDiv>
-        <Button onClick={() => {
-          dispatch(setShowSheetBuilder(getExitSheetBuilder(showSheetBuilder)));
-          const exitShowUploadPage = { income: false, resources: false };
-          dispatch(setShowUploadPage(exitShowUploadPage));
-        }}
-        >
-          {`Back to ${thisTab} data`}
-        </Button>
-      </S.ButtonDiv> */}
       <S.BuilderDiv>
         <S.contentDiv>
-          <S.WhiteCard>
+          <S.WhiteCard hasTable={newIncomeSheet.length > 0}>
             <TopPart />
-            <BottomPart />
+            { newIncomeSheet.length > 0 && <BottomPart /> }
           </S.WhiteCard>
         </S.contentDiv>
       </S.BuilderDiv>

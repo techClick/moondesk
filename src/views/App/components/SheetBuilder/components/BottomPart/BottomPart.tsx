@@ -8,6 +8,7 @@ import GrossPart from './components/GrossPart/GrossPart';
 const BottomPart = function BottomPart() {
   return (
     <S.Container>
+      <S.Line />
       <MediaQuery minWidth={bigRes + 0.0001}>
         <S.TableDiv>
           <Table />

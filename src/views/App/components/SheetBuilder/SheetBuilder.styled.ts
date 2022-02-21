@@ -33,8 +33,8 @@ export const contentDiv = styled.div`
   overflow: auto;
 `;
 
-export const WhiteCard = styled.div`
-  padding-bottom: 40px; //23.5px;
+export const WhiteCard = styled.div<any>`
+  padding-bottom: ${(props) => { return props.hasTable ? '40px' : '30px'; }}; //23.5px;
   border-radius: 4px;
   width: 70%;
   background: white;
