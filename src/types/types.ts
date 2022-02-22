@@ -20,7 +20,16 @@ export type CallArgs = {
 
 export type SheetBuilderInput = {
   [key: string]: any,
-  group?: string | null,
-  source: string | null,
-  amount: number | null,
+  group?: string,
+  source: string,
+  amount: string | number,
 };
+
+export type SheetEntry = {
+  [key: string]: any,
+  group?: string,
+  source: string,
+  amount: number,
+};
+
+export type DataSheet = Array<SheetEntry>

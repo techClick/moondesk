@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getStorageItem } from 'views/App/utils/utils';
+import { SheetBuilderInput } from 'types/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
 import * as S from './ColumnBuilder.styled';
@@ -7,8 +8,8 @@ import ButtonSection from './components/ButtonSection';
 import { saveColumnEntry } from './utils/utils';
 
 const ColumnBuilder = function ColumnBuilder() {
-  const [input, setInput] = useState<any>(
-    JSON.parse(getStorageItem('columnEntry_Income') || JSON.stringify({ group: '', source: '', amount: '' })),
+  const [input, setInput] = useState<SheetBuilderInput>(
+    JSON.parse(getStorageItem('columnEntry_Income') || JSON.stringify({ source: '', amount: '' })),
   );
   const [error, setError] = useState<any>({ source: false, amount: false });
 

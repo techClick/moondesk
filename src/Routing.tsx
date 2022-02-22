@@ -11,6 +11,7 @@ const HomePage = lazy(() => import('./views/Public/HomePage/HomePage'));
 const Income = lazy(() => import('./views/App/Income/Income'));
 const Resources = lazy(() => import('./views/App/Resources/Resources'));
 const Settings = lazy(() => import('./views/App/Settings/Settings'));
+// localStorage.clear();
 
 const Routing = function Routing() {
   return (

@@ -36,13 +36,13 @@ export const contentDiv = styled.div`
 export const WhiteCard = styled.div<any>`
   padding-bottom: ${(props) => { return props.hasTable ? '40px' : '30px'; }}; //23.5px;
   border-radius: 4px;
-  width: 70%;
   background: white;
-  min-width: 830px;
+  width: max-content;
+  min-width: 648px;
   height: max-content;
-  max-height: 100%;
   text-align: center;
   position: relative;
+  margin: auto;
   animation-name: ${breatheAnimation};
   animation-duration: 0.1s;
   animation-iteration-count: 1;

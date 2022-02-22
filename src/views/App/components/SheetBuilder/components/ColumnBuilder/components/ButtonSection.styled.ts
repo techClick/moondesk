@@ -9,7 +9,7 @@ export const ButtonDiv = styled.div`
 `;
 
 export const RelativeDiv = styled.div`
-  width: 360px;
+  width: max-content;
   display: flex;
   height: 36px;
   margin-left: 7px;

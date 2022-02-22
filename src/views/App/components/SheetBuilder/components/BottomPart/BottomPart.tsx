@@ -7,25 +7,21 @@ import GrossPart from './components/GrossPart/GrossPart';
 
 const BottomPart = function BottomPart() {
   return (
-    <S.Container>
-      <S.Line />
-      <MediaQuery minWidth={bigRes + 0.0001}>
-        <S.TableDiv>
+    <>
+      <S.Container>
+        <S.Line />
+        <MediaQuery minWidth={bigRes + 0.0001}>
           <Table />
-        </S.TableDiv>
-      </MediaQuery>
-      <MediaQuery maxWidth={bigRes} minWidth={minRes + 0.0001}>
-        <S.TableDiv>
+        </MediaQuery>
+        <MediaQuery maxWidth={bigRes} minWidth={minRes + 0.0001}>
           <Table />
-        </S.TableDiv>
-      </MediaQuery>
-      <MediaQuery maxWidth={minRes}>
-        <S.TableDiv>
+        </MediaQuery>
+        <MediaQuery maxWidth={minRes}>
           <Table />
-        </S.TableDiv>
-      </MediaQuery>
+        </MediaQuery>
+      </S.Container>
       <GrossPart />
-    </S.Container>
+    </>
   );
 };
 

@@ -1,6 +1,27 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { panelBorderColor } from 'views/App/styles';
+import { panelBorderColor, textColor, topBarHeight } from 'views/App/styles';
+import { bigRes } from 'views/styles';
+
+const getTableHeight = function getTableHeight() {
+  const topBarHeightInt = Number(topBarHeight.replace('px', ''));
+  const tableHeightInt = (window.innerHeight - 385)
+    - (window.innerWidth < (bigRes + 0.0001) ? (topBarHeightInt + 10) : 0);
+  const tableHeight = `${tableHeightInt}px`;
+  return tableHeight;
+};
+
+export const Container = styled.div<any>`
+  width: max-content;
+  max-width: 100%;
+  display: flex;
+  max-height: ${() => getTableHeight()};
+  overflow: auto;
+  margin-top: 23px;
+  padding: 0 0px;
+  position: relative;
+  z-index: 2;
+`;
 
 export const TableDiv = styled.div<any>`
   text-align: left;
@@ -29,7 +50,8 @@ export const TH = styled.th<any>`
   padding: 10px 
     ${(props) => { return props.isIndex ? '6px' : '13px'; }} 
     10px ${(props) => { return props.isIndex ? '27px' : '13px'; }};
-  color: #525252;
+  color: ${textColor};
+  font-size: 14px;
 `;
 
 export const TR = styled.tr<any>`

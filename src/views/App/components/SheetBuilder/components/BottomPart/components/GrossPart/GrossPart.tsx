@@ -1,8 +1,20 @@
 import React from 'react';
+import { FormattedNumber } from 'react-intl';
+import { useAppSelector } from 'redux/hooks';
+import { DataSheet } from 'types/types';
+import { selectNewIncomeSheet } from 'views/App/components/SheetBuilder/redux';
 import { MainButton } from 'views/App/styles';
+import { getStorageItem } from 'views/App/utils/utils';
 import * as S from './GrossPart.styled';
 
 const GrossPart = function GrossPart() {
+  const newIncomeSheet: DataSheet = useAppSelector(selectNewIncomeSheet);
+  let grossAmount = 0;
+  for (const entry of newIncomeSheet) {
+    grossAmount += entry.amount || 0;
+  }
+  const currency = getStorageItem('currency') || '$';
+
   return (
     <S.Container>
       <S.GrossPartCont>
@@ -15,7 +27,8 @@ const GrossPart = function GrossPart() {
           </S.GrossPart>
           <S.GrossAmtPart>
             <S.GrossAmt>
-              $5000000
+              {`${currency} `}
+              <FormattedNumber value={grossAmount} />
             </S.GrossAmt>
           </S.GrossAmtPart>
         </S.GrossPartCont1>

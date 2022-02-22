@@ -1,6 +1,6 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { textColor, topBarColor } from 'views/App/styles';
+import { panelBorderColor, textColor, topBarColor } from 'views/App/styles';
 
 export const Container = styled.div`
   width: 120px;
@@ -68,6 +68,7 @@ export const Input = styled.input<any>`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
+  border: 1px solid ${panelBorderColor};
   border: ${(props) => props.isError && '1px solid red'};
 `;
 

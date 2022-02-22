@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
@@ -10,10 +11,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
-      <Routing />
-    </Provider>
+    <IntlProvider locale="en">
+      <Provider store={store}>
+        <ToastContainer />
+        <Routing />
+      </Provider>
+    </IntlProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

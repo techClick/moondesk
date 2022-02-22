@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'redux/store';
+import { DataSheet } from 'types/types';
 import { getStorageItem } from 'views/App/utils/utils';
 
 type ShowUploadPage = {
@@ -8,15 +9,9 @@ type ShowUploadPage = {
   resources: boolean | null,
 }
 
-type NewIncomeSheet = Array<{
-  [key: string]: any
-  group?: string | null,
-  source: string,
-  amount: number,
-}>
 export interface AppState {
   showUploadPage: ShowUploadPage,
-  newIncomeSheet: NewIncomeSheet,
+  newIncomeSheet: DataSheet,
 }
 
 const initialState: AppState = {
@@ -31,8 +26,8 @@ export const counterSlice = createSlice({
     setShowUploadPage: (state, action: PayloadAction<ShowUploadPage>) => {
       state.showUploadPage = action.payload;
     },
-    setNewIncomeSheet: (state, action: PayloadAction<ShowUploadPage>) => {
-      state.showUploadPage = action.payload;
+    setNewIncomeSheet: (state, action: PayloadAction<DataSheet>) => {
+      state.newIncomeSheet = action.payload;
     },
   },
 });

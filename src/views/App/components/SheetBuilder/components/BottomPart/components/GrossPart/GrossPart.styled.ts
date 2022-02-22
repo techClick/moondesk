@@ -1,18 +1,17 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { panelBorderColor, textColor } from 'views/App/styles';
+import { panelBorderColor } from 'views/App/styles';
 
 export const Container = styled.div`
-  flex-grow: 1;
-  margin-top: 23px;
-  border-bottom: 1px solid ${Color(panelBorderColor).lighten(0.19).toString()};
-  height: 86px;
+  // margin-top: 23px;
+  border-top: 1px solid ${Color(panelBorderColor).lighten(0).toString()};
+  border-bottom: 1px solid ${Color(panelBorderColor).lighten(0).toString()};
+  height: 76px;
   display: flex;
 `;
 
 export const GrossPartCont = styled.div`
-  width: calc(100% - 130px);
-  max-width: calc(100% - 130px);
+  // width: calc(100% - 130px);
   height: 100%;
   text-align: right;
 `;
@@ -20,19 +19,22 @@ export const GrossPartCont = styled.div`
 export const GrossPartCont1 = styled.div`
   width: max-content;
   max-width: 100%;
-  padding-left: 30px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
   height: 100%;
+  max-height: 100%;
   display: inline-block;
 `;
 
 export const GrossPart = styled.div`
   width: 100%;
   height: calc(50% - 2px);
-  border-bottom: 2px solid ${textColor};
-  border-radius: 1px;
+  padding-left: 30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+  border-bottom: 1px solid ${panelBorderColor};
   position: relative;
 `;
 
@@ -48,8 +50,8 @@ export const AbsolutePart = styled.div`
 
 export const GrossAmtPart = styled.div`
   text-align: left;
-  margin-right: 50px;
-  font-size: 24px;
+  margin-right: 30px;
+  font-size: 20px;
   font-weight: 500;
   padding: 0;
   margin-top: -3px;
@@ -58,10 +60,12 @@ export const GrossAmtPart = styled.div`
 
 export const GrossAmt = styled.div`
   display: inline-flex;
-  height: 46px;
+  height: 48px;
+  white-space: nowrap;
+  padding-left: 30px;
   overflow: hidden;
   overflow-x: auto;
-  max-width: 250px;
+  max-width: 720px;
   }
 `;
 
@@ -69,5 +73,7 @@ export const MainButtonDiv = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  margin-left: 3px;
+  padding-left: 20px;
+  width: 130px;
+  border-left: 1px solid ${Color(panelBorderColor).lighten(0.2).toString()};
 `;
