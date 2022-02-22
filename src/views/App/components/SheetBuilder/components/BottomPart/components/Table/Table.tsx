@@ -20,11 +20,8 @@ const Table = function Table() {
               <S.TH>GROUP</S.TH>
               <S.TH>SOURCE</S.TH>
               <S.TH>
-                AMOUNT
-                (
-                <small>
-                  {currency}
-                </small>
+                AMOUNT(
+                <small>{currency}</small>
                 )
               </S.TH>
             </tr>
@@ -32,18 +29,10 @@ const Table = function Table() {
           <tbody>
             { newIncomeSheet.map((entry: any, index: number) => (
               <S.TR>
-                <S.TD isIndex>
-                  {index + 1}
-                </S.TD>
-                <S.TD>
-                  {entry.group}
-                </S.TD>
-                <S.TD>
-                  {entry.source}
-                </S.TD>
-                <S.TD>
-                  <FormattedNumber value={entry.amount} />
-                </S.TD>
+                <S.TD isIndex>{index + 1}</S.TD>
+                <S.TD>{entry.group}</S.TD>
+                <S.TD>{entry.source}</S.TD>
+                <S.TD><FormattedNumber value={entry.amount} /></S.TD>
               </S.TR>
             ))}
           </tbody>

@@ -96,11 +96,6 @@ const sendToast = function sendToast(
         entries`, { type: 'error', autoClose: 12000 });
     } else {
       toast(
-        // `Could not find data with${columns.group && ' '}
-        // ${columns.group && columns.group.toUpperCase()}${columns.group && ','}
-        // ${' '}${columns.source.toUpperCase()},
-        // and ${columns.amount.toString().toUpperCase()}(combined) as headers.`,
-        // { type: 'error', autoClose: 15000 },
         `Data upload failed. The CSV file does not contain the columns ${columns.group && ' '}
         ${columns.group && columns.group.toUpperCase()}${columns.group && ','}
         ${' '}${columns.source.toUpperCase()},
