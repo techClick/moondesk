@@ -101,7 +101,7 @@ const getAdditonResults = function getAdditonResults(
   if (found) {
     index = uploadedSheet.indexOf(found);
   }
-  return { isExistsAlready: found, source: uploadedSheet[index]?.source };
+  return { isExistsAlready: found, index, source: uploadedSheet[index]?.source };
 };
 
 const saveCSVStart = function saveCSVStart(
