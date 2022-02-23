@@ -22,7 +22,7 @@ export type SheetBuilderInput = {
   [key: string]: any,
   group?: string,
   source: string,
-  amount: string | number,
+  amount: string,
 };
 
 export type SheetEntry = {

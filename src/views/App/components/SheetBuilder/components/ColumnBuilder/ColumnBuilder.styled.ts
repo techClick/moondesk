@@ -54,9 +54,9 @@ export const InputDiv = styled.div<any>`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  padding-left: 5px;
-  border-left: 2px solid ${(props) => {
-    return !props.isError ? Color(textColor).lighten(0.6).toString() : 'red';
+  //padding-left: 5px;
+  border-left: 1px solid ${(props) => {
+    return !props.isError ? Color(panelBorderColor).lighten(0.05).toString() : 'red';
   }};
   position: relative;
 `;
@@ -68,7 +68,7 @@ export const Input = styled.input<any>`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  border: 1px solid ${panelBorderColor};
+  border: 1px solid ${Color(panelBorderColor).darken(0.05).toString()};
   border: ${(props) => props.isError && '1px solid red'};
 `;
 

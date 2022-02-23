@@ -24,7 +24,6 @@ export const ButtonDiv = styled.div`
 export const BuilderDiv = styled.div`
   width: 100%;
   height: 100%;
-  flex: 1;
 `;
 
 export const contentDiv = styled.div`

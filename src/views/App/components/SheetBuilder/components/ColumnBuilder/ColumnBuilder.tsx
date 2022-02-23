@@ -9,7 +9,7 @@ import { saveColumnEntry } from './utils/utils';
 
 const ColumnBuilder = function ColumnBuilder() {
   const [input, setInput] = useState<SheetBuilderInput>(
-    JSON.parse(getStorageItem('columnEntry_Income') || JSON.stringify({ source: '', amount: '' })),
+    JSON.parse(getStorageItem('columnEntry_income') || JSON.stringify({ source: '', amount: '' })),
   );
   const [error, setError] = useState<any>({ source: false, amount: false });
 

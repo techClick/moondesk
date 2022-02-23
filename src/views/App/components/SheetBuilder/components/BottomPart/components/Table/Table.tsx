@@ -4,11 +4,13 @@ import { useAppSelector } from 'redux/hooks';
 import { selectNewIncomeSheet } from 'views/App/components/SheetBuilder/redux';
 import { getStorageItem } from 'views/App/utils/utils';
 import * as S from './Table.styled';
+import NoGroup from './components/NoGroup';
 
 const Table = function Table() {
   const currency = getStorageItem('currency') || '$';
-  const newIncomeSheet = useAppSelector(selectNewIncomeSheet);
+  const newSheet = useAppSelector(selectNewIncomeSheet);
   // const newIncomeSheet: any = [newIncomeSheet1[0]];
+  const containsGroup = Boolean(newSheet.find((entry) => entry.group));
 
   return (
     <S.Container innerWidth={window.innerWidth} innerHeight={window.innerHeight}>
@@ -17,7 +19,7 @@ const Table = function Table() {
           <thead>
             <tr>
               <S.TH isIndex>#</S.TH>
-              <S.TH>GROUP</S.TH>
+              { containsGroup && <S.TH>GROUP</S.TH>}
               <S.TH>SOURCE</S.TH>
               <S.TH>
                 AMOUNT(
@@ -27,10 +29,11 @@ const Table = function Table() {
             </tr>
           </thead>
           <tbody>
-            { newIncomeSheet.map((entry: any, index: number) => (
+            { newSheet.map((entry: any, index: number) => (
               <S.TR>
                 <S.TD isIndex>{index + 1}</S.TD>
-                <S.TD>{entry.group}</S.TD>
+                { containsGroup
+                  && <S.TD>{entry.group || <NoGroup />}</S.TD>}
                 <S.TD>{entry.source}</S.TD>
                 <S.TD><FormattedNumber value={entry.amount} /></S.TD>
               </S.TR>

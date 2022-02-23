@@ -5,7 +5,6 @@ import { panelBorderColor } from '../styles';
 export const Container = styled.div<any>`
   width: 100%;
   height: 100%;
-  position: relative;
   display: flex;
   flex-direction: column;
 `;

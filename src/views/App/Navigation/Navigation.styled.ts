@@ -22,9 +22,8 @@ export const BottomPanel = styled.div`
 
 export const BottomRightPanel = styled.div`
   overflow: auto;
-  height: 100%;
   position: relative;
-  flex-grow: 1;
+  flex: 1;
   z-index: 1;
   background: ${Color(panelBorderColor).lighten(0.18).toString()};
 `;

@@ -10,6 +10,8 @@ export const Container = styled.div`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
+  position: relative;
+  z-index: 2;
 `;
 
 export const Menu = styled.div`

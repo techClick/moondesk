@@ -47,11 +47,11 @@ export const Table = styled.table`
 export const TH = styled.th<any>`
   border-bottom: .75px solid ${tableBorderColor};
   border-left: .75px solid ${Color(panelBorderColor).lighten(0.2).toString()};
-  padding: 10px 
+  padding: 12px 
     ${(props) => { return props.isIndex ? '6px' : '13px'; }} 
-    10px ${(props) => { return props.isIndex ? '27px' : '13px'; }};
+    12px ${(props) => { return props.isIndex ? '27px' : '13px'; }};
   color: ${textColor};
-  font-size: 14px;
+  font-size: 15px;
 `;
 
 export const TR = styled.tr<any>`
@@ -60,15 +60,16 @@ export const TR = styled.tr<any>`
 
 export const TD = styled.td<any>`
   color: #525252;
-  padding: 10px 
+  padding: 11px 
     ${(props) => { return props.isIndex ? '6px' : '13px'; }} 
-    10px ${(props) => { return props.isIndex ? '27px' : '10px'; }};
-  font-size: 13.5px;
+    11px ${(props) => { return props.isIndex ? '27px' : '10px'; }};
+  font-size: 14.5px;
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; 
   max-width: 292px;
+  position: relative;
   &:hover {
     text-overflow: clip;
     white-space: normal;
