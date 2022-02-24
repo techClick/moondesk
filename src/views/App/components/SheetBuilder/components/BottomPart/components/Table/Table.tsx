@@ -27,7 +27,7 @@ const Table = function Table() {
               </S.TH>
             </tr>
           </thead>
-          <TableBody newSheet={newSheet}/>
+          <TableBody newSheet={newSheet} />
         </S.Table>
       </S.TableDiv>
     </S.Container>

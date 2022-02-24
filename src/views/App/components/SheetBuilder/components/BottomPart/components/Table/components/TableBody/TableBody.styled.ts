@@ -32,7 +32,6 @@ export const IconsDiv = styled.td<any>`
   bottom: 50%;
   transform: translateY(50%);
   display: flex;
-  margin-right: 10px;
   color: ${Color(panelBorderColor).darken(0.13).toString()};
 `;
 
@@ -40,6 +39,7 @@ export const TrashIcon = styled.td<any>`
   border-radius: 4px;
   transform: scale(0.85);
   padding: 2px 5px;
+  margin-right: 10px;
   cursor: pointer;
   &:hover {
     background: ${Color('red').lighten(0.9).toString()};
@@ -52,6 +52,18 @@ export const EditIcon = styled.td<any>`
   transform: scale(0.85);
   padding: 2px 5px;
   margin-right: 5px;
+  cursor: pointer;
+  &:hover {
+    background: ${Color(panelBorderColor).lighten(0.1).toString()};
+    color: ${textColor};
+  }
+`;
+
+export const MenuIcon = styled.td<any>`
+  border-radius: 4px;
+  transform: scale(0.95);
+  padding: 5px 8px;
+  margin-right: 12px;
   cursor: pointer;
   &:hover {
     background: ${Color(panelBorderColor).lighten(0.1).toString()};

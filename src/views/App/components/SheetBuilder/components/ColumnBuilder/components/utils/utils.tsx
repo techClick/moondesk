@@ -65,7 +65,7 @@ const sendToast = function sendToast(
       );
     }
   } else {
-    const rawCSVData = JSON.parse(getStorageItem('rawCSVData_income'));
+    const rawCSVData = JSON.parse(getStorageItem(`rawCSVData_${getCurrentTab()}`));
     toast(
       `Successfully added ${successfulExtractions}/${rawCSVData.length} entries`,
       { type: 'success', autoClose: numericalErrors > 0 ? 9000 : 5000 },
@@ -84,7 +84,7 @@ const saveCSVtoSheet = function saveCSVtoSheet(
   setShowPopup: Function,
 ): void {
   const newSheet: DataSheet = newSheetResult.dataSheet;
-  setStorageItem('new_income', JSON.stringify(newSheet));
+  setStorageItem(`new_${getCurrentTab()}`, JSON.stringify(newSheet));
   localStorage.removeItem(`rawCSVData_${getCurrentTab()}`);
   showNewSheet(newSheet);
   setShowPopup({ income: null, resources: null });
@@ -114,14 +114,14 @@ const saveCSVStart = function saveCSVStart(
   showNewSheet: Function,
   setShowPopup: Function,
 ) {
-  const columnEntries = JSON.parse(getStorageItem('columnEntry_income'));
+  const columnEntries = JSON.parse(getStorageItem(`columnEntry_${getCurrentTab()}`));
   columns = {
     group: columnEntries.group.toLowerCase(),
     source: columnEntries.source.toLowerCase(),
     amount: columnEntries.amount.toLowerCase(),
   };
-  const rawCSVData = JSON.parse(getStorageItem('rawCSVData_income'));
-  const newSheet: DataSheet = JSON.parse(getStorageItem('new_income') || '[]');
+  const rawCSVData = JSON.parse(getStorageItem(`rawCSVData_${getCurrentTab()}`));
+  const newSheet: DataSheet = JSON.parse(getStorageItem(`new_${getCurrentTab()}`) || '[]');
   let count = 0;
   let successfulExtractions = 0;
   const additionSources: Array<string> = [];
@@ -210,7 +210,7 @@ export const getDataFromCSV = function getDataFromCSV(
 ) {
   Papa.parse(files[0], {
     complete: (result) => {
-      setStorageItem('rawCSVData_income', JSON.stringify(result.data));
+      setStorageItem(`rawCSVData_${getCurrentTab()}`, JSON.stringify(result.data));
       saveCSVStart(showNewSheet, setShowPopup);
     },
     header: true,

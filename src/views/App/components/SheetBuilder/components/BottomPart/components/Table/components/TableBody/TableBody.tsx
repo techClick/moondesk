@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataSheet } from 'types/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormattedNumber } from 'react-intl';
 import * as S from './TableBody.styled';
 import NoGroup from '../NoGroup/NoGroup';
@@ -21,8 +21,9 @@ const TableBody = function TableBody({ newSheet }:{ newSheet: DataSheet}) {
             <FormattedNumber value={entry.amount} />
           </S.TD>
           <S.IconsDiv>
-            <S.EditIcon><FontAwesomeIcon icon={faPenToSquare} /></S.EditIcon>
-            <S.TrashIcon><FontAwesomeIcon icon={faTrash} /></S.TrashIcon>
+            {/* <S.EditIcon><FontAwesomeIcon icon={faPenToSquare} /></S.EditIcon>
+            <S.TrashIcon><FontAwesomeIcon icon={faTrash} /></S.TrashIcon> */}
+            <S.MenuIcon><FontAwesomeIcon icon={faEllipsisVertical} /></S.MenuIcon>
           </S.IconsDiv>
         </S.TR>
       ))}
