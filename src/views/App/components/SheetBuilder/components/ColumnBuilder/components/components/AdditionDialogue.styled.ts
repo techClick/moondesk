@@ -10,7 +10,7 @@ export const Container = styled.div`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  position: fixed;
+  position: absolute;
   z-index: 5;
   margin: auto;
   bottom: 50%;

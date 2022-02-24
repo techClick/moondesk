@@ -1,10 +1,9 @@
 import React from 'react';
-import { FormattedNumber } from 'react-intl';
 import { useAppSelector } from 'redux/hooks';
 import { selectNewIncomeSheet } from 'views/App/components/SheetBuilder/redux';
 import { getStorageItem } from 'views/App/utils/utils';
 import * as S from './Table.styled';
-import NoGroup from './components/NoGroup';
+import TableBody from './components/TableBody/TableBody';
 
 const Table = function Table() {
   const currency = getStorageItem('currency') || '$';
@@ -28,17 +27,7 @@ const Table = function Table() {
               </S.TH>
             </tr>
           </thead>
-          <tbody>
-            { newSheet.map((entry: any, index: number) => (
-              <S.TR>
-                <S.TD isIndex>{index + 1}</S.TD>
-                { containsGroup
-                  && <S.TD>{entry.group || <NoGroup />}</S.TD>}
-                <S.TD>{entry.source}</S.TD>
-                <S.TD><FormattedNumber value={entry.amount} /></S.TD>
-              </S.TR>
-            ))}
-          </tbody>
+          <TableBody newSheet={newSheet}/>
         </S.Table>
       </S.TableDiv>
     </S.Container>

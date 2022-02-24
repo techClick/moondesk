@@ -12,8 +12,8 @@ const getTableHeight = function getTableHeight() {
 };
 
 export const Container = styled.div<any>`
-  width: max-content;
-  max-width: 100%;
+  // width: max-content;
+  width: 101%;
   display: flex;
   max-height: ${() => getTableHeight()};
   overflow: auto;
@@ -26,7 +26,7 @@ export const Container = styled.div<any>`
 export const TableDiv = styled.div<any>`
   text-align: left;
   margin-left: -1px;
-  width: 100%;
+  width: 102%;
 `;
 
 const tableBorderColor = Color(panelBorderColor).lighten(0.1).toString();
@@ -34,7 +34,9 @@ const getScreenCalc = function getBigScreenCalc(): string {
   return window.innerWidth > 600 ? '150px' : '0px';
 };
 export const Table = styled.table`
-  min-width: calc(320px + ${() => getScreenCalc()});
+  // min-width: calc(320px + ${() => getScreenCalc()});
+  min-width: 100%;
+  width: max-content;
   border-right: 1px solid ${tableBorderColor};
   border-collapse: collapse;
   text-align: left;
@@ -56,23 +58,5 @@ export const TH = styled.th<any>`
 
 export const TR = styled.tr<any>`
   border-top: .75px solid ${tableBorderColor};
-`;
-
-export const TD = styled.td<any>`
-  color: #525252;
-  padding: 11px 
-    ${(props) => { return props.isIndex ? '6px' : '13px'; }} 
-    11px ${(props) => { return props.isIndex ? '27px' : '10px'; }};
-  font-size: 14.5px;
   position: relative;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; 
-  max-width: 292px;
-  position: relative;
-  &:hover {
-    text-overflow: clip;
-    white-space: normal;
-    word-break: break-all;
-  }
 `;

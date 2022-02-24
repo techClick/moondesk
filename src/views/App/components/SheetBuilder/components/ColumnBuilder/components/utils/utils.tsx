@@ -97,8 +97,11 @@ const getMatchingItemResults = function getMatchingItemResults(
   keys: any,
 ) {
   const found = newSheet.find((entry) => {
-    return line[keys.group].toLowerCase() === entry.group?.toLowerCase()
-      && line[keys.source].toLowerCase() === entry.source.toLowerCase();
+    return (line[keys.group] && entry.group
+      && line[keys.group].toLowerCase() === entry.group.toLowerCase()
+      && line[keys.source].toLowerCase() === entry.source.toLowerCase())
+      || ((!line[keys.group] && !entry.group)
+      && line[keys.source].toLowerCase() === entry.source.toLowerCase());
   });
   let index = -1;
   if (found) {
