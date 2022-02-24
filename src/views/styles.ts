@@ -14,7 +14,7 @@ export const RelativeContainer = styled.div<any>`
 export const Background = styled.div<any>`
   height: 100%;
   width: 100%;
-  position: fixed;
+  position: absolute;
   z-index: 3;
   bottom: 0;
   left: 0;

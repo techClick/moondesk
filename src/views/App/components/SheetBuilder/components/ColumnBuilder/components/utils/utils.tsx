@@ -3,18 +3,19 @@ import Papa from 'papaparse';
 import { toast } from 'react-toastify';
 import { DataSheet, SheetBuilderInput } from 'types/types';
 import { getStorageItem, setStorageItem } from 'views/App/utils/utils';
+import { getCurrentTab } from 'views/App/components/utils/utils';
 import AdditionDialogue from '../components/AdditionDialogue';
 
 let columns: SheetBuilderInput;
-type UploadedSheetResult = {
+type NewSheetResult = {
   dataSheet: DataSheet,
   numericalErrors: number,
-  additionsMade: number,
+  additions: Array<string>,
 };
-let uploadedSheetResult: UploadedSheetResult = {
+let newSheetResult: NewSheetResult = {
   dataSheet: [],
   numericalErrors: 0,
-  additionsMade: 0,
+  additions: [],
 };
 
 const getIsUploadError = function getIsUploadError(input: SheetBuilderInput) {
@@ -46,10 +47,10 @@ const getIsNotANumber = function getIsNotANumber(amount: string | null): boolean
 };
 
 const sendToast = function sendToast(
-  uploadedSheet: DataSheet,
+  successfulExtractions: number,
   numericalErrors: number,
 ): void {
-  if (uploadedSheet.length <= 0) {
+  if (successfulExtractions === 0) {
     if (numericalErrors > 0) {
       toast(`No data was loaded. 
         The ${columns.amount} column in your file contains non numerical 
@@ -66,7 +67,7 @@ const sendToast = function sendToast(
   } else {
     const rawCSVData = JSON.parse(getStorageItem('rawCSVData_income'));
     toast(
-      `Successfully added ${uploadedSheet.length}/${rawCSVData.length} entries`,
+      `Successfully added ${successfulExtractions}/${rawCSVData.length} entries`,
       { type: 'success', autoClose: numericalErrors > 0 ? 9000 : 5000 },
     );
     if (numericalErrors > 0) {
@@ -79,29 +80,31 @@ const sendToast = function sendToast(
 
 const saveCSVtoSheet = function saveCSVtoSheet(
   showNewSheet: Function,
+  successfulExtractions: number,
+  setShowPopup: Function,
 ): void {
-  const uploadedSheet: DataSheet = uploadedSheetResult.dataSheet;
-  const oldSheet: DataSheet = JSON.parse(getStorageItem('new_income') || '[]');
-  const newSheet: DataSheet = [...oldSheet, ...uploadedSheet];
+  const newSheet: DataSheet = newSheetResult.dataSheet;
   setStorageItem('new_income', JSON.stringify(newSheet));
+  localStorage.removeItem(`rawCSVData_${getCurrentTab()}`);
   showNewSheet(newSheet);
-  sendToast(uploadedSheet, uploadedSheetResult.numericalErrors);
+  setShowPopup({ income: null, resources: null });
+  sendToast(successfulExtractions, newSheetResult.numericalErrors);
 };
 
-const getAdditonResults = function getAdditonResults(
-  uploadedSheet: DataSheet,
+const getMatchingItemResults = function getMatchingItemResults(
+  newSheet: DataSheet,
   line: any,
   keys: any,
 ) {
-  const found = uploadedSheet.find((entry) => {
+  const found = newSheet.find((entry) => {
     return line[keys.group].toLowerCase() === entry.group?.toLowerCase()
       && line[keys.source].toLowerCase() === entry.source.toLowerCase();
   });
   let index = -1;
   if (found) {
-    index = uploadedSheet.indexOf(found);
+    index = newSheet.indexOf(found);
   }
-  return { isExistsAlready: found, index, source: uploadedSheet[index]?.source };
+  return { foundItem: found, index };
 };
 
 const saveCSVStart = function saveCSVStart(
@@ -115,10 +118,10 @@ const saveCSVStart = function saveCSVStart(
     amount: columnEntries.amount.toLowerCase(),
   };
   const rawCSVData = JSON.parse(getStorageItem('rawCSVData_income'));
-  const uploadedSheet: DataSheet = [];
+  const newSheet: DataSheet = JSON.parse(getStorageItem('new_income') || '[]');
   let count = 0;
-  let additionsCount = 0;
-  const additionSources = [];
+  let successfulExtractions = 0;
+  const additionSources: Array<string> = [];
   for (const line of rawCSVData) {
     const keys: any = { source: null, amount: null };
     for (const key of Object.keys(line)) {
@@ -137,13 +140,20 @@ const saveCSVStart = function saveCSVStart(
     if (amountIsNotANumber) {
       count += 1;
     } else if (columns.group) {
-      const { isExistsAlready, source } = getAdditonResults(uploadedSheet, line, keys);
+      const { foundItem, index } = getMatchingItemResults(newSheet, line, keys);
       if (keys.group && keys.source && keys.amount) {
-        if (isExistsAlready) {
-          additionsCount += 1;
-          additionSources.push(source);
+        if (foundItem) {
+          if (!additionSources.find((source) => source === foundItem.source.toUpperCase())) {
+            additionSources.push(foundItem.source.toUpperCase());
+          }
+          successfulExtractions += 1;
+          newSheet[index] = {
+            ...newSheet[index],
+            amount: Number(line[keys.amount]) + newSheet[index].amount,
+          };
         } else {
-          uploadedSheet.push({
+          successfulExtractions += 1;
+          newSheet.push({
             group: line[keys.group],
             amount: Number(line[keys.amount]),
             source: line[keys.source],
@@ -151,36 +161,43 @@ const saveCSVStart = function saveCSVStart(
         }
       }
     } else if (keys.source && keys.amount) {
-      const { isExistsAlready, source } = getAdditonResults(uploadedSheet, line, keys);
-      if (isExistsAlready) {
-        additionsCount += 1;
-        additionSources.push(source);
+      const { foundItem, index } = getMatchingItemResults(newSheet, line, keys);
+      if (foundItem) {
+        if (!additionSources.find((source) => source === foundItem.source.toUpperCase())) {
+          additionSources.push(foundItem.source.toUpperCase());
+        }
+        successfulExtractions += 1;
+        newSheet[index] = {
+          ...newSheet[index],
+          amount: Number(line[keys.amount]) + newSheet[index].amount,
+        };
       } else {
-        uploadedSheet.push({
+        successfulExtractions += 1;
+        newSheet.push({
           amount: Number(line[keys.amount]),
           source: line[keys.source],
         });
       }
     }
   }
-  uploadedSheetResult = {
-    dataSheet: uploadedSheet,
+  newSheetResult = {
+    dataSheet: newSheet,
     numericalErrors: count,
-    additionsMade: additionsCount,
+    additions: additionSources,
   };
-  if (uploadedSheet.length <= 0) {
-    sendToast(uploadedSheet, uploadedSheetResult.numericalErrors);
-  } else if (additionsCount > 0) {
+  if (successfulExtractions === 0) {
+    sendToast(0, newSheetResult.numericalErrors);
+  } else if (additionSources.length > 0) {
     setShowPopup({
       income: <AdditionDialogue
-        onComplete={showNewSheet}
-        label={' '}
+        onComplete={() => saveCSVtoSheet(showNewSheet, successfulExtractions, setShowPopup)}
+        labels={additionSources}
       />,
-      resources: false,
+      resources: null,
     });
+  } else {
+    saveCSVtoSheet(showNewSheet, successfulExtractions, setShowPopup);
   }
-  /// check if to combine similar field amounts in rewCSVData or in StorageData;
-  /// saveCSVtoSheet(showNewSheet);
 };
 
 export const getDataFromCSV = function getDataFromCSV(

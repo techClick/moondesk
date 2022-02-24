@@ -9,8 +9,8 @@ type ShowPage = {
   resources: boolean,
 }
 
-type ShowPopup = {
-  [key: string]: any
+export type ShowPopup = {
+  [key: string]: Function | null
   income: Function | null,
   resources: Function | null,
 }

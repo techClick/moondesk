@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { DataSheet, SheetBuilderInput } from 'types/types';
 import { Button } from 'views/App/styles';
-import { setNewIncomeSheet, setShowPopup } from '../../../redux';
+import { setNewIncomeSheet, setShowPopup, ShowPopup } from '../../../redux';
 import * as S from './ButtonSection.styled';
 import { getDataFromCSV, uploadCSV, useDirectly } from './utils/utils';
 
@@ -22,7 +22,7 @@ const ButtonSection = function ButtonSection(
             getDataFromCSV(
               e.target.files,
               (sheet: DataSheet) => dispatch(setNewIncomeSheet(sheet)),
-              (component: any) => dispatch(setShowPopup(component)),
+              (showPopup: ShowPopup) => dispatch(setShowPopup(showPopup)),
             );
             e.target.value = '';
           }}

@@ -31,6 +31,9 @@ export const counterSlice = createSlice({
 export const { setLoggedIn, setPDFFileSrc } = counterSlice.actions;
 
 export const store = configureStore({
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }),
   reducer: {
     public: counterSlice.reducer,
     views: viewsReducer,
