@@ -17,7 +17,7 @@ const ImportTypes = function ImportTypes() {
         <S.IconCont>
           {
             importOptions.map((option) => (
-              <S.IconCont2>
+              <S.IconCont2 to={option.path}>
                 <S.IconContMain>
                   <S.IconDiv color={option.color}>
                     {option.icon}

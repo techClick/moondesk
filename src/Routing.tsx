@@ -12,6 +12,7 @@ const Income = lazy(() => import('./views/App/Income/Income'));
 const Resources = lazy(() => import('./views/App/Resources/Resources'));
 const Settings = lazy(() => import('./views/App/Settings/Settings'));
 const ImportTypes = lazy(() => import('./views/App/ImportTypes/ImportTypes'));
+const ImportCols = lazy(() => import('./views/App/ImportCols/ImportCols'));
 // localStorage.clear();
 
 const Routing = function Routing() {
@@ -34,6 +35,9 @@ const Routing = function Routing() {
             </Route>
             <Route exact path="/app/income/importtypes">
               <ImportTypes />
+            </Route>
+            <Route exact path={'/app/income/importcols' || '/app/resources/importcols'}>
+              <ImportCols />
             </Route>
           </Switch>
         </Suspense>

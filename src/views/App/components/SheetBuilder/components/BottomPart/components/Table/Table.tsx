@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from 'redux/hooks';
-import { selectNewIncomeSheet } from 'views/App/components/SheetBuilder/redux';
+import { selectNewIncomeSheet } from 'views/App/redux';
 import { getStorageItem } from 'views/App/utils/utils';
 import * as S from './Table.styled';
 import TableBody from './components/TableBody/TableBody';

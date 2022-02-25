@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 export type IResponse = {
   status: 'error' | 'success',
   data?: string,
@@ -43,3 +45,9 @@ export type DataSheet = {
   date: Date,
   data: Array<SheetEntry>;
 }
+
+export type ShowPopup = {
+  [key: string]: ReactElement | null
+  income: ReactElement | null,
+  resources: ReactElement | null,
+};

@@ -1,4 +1,5 @@
 import Color from 'color';
+import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { containerPadding, panelBorderColor, textColor } from '../styles';
 
@@ -56,7 +57,7 @@ export const IconCont = styled.div<any>`
   box-sizing: border-box;
 `;
 
-export const IconCont2 = styled.div<any>`
+export const IconCont2 = styled<any>(Link)`
   background: ${Color(panelBorderColor).lighten(0.17).toString()};
   border-radius: 4px;
   padding-bottom: 5px;
@@ -67,6 +68,8 @@ export const IconCont2 = styled.div<any>`
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
+  text-decoration: none;
+  color: ${textColor};
   cursor: pointer;
   &:hover {
     background: ${Color(panelBorderColor).lighten(0).toString()};

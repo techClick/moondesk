@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getStorageItem } from 'views/App/utils/utils';
-import { SheetBuilderInput } from 'types/types';
+import { SheetBuilderInput, ShowPopup } from 'types/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
 import * as S from './ColumnBuilder.styled';
@@ -11,6 +11,7 @@ const ColumnBuilder = function ColumnBuilder() {
   const [input, setInput] = useState<SheetBuilderInput>(
     JSON.parse(getStorageItem('columnEntry_income') || JSON.stringify({ source: '', amount: '' })),
   );
+  const [showPopup, setShowPopup] = useState<ShowPopup>({ income: null, resources: null });
   const [error, setError] = useState<any>({ source: false, amount: false });
 
   return (
@@ -51,7 +52,7 @@ const ColumnBuilder = function ColumnBuilder() {
           </S.Container>
         ))
       }
-      <ButtonSection input={input} setError={setError} />
+      <ButtonSection input={input} setError={setError} setShowPopup={setShowPopup} />
     </>
   );
 };

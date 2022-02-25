@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedNumber } from 'react-intl';
 import { useAppSelector } from 'redux/hooks';
 import { DataSheet } from 'types/types';
-import { selectNewIncomeSheet } from 'views/App/components/SheetBuilder/redux';
+import { selectNewIncomeSheet } from 'views/App/redux';
 import { MainButton } from 'views/App/styles';
 import { getStorageItem } from 'views/App/utils/utils';
 import * as S from './GrossPart.styled';

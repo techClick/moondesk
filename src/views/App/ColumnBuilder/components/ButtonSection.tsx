@@ -1,13 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { DataSheet, SheetBuilderInput } from 'types/types';
+import { DataSheet, SheetBuilderInput, ShowPopup } from 'types/types';
+import { setNewIncomeSheet } from 'views/App/redux';
 import { Button } from 'views/App/styles';
-import { setNewIncomeSheet, setShowPopup, ShowPopup } from '../../../redux';
 import * as S from './ButtonSection.styled';
 import { getDataFromCSV, uploadCSV, useDirectly } from './utils/utils';
 
 const ButtonSection = function ButtonSection(
-  { input, setError } : { input: SheetBuilderInput, setError: Function },
+  { input, setError, setShowPopup }
+  :
+  { input: SheetBuilderInput, setError: Function, setShowPopup: Function },
 ) {
   const dispatch = useDispatch();
 
