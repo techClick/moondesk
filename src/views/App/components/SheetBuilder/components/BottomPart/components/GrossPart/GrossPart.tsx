@@ -10,7 +10,7 @@ import * as S from './GrossPart.styled';
 const GrossPart = function GrossPart() {
   const newIncomeSheet: DataSheet = useAppSelector(selectNewIncomeSheet);
   let grossAmount = 0;
-  for (const entry of newIncomeSheet) {
+  for (const entry of newIncomeSheet.data) {
     grossAmount += entry.amount || 0;
   }
   const currency = getStorageItem('currency') || '$';

@@ -13,7 +13,7 @@ type NewSheetResult = {
   additions: Array<string>,
 };
 let newSheetResult: NewSheetResult = {
-  dataSheet: [],
+  dataSheet: { date: new Date(), data: [] },
   numericalErrors: 0,
   additions: [],
 };
@@ -96,7 +96,7 @@ const getMatchingItemResults = function getMatchingItemResults(
   line: any,
   keys: any,
 ) {
-  const found = newSheet.find((entry) => {
+  const found = newSheet.data.find((entry) => {
     return (line[keys.group] && entry.group
       && line[keys.group].toLowerCase() === entry.group.toLowerCase()
       && line[keys.source].toLowerCase() === entry.source.toLowerCase())
@@ -105,7 +105,7 @@ const getMatchingItemResults = function getMatchingItemResults(
   });
   let index = -1;
   if (found) {
-    index = newSheet.indexOf(found);
+    index = newSheet.data.indexOf(found);
   }
   return { foundItem: found, index };
 };
@@ -150,13 +150,13 @@ const saveCSVStart = function saveCSVStart(
             additionSources.push(foundItem.source.toUpperCase());
           }
           successfulExtractions += 1;
-          newSheet[index] = {
-            ...newSheet[index],
-            amount: Number(line[keys.amount]) + newSheet[index].amount,
+          newSheet.data[index] = {
+            ...newSheet.data[index],
+            amount: Number(line[keys.amount]) + newSheet.data[index].amount,
           };
         } else {
           successfulExtractions += 1;
-          newSheet.push({
+          newSheet.data.push({
             group: line[keys.group],
             amount: Number(line[keys.amount]),
             source: line[keys.source],
@@ -170,13 +170,13 @@ const saveCSVStart = function saveCSVStart(
           additionSources.push(foundItem.source.toUpperCase());
         }
         successfulExtractions += 1;
-        newSheet[index] = {
-          ...newSheet[index],
-          amount: Number(line[keys.amount]) + newSheet[index].amount,
+        newSheet.data[index] = {
+          ...newSheet.data[index],
+          amount: Number(line[keys.amount]) + newSheet.data[index].amount,
         };
       } else {
         successfulExtractions += 1;
-        newSheet.push({
+        newSheet.data.push({
           amount: Number(line[keys.amount]),
           source: line[keys.source],
         });

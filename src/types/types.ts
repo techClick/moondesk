@@ -26,10 +26,20 @@ export type SheetBuilderInput = {
 };
 
 export type SheetEntry = {
-  [key: string]: any,
+  [key: string]: string | number | undefined,
   group?: string,
   source: string,
   amount: number,
 };
 
-export type DataSheet = Array<SheetEntry>
+export type Sheet = {
+  [key: string]: Date | Array<SheetEntry>,
+  date: Date,
+  data: Array<SheetEntry>,
+};
+
+export type DataSheet = {
+  [key: string]: Date | Array<SheetEntry>,
+  date: Date,
+  data: Array<SheetEntry>;
+}

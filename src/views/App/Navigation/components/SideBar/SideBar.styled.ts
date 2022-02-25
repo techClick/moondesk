@@ -13,5 +13,5 @@ export const Container = styled.div<any>`
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
   transform: translateX(${(props) => props.isMobile && '-100%'});
-  z-index: 1;
+  z-index: 2;
 `;

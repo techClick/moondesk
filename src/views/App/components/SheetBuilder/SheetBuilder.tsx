@@ -23,9 +23,9 @@ const SheetBuilder = function SheetBuilder() {
         )}
       <S.BuilderDiv>
         <S.contentDiv>
-          <S.WhiteCard hasTable={newIncomeSheet.length > 0}>
+          <S.WhiteCard hasTable={newIncomeSheet.data.length > 0}>
             <TopPart />
-            { newIncomeSheet.length > 0 && <BottomPart /> }
+            { newIncomeSheet.data.length > 0 && <BottomPart /> }
           </S.WhiteCard>
         </S.contentDiv>
       </S.BuilderDiv>

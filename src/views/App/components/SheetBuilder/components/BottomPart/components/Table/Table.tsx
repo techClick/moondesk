@@ -9,7 +9,7 @@ const Table = function Table() {
   const currency = getStorageItem('currency') || '$';
   const newSheet = useAppSelector(selectNewIncomeSheet);
   // const newIncomeSheet: any = [newIncomeSheet1[0]];
-  const containsGroup = Boolean(newSheet.find((entry) => entry.group));
+  const containsGroup = Boolean(newSheet.data.find((entry) => entry.group));
 
   return (
     <S.Container innerWidth={window.innerWidth} innerHeight={window.innerHeight}>
