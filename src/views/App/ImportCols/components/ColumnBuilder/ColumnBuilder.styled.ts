@@ -2,18 +2,23 @@ import Color from 'color';
 import styled from 'styled-components';
 import { panelBorderColor, textColor, topBarColor } from 'views/App/styles';
 
+export const ContainerMain = styled.div`
+  margin-top: 50px;
+`;
+
 export const Container = styled.div`
-  width: 120px;
+  width: 35%;
+  min-width: 200px;
   color: lightgrey;
   display: flex;
   flex-direction: column;
-  margin-top: 25px;
+  margin-top: 18px;
 `;
 
 export const ColumnBuild = styled.div`
   width: 98%;
   border-radius: 2px;
-  padding-left: 14px;
+  padding-left: 40px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -55,15 +60,14 @@ export const InputDiv = styled.div<any>`
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
   //padding-left: 5px;
-  border-left: 1px solid ${(props) => {
-    return !props.isError ? Color(panelBorderColor).lighten(0.05).toString() : 'red';
-  }};
+  border-left: ${(props) => props.isError && '1px solid red'};
   position: relative;
 `;
 
 export const Input = styled.input<any>`
   width: 100%;
-  height: 27px;
+  height: 32px;
+  border-radius: 2px;
   padding-left: 5px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 

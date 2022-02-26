@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DataSheet } from 'types/types';
-import { RootState } from '../../redux/store';
+import { RootState } from 'redux/store';
 import { getStorageItem } from './utils/utils';
 
 type ShowSheetBuilder = {

@@ -1,15 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { DataSheet, SheetBuilderInput, ShowPopup } from 'types/types';
+import { DataSheet, InputErrorCB, ShowPopup } from 'types/types';
 import { setNewIncomeSheet } from 'views/App/redux';
 import { Button } from 'views/App/styles';
+import { setInputError } from '../../redux';
 import * as S from './ButtonSection.styled';
 import { getDataFromCSV, uploadCSV, useDirectly } from './utils/utils';
 
 const ButtonSection = function ButtonSection(
-  { input, setError, setShowPopup }
+  { setShowPopup }
   :
-  { input: SheetBuilderInput, setError: Function, setShowPopup: Function },
+  { setShowPopup: Function },
 ) {
   const dispatch = useDispatch();
 
@@ -29,10 +30,16 @@ const ButtonSection = function ButtonSection(
             e.target.value = '';
           }}
         />
-        <Button onClick={() => uploadCSV(input, setError)}>
+        <Button onClick={() => uploadCSV(
+          (inputError: InputErrorCB) => dispatch(setInputError(inputError)),
+        )}
+        >
           Upload CSV
         </Button>
-        <S.Button onClick={() => useDirectly(input, setError)}>
+        <S.Button onClick={() => useDirectly(
+          (inputError: InputErrorCB) => dispatch(setInputError(inputError)),
+        )}
+        >
           Use directly
         </S.Button>
       </S.RelativeDiv>

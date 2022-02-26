@@ -40,9 +40,9 @@ export const Header1 = styled.div<any>`
 export const Header = styled.div<any>`
   // padding-left: 26px;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 12px;
   margin: auto;
-  margin-top: 30px;
+  margin-top: 42px;
   color: ${Color(textColor).lighten(0.55).toString()};
 `;
 
@@ -50,7 +50,7 @@ export const IconCont = styled.div<any>`
   width: 100%;
   height: 100px;
   padding: 0 10px;
-  margin-top: 32px;
+  margin-top: 20px;
   display: flex;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 

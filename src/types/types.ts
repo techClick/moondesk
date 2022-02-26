@@ -20,12 +20,19 @@ export type CallArgs = {
   noContentType?: boolean;
 };
 
-export type SheetBuilderInput = {
-  [key: string]: any,
+export type ColumnBuilderInput = {
+  [key: string]: string | undefined,
   group?: string,
   source: string,
   amount: string,
-};
+}
+
+export type InputErrorCB = {
+  [key: string]: string | undefined | false,
+  group?: string | false,
+  source: string | false,
+  amount: string | false,
+}
 
 export type SheetEntry = {
   [key: string]: string | number | undefined,

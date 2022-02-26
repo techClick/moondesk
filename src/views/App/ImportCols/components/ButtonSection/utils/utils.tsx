@@ -1,12 +1,12 @@
 import React from 'react';
 import Papa from 'papaparse';
 import { toast } from 'react-toastify';
-import { DataSheet, SheetBuilderInput } from 'types/types';
+import { DataSheet, ColumnBuilderInput, InputErrorCB } from 'types/types';
 import { getStorageItem, setStorageItem } from 'views/App/utils/utils';
 import { getCurrentTab } from 'views/App/components/utils/utils';
 import AdditionDialogue from '../components/AdditionDialogue';
 
-let columns: SheetBuilderInput;
+let columns: ColumnBuilderInput;
 type NewSheetResult = {
   dataSheet: DataSheet,
   numericalErrors: number,
@@ -18,8 +18,9 @@ let newSheetResult: NewSheetResult = {
   additions: [],
 };
 
-const getIsUploadError = function getIsUploadError(input: SheetBuilderInput) {
-  const errorTmp: any = { source: false, amount: false };
+const getIsUploadError = function getIsUploadError() {
+  const input: ColumnBuilderInput = JSON.parse(getStorageItem(`columnEntry_${getCurrentTab()}`));
+  const errorTmp: InputErrorCB = { source: false, amount: false };
   if (!input.amount) {
     errorTmp.amount = 'Required';
   }
@@ -29,8 +30,8 @@ const getIsUploadError = function getIsUploadError(input: SheetBuilderInput) {
   return errorTmp;
 };
 
-export const uploadCSV = function uploadCSV(input: SheetBuilderInput, setError: Function) {
-  const errorTmp = getIsUploadError(input);
+export const uploadCSV = function uploadCSV(setError: Function) {
+  const errorTmp = getIsUploadError();
   setError(errorTmp);
   if (!errorTmp.amount && !errorTmp.source) {
     const fileUploader = document.getElementById('uploadSheet');
@@ -217,8 +218,9 @@ export const getDataFromCSV = function getDataFromCSV(
   });
 };
 
-export const useDirectly = function useDirectly(input: SheetBuilderInput, setError: Function) {
-  const errorTmp = getIsUploadError(input);
+export const useDirectly = function useDirectly(setError: Function) {
+  const input: ColumnBuilderInput = JSON.parse(getStorageItem(`columnEntry_${getCurrentTab()}`));
+  const errorTmp: InputErrorCB = getIsUploadError();
   if (isNaN(Number(input.amount))) errorTmp.amount = 'Numbers only';
   if (input.amount.includes('-')
     || input.amount.includes('+')) errorTmp.amount = 'Don\'t use operators';

@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import Loader from './views/Loader/Loader';
 import Navigation from './views/App/Navigation/Navigation';
+import MediaQuery from 'react-responsive';
+import { minRes } from 'views/styles';
 
 const HomePage = lazy(() => import('./views/Public/HomePage/HomePage'));
 const Income = lazy(() => import('./views/App/Income/Income'));
@@ -37,7 +39,14 @@ const Routing = function Routing() {
               <ImportTypes />
             </Route>
             <Route exact path={'/app/income/importcols' || '/app/resources/importcols'}>
-              <ImportCols />
+              <>
+                <MediaQuery maxWidth={minRes}>
+                  <ImportCols />
+                </MediaQuery>
+                <MediaQuery minWidth={minRes + 0.0001}>
+                  <ImportCols />
+                </MediaQuery>
+              </>
             </Route>
           </Switch>
         </Suspense>

@@ -17,8 +17,7 @@ const SheetBuilder = function SheetBuilder() {
       {showPopup[getCurrentTab()]
         && (
           <>
-            <Background>
-            </Background>
+            <Background />
             {showPopup[getCurrentTab()]}
           </>
         )}
