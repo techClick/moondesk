@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCurrentTab } from 'views/App/components/utils/utils';
+import { getCurrentTab } from 'views/App/utils/utils';
 import * as S from './TopPart.styled';
 import DateSection from '../DateSection/DateSection';
 

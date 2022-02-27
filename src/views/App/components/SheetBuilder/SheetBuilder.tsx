@@ -2,11 +2,11 @@ import React from 'react';
 import { useAppSelector } from 'redux/hooks';
 import { selectNewIncomeSheet } from 'views/App/redux';
 import { Background } from 'views/styles';
+import { getCurrentTab } from 'views/App/utils/utils';
 import * as S from './SheetBuilder.styled';
 import TopPart from './components/TopPart/TopPart';
 import BottomPart from './components/BottomPart/BottomPart';
 import { selectShowPopup } from './redux';
-import { getCurrentTab } from '../utils/utils';
 
 const SheetBuilder = function SheetBuilder() {
   const newIncomeSheet = useAppSelector(selectNewIncomeSheet);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getStorageItem } from 'views/App/utils/utils';
-import { getCurrentTab } from 'views/App/components/utils/utils';
+import { getCurrentTab } from 'views/App/utils/utils';
 import { useAppSelector } from 'redux/hooks';
 import { useDispatch } from 'react-redux';
 import { ColumnBuilderInput, InputErrorCB } from 'types/types';
@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
 import * as S from './ColumnBuilder.styled';
 import { saveColumnEntry } from './utils/utils';
-import { selectInputError, setInputError } from '../redux';
+import { selectInputError, setInputError } from '../../redux';
 
 const ColumnBuilder = function ColumnBuilder() {
   const [input, setInput] = useState<ColumnBuilderInput>(

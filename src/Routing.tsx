@@ -4,10 +4,10 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import Loader from './views/Loader/Loader';
-import Navigation from './views/App/Navigation/Navigation';
 import MediaQuery from 'react-responsive';
 import { minRes } from 'views/styles';
+import Loader from './views/Loader/Loader';
+import Navigation from './views/App/Navigation/Navigation';
 
 const HomePage = lazy(() => import('./views/Public/HomePage/HomePage'));
 const Income = lazy(() => import('./views/App/Income/Income'));
@@ -16,6 +16,7 @@ const Settings = lazy(() => import('./views/App/Settings/Settings'));
 const ImportTypes = lazy(() => import('./views/App/ImportTypes/ImportTypes'));
 const ImportCols = lazy(() => import('./views/App/ImportCols/ImportCols'));
 // localStorage.clear();
+localStorage.setItem('projectId', '1');
 
 const Routing = function Routing() {
   return (
@@ -38,7 +39,11 @@ const Routing = function Routing() {
             <Route exact path="/app/income/importtypes">
               <ImportTypes />
             </Route>
-            <Route exact path={'/app/income/importcols' || '/app/resources/importcols'}>
+            <Route
+              exact
+              path={['/app/income/importcols/csv', '/app/resources/importcols/csv',
+                '/app/income/importcols/excel', '/app/resources/importcols/excel']}
+            >
               <>
                 <MediaQuery maxWidth={minRes}>
                   <ImportCols />

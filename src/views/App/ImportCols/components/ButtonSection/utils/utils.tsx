@@ -3,7 +3,7 @@ import Papa from 'papaparse';
 import { toast } from 'react-toastify';
 import { DataSheet, ColumnBuilderInput, InputErrorCB } from 'types/types';
 import { getStorageItem, setStorageItem } from 'views/App/utils/utils';
-import { getCurrentTab } from 'views/App/components/utils/utils';
+import { getCurrentTab } from 'views/App/utils/utils';
 import AdditionDialogue from '../components/AdditionDialogue';
 
 let columns: ColumnBuilderInput;

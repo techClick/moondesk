@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCurrentTab } from '../components/utils/utils';
+import { getCurrentTab } from 'views/App/utils/utils';
 import * as S from './ImportTypes.styled';
 import { importOptions } from './utils/utils';
 

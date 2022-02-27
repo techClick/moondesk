@@ -1,9 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBill1 } from '@fortawesome/free-regular-svg-icons';
+import { getCurrentTab } from 'views/App/utils/utils';
 import { faTriangleExclamation, faCoins } from '@fortawesome/free-solid-svg-icons';
 import * as S from './NoData.styled';
-import { getCurrentTab } from '../utils/utils';
 
 const pagesNoData: any = {
   income: {

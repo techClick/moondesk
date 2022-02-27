@@ -1,4 +1,4 @@
-import { getCurrentTab } from '../../utils/utils';
+import { getCurrentTab } from 'views/App/utils/utils';
 
 export const getExitSheetBuilder = function getExitSheetBuilder(showSheetBuilder: any) {
   const exitSheetBuilder: any = {

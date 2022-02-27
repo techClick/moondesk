@@ -41,7 +41,7 @@ export const Line = styled.hr`
   width: 100%;
   position:absolute;
   border: 0;
-  background-color: ${Color(panelBorderColor).lighten(0.17).toString()};
+  background-color: ${Color(panelBorderColor).lighten(0.2).toString()};
   top: 63px;
   left: 0;
 `;
@@ -51,7 +51,7 @@ export const Header2 = styled.div`
   font-weight: 500;
   color: ${Color(textColor).lighten(0.2).toString()};
   padding-left: 40px;
-  margin-top: 30px;
+  margin-top: 55px;
   width: max-content;
 `;
 
@@ -60,8 +60,18 @@ export const Line2 = styled.hr`
   width: 100%;
   position:absolute;
   border: 0;
-  background-color: ${Color(panelBorderColor).lighten(0.17).toString()};
-  top: 440px;
+  background-color: ${Color(panelBorderColor).lighten(0.2).toString()};
+  top: 380px;
+  left: 0;
+`;
+
+export const Line3 = styled.hr`
+  height: 1px;
+  width: 100%;
+  position:absolute;
+  border: 0;
+  background-color: ${Color(panelBorderColor).lighten(0.2).toString()};
+  top: 455px;
   left: 0;
 `;
 
