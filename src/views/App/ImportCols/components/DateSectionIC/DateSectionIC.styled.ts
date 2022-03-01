@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { panelBorderColor, textColor, topBarColor } from 'views/App/styles';
 
 export const Container = styled.div`
-  // background: lightgreen;
 `;
 
 export const DateCont1 = styled.div<any>`
@@ -29,12 +28,15 @@ export const IconCont1 = styled.div<any>`
   width: max-content;
   text-align: right;
   border: 1px solid ${Color(panelBorderColor).lighten(0.1).toString()};
+  border-left: ${(props) => props.position === 2 && 'none'};
+  border-right: ${(props) => props.position !== 2 && 'none'};
   color: ${Color(textColor).lighten(0.3).toString()};
   border-radius: 2px;
-  cursor: pointer;
+  opacity: ${(props) => props.disabled && 0.2};
+  cursor: ${(props) => !props.disabled && 'pointer'};
   &:hover {
-    color: ${topBarColor};
-    border-color: ${topBarColor};  
+    color: ${(props) => !props.disabled && topBarColor};
+    border-color: ${(props) => !props.disabled && topBarColor};  
   }
 `;
 
@@ -63,9 +65,8 @@ export const DateContainer = styled.div<any>`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  // background: ${Color('white').darken(0.05).toString()};
-  border-top: 1px solid ${Color(panelBorderColor).lighten(0.1).toString()};
-  border-bottom: 1px solid ${Color(panelBorderColor).lighten(0.1).toString()};
+  border: 1px solid ${Color(panelBorderColor).lighten(0.1).toString()};
+  border-radius: 2px;
 `;
 
 export const Today = styled.div<any>`

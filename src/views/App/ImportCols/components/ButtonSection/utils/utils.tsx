@@ -1,12 +1,12 @@
 import React from 'react';
 import Papa from 'papaparse';
 import { toast } from 'react-toastify';
-import { DataSheet, ColumnBuilderInput, InputErrorCB } from 'types/types';
-import { getStorageItem, setStorageItem } from 'views/App/utils/utils';
-import { getCurrentTab } from 'views/App/utils/utils';
+import { DataSheet, RowBuilderInput, InputErrorCB } from 'types/types';
+import { getStorageItem, setStorageItem, getCurrentTab } from 'views/App/utils/utils';
+import { getRowEntryId } from 'views/App/utils/GlobalUtils';
 import AdditionDialogue from '../components/AdditionDialogue';
 
-let columns: ColumnBuilderInput;
+let columns: RowBuilderInput;
 type NewSheetResult = {
   dataSheet: DataSheet,
   numericalErrors: number,
@@ -19,7 +19,7 @@ let newSheetResult: NewSheetResult = {
 };
 
 const getIsUploadError = function getIsUploadError() {
-  const input: ColumnBuilderInput = JSON.parse(getStorageItem(`columnEntry_${getCurrentTab()}`));
+  const input: RowBuilderInput = JSON.parse(getStorageItem(getRowEntryId()));
   const errorTmp: InputErrorCB = { source: false, amount: false };
   if (!input.amount) {
     errorTmp.amount = 'Required';
@@ -60,8 +60,8 @@ const sendToast = function sendToast(
       toast(
         `Data upload failed. The CSV file does not contain the columns ${columns.group && ' '}
         ${columns.group && columns.group.toUpperCase()}${columns.group && ','}
-        ${' '}${columns.source.toUpperCase()}
-        and ${columns.amount.toUpperCase()} combined.`,
+        ${' '}${columns.source?.toUpperCase()}
+        and ${columns.amount?.toUpperCase()} combined.`,
         { type: 'error', autoClose: 15000 },
       );
     }
@@ -73,7 +73,7 @@ const sendToast = function sendToast(
     );
     if (numericalErrors > 0) {
       toast(`${numericalErrors} non numerical entries in the 
-        ${columns.amount.toUpperCase()} column
+        ${columns.amount?.toUpperCase()} column
         were ignored.`, { type: 'warning', autoClose: 12000 });
     }
   }
@@ -115,11 +115,11 @@ const saveCSVStart = function saveCSVStart(
   showNewSheet: Function,
   setShowPopup: Function,
 ) {
-  const columnEntries = JSON.parse(getStorageItem(`columnEntry_${getCurrentTab()}`));
+  const rowEntries = JSON.parse(getStorageItem(getRowEntryId()));
   columns = {
-    group: columnEntries.group.toLowerCase(),
-    source: columnEntries.source.toLowerCase(),
-    amount: columnEntries.amount.toLowerCase(),
+    group: rowEntries.group.toLowerCase(),
+    source: rowEntries.source.toLowerCase(),
+    amount: rowEntries.amount.toLowerCase(),
   };
   const rawCSVData = JSON.parse(getStorageItem(`rawCSVData_${getCurrentTab()}`));
   const newSheet: DataSheet = JSON.parse(getStorageItem(`new_${getCurrentTab()}`) || '[]');
@@ -219,12 +219,12 @@ export const getDataFromCSV = function getDataFromCSV(
 };
 
 export const useDirectly = function useDirectly(setError: Function) {
-  const input: ColumnBuilderInput = JSON.parse(getStorageItem(`columnEntry_${getCurrentTab()}`));
+  const input: RowBuilderInput = JSON.parse(getStorageItem(getRowEntryId()));
   const errorTmp: InputErrorCB = getIsUploadError();
   if (isNaN(Number(input.amount))) errorTmp.amount = 'Numbers only';
-  if (input.amount.includes('-')
-    || input.amount.includes('+')) errorTmp.amount = 'Don\'t use operators';
-  if (input.amount.includes('e')) errorTmp.amount = 'Numbers only';
+  if (input.amount?.includes('-')
+    || input.amount?.includes('+')) errorTmp.amount = 'Don\'t use operators';
+  if (input.amount?.includes('e')) errorTmp.amount = 'Numbers only';
   setError(errorTmp);
   if (!errorTmp.amount && !errorTmp.source) {
     // proceed

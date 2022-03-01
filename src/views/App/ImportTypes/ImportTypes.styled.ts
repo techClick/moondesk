@@ -42,7 +42,7 @@ export const Header = styled.div<any>`
   font-weight: 500;
   font-size: 12px;
   margin: auto;
-  margin-top: 42px;
+  margin-top: 50px;
   color: ${Color(textColor).lighten(0.55).toString()};
 `;
 
@@ -50,7 +50,7 @@ export const IconCont = styled.div<any>`
   width: 100%;
   height: 100px;
   padding: 0 10px;
-  margin-top: 20px;
+  margin-top: 12px;
   display: flex;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
@@ -87,13 +87,13 @@ export const IconDiv = styled.div<any>`
   position: absolute;
   bottom: 0;
   right: 50%;
-  transform: translateX(50%);
+  transform: translateX(50%) scaleX(${(props) => { return props.biggerX ? 1.125 : 1; }});
   color: ${(props) => props.color && props.color};
 `;
 
 export const IconDesc = styled.div<any>`
   margin: auto;
-  margin-top: 3px;
+  margin-top: 4px;
   font-size: 14px;
   font-weight: 700;
 `;

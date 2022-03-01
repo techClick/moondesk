@@ -16,10 +16,10 @@ const ImportTypes = function ImportTypes() {
         </S.Header>
         <S.IconCont>
           {
-            importOptions.map((option) => (
+            importOptions.map((option, index) => (
               <S.IconCont2 to={option.path}>
                 <S.IconContMain>
-                  <S.IconDiv color={option.color}>
+                  <S.IconDiv color={option.color} biggerX={index < 2}>
                     {option.icon}
                   </S.IconDiv>
                 </S.IconContMain>

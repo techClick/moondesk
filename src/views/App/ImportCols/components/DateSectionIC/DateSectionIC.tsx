@@ -2,22 +2,36 @@ import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { getCurrentTab, getDateFormat1, getImportType, getStorageItem } from 'views/App/utils/utils';
+import { getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
+import {
+  getDateFormat1, getDateIsFar, getIsSameDay, getIsToday, getStorageItem,
+} from 'views/App/utils/utils';
 import * as S from './DateSectionIC.styled';
-import { saveUseRange } from './utils/utils';
+import { moveDay, saveUseRange } from './utils/utils';
 
 const DateSection = function DateSection() {
-  const projectId: string = getStorageItem('projectId');
-  const useRangeStore: string | null = getStorageItem(
-    `${projectId}_useRange_${getCurrentTab()}_${getImportType()}`,
-  );
+  const useRangeStore: string | null = getStorageItem(getUseRangeId());
   const [useRange, setUseRange] = useState<boolean>(Boolean(useRangeStore));
-  const todaysDate = getDateFormat1();
+  const [sheetDateDate1, setSheetDateDate1] = useState<Date>(JSON.parse(
+    getStorageItem(getRowEntryId()) || JSON.stringify({ sheetDate1: new Date() }),
+  ).sheetDate1 || new Date());
+  const [sheetDateDate2, setSheetDateDate2] = useState<Date>(JSON.parse(
+    getStorageItem(getRowEntryId()) || JSON.stringify({ sheetDate2: new Date() }),
+  ).sheetDate2 || new Date());
+  const sheetDate1 = getDateFormat1(sheetDateDate1);
+  const sheetDate2 = getDateFormat1(sheetDateDate2);
 
   return (
     <S.Container>
       <S.DateCont1 isRange={useRange}>
-        <S.IconCont1>
+        <S.IconCont1
+          onClick={() => {
+            if (!getDateIsFar(sheetDateDate1)) {
+              moveDay(sheetDateDate1, -1, setSheetDateDate1, 'sheetDate1');
+            }
+          }}
+          disabled={getDateIsFar(sheetDateDate1)}
+        >
           <S.IconContainer>
             <FontAwesomeIcon icon={faAngleLeft} size="2x" />
           </S.IconContainer>
@@ -28,11 +42,22 @@ const DateSection = function DateSection() {
           <S.CalendarCont>
             <FontAwesomeIcon icon={faCalendarDays} size="2x" />
           </S.CalendarCont>
-          {todaysDate}
+          {sheetDate1}
           <br />
-          <S.Today>Today</S.Today>
+          { getIsToday(sheetDateDate1) && <S.Today>Today</S.Today>}
         </S.DateContainer>
-        <S.IconCont1>
+        <S.IconCont1
+          onClick={() => {
+            if (!getIsToday(sheetDateDate1)) {
+              if (getIsSameDay(sheetDateDate1, sheetDateDate2)) {
+                moveDay(sheetDateDate2, 1, setSheetDateDate2, 'sheetDate2');
+              }
+              moveDay(sheetDateDate1, 1, setSheetDateDate1, 'sheetDate1');
+            }
+          }}
+          disabled={getIsToday(sheetDateDate1)}
+          position={2}
+        >
           <S.IconContainer>
             <FontAwesomeIcon icon={faAngleRight} size="2x" />
           </S.IconContainer>
@@ -41,7 +66,14 @@ const DateSection = function DateSection() {
           useRange && (
           <>
             <S.Padding />
-            <S.IconCont1>
+            <S.IconCont1
+              onClick={() => {
+                if (!getIsSameDay(sheetDateDate1, sheetDateDate2)) {
+                  moveDay(sheetDateDate2, -1, setSheetDateDate2, 'sheetDate2');
+                }
+              }}
+              disabled={getIsSameDay(sheetDateDate1, sheetDateDate2)}
+            >
               <S.IconContainer>
                 <FontAwesomeIcon icon={faAngleLeft} size="2x" />
               </S.IconContainer>
@@ -51,9 +83,17 @@ const DateSection = function DateSection() {
               <S.CalendarCont>
                 <FontAwesomeIcon icon={faCalendarDays} size="2x" />
               </S.CalendarCont>
-              <S.Today></S.Today>
+              {sheetDate2}
+              <br />
+              { getIsToday(sheetDateDate2) && <S.Today>Today</S.Today>}
             </S.DateContainer>
-            <S.IconCont1>
+            <S.IconCont1
+              onClick={() => {
+                if (!getIsToday(sheetDateDate2)) moveDay(sheetDateDate2, 1, setSheetDateDate2, 'sheetDate2');
+              }}
+              disabled={getIsToday(sheetDateDate2)}
+              position={2}
+            >
               <S.IconContainer>
                 <FontAwesomeIcon icon={faAngleRight} size="2x" />
               </S.IconContainer>
@@ -66,7 +106,7 @@ const DateSection = function DateSection() {
         <S.Input
           type="checkbox"
           checked={useRange}
-          onClick={() => saveUseRange(useRange, setUseRange)}
+          onChange={() => saveUseRange(useRange, setUseRange)}
         />
         Use a range of dates.
       </S.UseRange>

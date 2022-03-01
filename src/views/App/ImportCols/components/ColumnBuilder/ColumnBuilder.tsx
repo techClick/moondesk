@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useAppSelector } from 'redux/hooks';
 import { useDispatch } from 'react-redux';
-import { getStorageItem, getCurrentTab } from 'views/App/utils/utils';
-import { ColumnBuilderInput, InputErrorCB } from 'types/types';
+import { getStorageItem } from 'views/App/utils/utils';
+import { getRowEntryId } from 'views/App/utils/GlobalUtils';
+import { RowBuilderInput, InputErrorCB } from 'types/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
 import * as S from './ColumnBuilder.styled';
-import { saveColumnEntry } from './utils/utils';
+import { saveRowEntry } from './utils/utils';
 import { selectInputError, setInputError } from '../../redux';
 
 const ColumnBuilder = function ColumnBuilder() {
-  const [input, setInput] = useState<ColumnBuilderInput>(
-    JSON.parse(getStorageItem(`columnEntry_${getCurrentTab()}`) || JSON.stringify({ source: '', amount: '' })),
+  const [input, setInput] = useState<RowBuilderInput>(
+    JSON.parse(getStorageItem(getRowEntryId()) || JSON.stringify({ source: '', amount: '' })),
   );
   const inputError: InputErrorCB = useAppSelector(selectInputError);
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const ColumnBuilder = function ColumnBuilder() {
                 <S.FillColumn
                   onClick={() => {
                     const thisInput: any = fileHeader.toLowerCase();
-                    saveColumnEntry(thisInput, thisInput);
+                    saveRowEntry(thisInput, thisInput);
                     dispatch(setInputError({ ...inputError, [thisInput]: null }));
                     setInput({ ...input, [thisInput]: thisInput });
                   }}
@@ -42,7 +43,7 @@ const ColumnBuilder = function ColumnBuilder() {
                   value={input[fileHeader.toLowerCase()]}
                   onChange={(e: any) => {
                     const thisInput: any = fileHeader.toLowerCase();
-                    saveColumnEntry(thisInput, e.target.value);
+                    saveRowEntry(thisInput, e.target.value);
                     dispatch(setInputError({ ...inputError, [thisInput]: null }));
                     setInput({ ...input, [thisInput]: e.target.value });
                   }}

@@ -20,23 +20,28 @@ export type CallArgs = {
   noContentType?: boolean;
 };
 
-export type ColumnBuilderInput = {
-  [key: string]: string | undefined,
+export type RowBuilderInput = {
+  [key: string]: string | Date | undefined,
   group?: string,
-  source: string,
-  amount: string,
+  timestamp?: Date,
+  source?: string,
+  amount?: string,
+  sheetDate1?: Date,
+  sheetDate2?: Date,
 }
 
 export type InputErrorCB = {
-  [key: string]: string | undefined | false,
+  [key: string]: string | Date | undefined | false,
   group?: string | false,
-  source: string | false,
-  amount: string | false,
+  timestamp?: Date | false,
+  source?: string | false,
+  amount?: string | false,
 }
 
 export type SheetEntry = {
-  [key: string]: string | number | undefined,
+  [key: string]: string | Date | number | undefined,
   group?: string,
+  timestamp?: Date,
   source: string,
   amount: number,
 };
