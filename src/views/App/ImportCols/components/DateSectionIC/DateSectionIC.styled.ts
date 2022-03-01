@@ -1,13 +1,104 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { textColor } from 'views/App/styles';
+import { panelBorderColor, textColor, topBarColor } from 'views/App/styles';
 
 export const Container = styled.div`
   // background: lightgreen;
 `;
 
+export const DateCont1 = styled.div<any>`
+  display: flex;
+  width: 100%;
+  height: max-content;
+  margin-top: 75px;
+  padding: 0px 40px;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+  position: relative;
+  align-items: center;
+`;
+
+export const Padding = styled.div`
+  margin-right: 5px;
+`;
+
+export const IconCont1 = styled.div<any>`
+  display: flex;
+  height: 44px;
+  width: max-content;
+  text-align: right;
+  border: 1px solid ${Color(panelBorderColor).lighten(0.1).toString()};
+  color: ${Color(textColor).lighten(0.3).toString()};
+  border-radius: 2px;
+  cursor: pointer;
+  &:hover {
+    color: ${topBarColor};
+    border-color: ${topBarColor};  
+  }
+`;
+
+export const IconContainer = styled.div<any>`
+  transform: scale(0.65);
+  display: flex;
+  justify-content: center;
+  padding: 0px 6px;
+  padding-top: 5px;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+`;
+
+export const DateContainer = styled.div<any>`
+  width: calc(35%);
+  padding-bottom: 3px;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  height: 46px;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+  // background: ${Color('white').darken(0.05).toString()};
+  border-top: 1px solid ${Color(panelBorderColor).lighten(0.1).toString()};
+  border-bottom: 1px solid ${Color(panelBorderColor).lighten(0.1).toString()};
+`;
+
+export const Today = styled.div<any>`
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: -4px;
+  color: ${Color(textColor).lighten(0.5).toString()};
+`;
+
+export const FromContainer = styled.div<any>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(calc(-100% - 4px));
+  font-size: 16px;
+  font-weight: 500;
+  color: ${Color(textColor).lighten(0.5).toString()};
+`;
+
+export const CalendarCont = styled.div<any>`
+  position: absolute;
+  top: 0;
+  right: -7px;
+  transform: scale(0.65) translateY(calc(-140% - 5px));
+  color: ${Color(textColor).lighten(0.7).toString()};
+  cursor: pointer;
+  &:hover {
+    color: ${topBarColor};
+  }
+`;
+
 export const UseRange = styled.div`
-  margin-top: 50px;
+  margin-top: 15px;
   margin-left: 35px;
   font-size: 15px;
   font-weight: 500;
@@ -23,54 +114,4 @@ export const Input = styled.input`
   margin-right: 8px;
   background: ${textColor};
   color: ${textColor};
-`;
-
-export const DateCont1 = styled.div`
-  display: flex;
-  width: 100%;
-  height: max-content;
-  margin-top: 20px;
-  padding: 0px 40px;
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
-  position: relative;
-  align-items: center;
-  // background: lightgreen;
-`;
-
-export const Padding = styled.div`
-  margin-right: 20px;
-`;
-
-export const IconContainer = styled.div<any>`
-  width: 25px;
-  transform: scale(0.7);
-  display: flex;
-  justify-content: center;
-  opacity: ${(props) => props.isNoRange && 0.2};
-`;
-
-export const DateContainer = styled.div<any>`
-  width: calc(40% - 20px);
-  padding: 7px 0;
-  padding-top: 3px;
-  font-size: 20px;
-  font-weight: 400;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  height: 38px;
-  background: ${(props) => {
-    return !props.isNoRange ? Color('white').darken(0.025).toString()
-      : Color('white').darken(0.15).toString();
-  }};
-  opacity: ${(props) => props.isNoRange && 0.2};
-`;
-
-export const Today = styled.div<any>`
-  font-size: 12px;
-  margin-top: -3px;
-  color: ${Color(textColor).lighten(0.2).toString()};
 `;

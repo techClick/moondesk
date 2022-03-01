@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { getStorageItem } from 'views/App/utils/utils';
-import { getCurrentTab } from 'views/App/utils/utils';
 import { useAppSelector } from 'redux/hooks';
 import { useDispatch } from 'react-redux';
+import { getStorageItem, getCurrentTab } from 'views/App/utils/utils';
 import { ColumnBuilderInput, InputErrorCB } from 'types/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
