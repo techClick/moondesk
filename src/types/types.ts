@@ -33,7 +33,7 @@ export type RowBuilderInput = {
 export type InputErrorCB = {
   [key: string]: string | Date | undefined | false,
   group?: string | false,
-  timestamp?: Date | false,
+  timestamp?: string | false,
   source?: string | false,
   amount?: string | false,
 }

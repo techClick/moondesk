@@ -77,10 +77,11 @@ export const Input = styled.input<any>`
 
 export const Required = styled.div`
   display: flex;
-  font-size: 10px;
+  font-size: 11px;
   height: 14px;
   position: absolute;
   bottom: -13px;
   left: -2px;
   color: red;
+  width: 150%;
 `;

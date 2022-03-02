@@ -25,7 +25,7 @@ const ImportCols = function ImportCols() {
           </>
         )}
       <S.Container>
-        <S.WhiteCard>
+        <S.WhiteCard id="importColsWhiteCard">
           <S.Header>Enter corresponding columns</S.Header>
           <S.Padding />
           {showTopInfo === 'show' && <TopInfo closeInfo={() => setShowTopInfo('shown')} />}
