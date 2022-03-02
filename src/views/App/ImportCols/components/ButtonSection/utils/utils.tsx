@@ -6,6 +6,12 @@ import { getStorageItem, setStorageItem, getCurrentTab } from 'views/App/utils/u
 import { getRowEntryId } from 'views/App/utils/GlobalUtils';
 import AdditionDialogue from '../components/AdditionDialogue';
 
+export const importType: any = {
+  csv: 'CSV',
+  excel: 'EXCEL',
+  dbf: '.db File',
+};
+
 let columns: RowBuilderInput;
 type NewSheetResult = {
   dataSheet: DataSheet,

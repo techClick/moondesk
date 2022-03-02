@@ -10,11 +10,17 @@ export const getTodaysDate = function getTodaysDate(datePicked?: Date): string {
   return `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 };
 
-export const getDateFormat1 = function getDateFormat1(datePicked?: Date): string {
+export const getDateFormat = function getDateFormat(datePicked?: Date): string {
   let date = new Date();
   if (datePicked) date = new Date(datePicked);
-  // const monthName = [...monthNames[date.getMonth()]].slice(0, 3).join('');
   const monthName = monthNames[date.getMonth()];
+  return `${monthName} ${date.getDate()}`;
+};
+
+export const getDateFormatMobile = function getDateFormatMobile(datePicked?: Date): string {
+  let date = new Date();
+  if (datePicked) date = new Date(datePicked);
+  const monthName = [...monthNames[date.getMonth()]].slice(0, 3).join('');
   return `${monthName} ${date.getDate()}`;
 };
 
@@ -61,12 +67,19 @@ export const getIsToday = function getIsToday(inputDate: Date): boolean {
 
 export const getDateIsFar = function getDateIsFar(inputDate: Date): boolean {
   inputDate = new Date(inputDate);
-  const threeMonthsBack = new Date();
-  threeMonthsBack.setDate(threeMonthsBack.getDate() - 90);
-  if (inputDate.setHours(0, 0, 0, 0) <= threeMonthsBack.setHours(0, 0, 0, 0)) {
+  const sixMonthsBack = new Date();
+  sixMonthsBack.setDate(sixMonthsBack.getDate() - 180);
+  if (inputDate.setHours(0, 0, 0, 0) <= sixMonthsBack.setHours(0, 0, 0, 0)) {
     return true;
   }
   return false;
+};
+
+export const getDateLimit = function getDateLimit(): Date {
+  const sixMonthsBack = new Date();
+  sixMonthsBack.setHours(0, 0, 0, 0);
+  sixMonthsBack.setDate(sixMonthsBack.getDate() - 180);
+  return sixMonthsBack;
 };
 
 export const getIsSameDay = function getIsSameDay(date1: Date, date2: Date): boolean {

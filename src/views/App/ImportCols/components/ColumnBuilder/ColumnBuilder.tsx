@@ -7,7 +7,7 @@ import { RowBuilderInput, InputErrorCB } from 'types/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
 import * as S from './ColumnBuilder.styled';
-import { saveRowEntry } from './utils/utils';
+import { getFieldName, saveRowEntry } from './utils/utils';
 import { selectInputError, setInputError } from '../../redux';
 
 const ColumnBuilder = function ColumnBuilder() {
@@ -24,14 +24,14 @@ const ColumnBuilder = function ColumnBuilder() {
           <S.Container>
             <S.ColumnBuild>
               <S.ColumnName>
-                {fileHeader}
+                {getFieldName(fileHeader)}
                 {!['Group', 'Timestamp'].includes(fileHeader) && <> *</>}
                 <S.FillColumn
                   onClick={() => {
                     const thisInput: any = fileHeader.toLowerCase();
                     saveRowEntry(thisInput, thisInput);
                     dispatch(setInputError({ ...inputError, [thisInput]: null }));
-                    setInput({ ...input, [thisInput]: thisInput });
+                    setInput({ ...input, [thisInput]: getFieldName(fileHeader).toLowerCase() });
                   }}
                 >
                   <FontAwesomeIcon icon={faSquareCaretDown} size="2x" />

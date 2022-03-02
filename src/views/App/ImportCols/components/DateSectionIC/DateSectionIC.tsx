@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import {
-  getDateFormat1, getDateIsFar, getIsSameDay, getIsToday, getStorageItem,
+  getDateIsFar, getDateLimit, getIsSameDay, getIsToday, getStorageItem,
 } from 'views/App/utils/utils';
+import Calendar from 'react-calendar';
 import * as S from './DateSectionIC.styled';
-import { moveDay, saveUseRange } from './utils/utils';
+import { getSheetDate, moveDay, saveSheet, saveUseRange } from './utils/utils';
+import './react-calendar.css';
 
 const DateSection = function DateSection() {
   const useRangeStore: string | null = getStorageItem(getUseRangeId());
@@ -18,11 +20,43 @@ const DateSection = function DateSection() {
   const [sheetDateDate2, setSheetDateDate2] = useState<Date>(JSON.parse(
     getStorageItem(getRowEntryId()) || JSON.stringify({ sheetDate2: new Date() }),
   ).sheetDate2 || new Date());
-  const sheetDate1 = getDateFormat1(sheetDateDate1);
-  const sheetDate2 = getDateFormat1(sheetDateDate2);
+  const [showDate, setShowDate] = useState<string>('');
+
+  const minDates: any = {
+    sheetDate1: new Date(getDateLimit()),
+    sheetDate2: new Date(sheetDateDate1),
+  };
+  const dates: any = {
+    sheetDate1: new Date(sheetDateDate1),
+    sheetDate2: new Date(sheetDateDate2),
+  };
+  const dateFuncs: any = {
+    sheetDate1: setSheetDateDate1,
+    sheetDate2: setSheetDateDate2,
+  };
 
   return (
     <S.Container>
+      {
+        showDate && (
+          <>
+            <S.Background onClick={() => setShowDate('')} />
+            <S.CalendarPicker>
+              <Calendar
+                value={dates[showDate]}
+                maxDate={new Date()}
+                minDate={minDates[showDate]}
+                onChange={(value: Date) => {
+                  if (value > new Date(sheetDateDate2)) dateFuncs.sheetDate2(value);
+                  dateFuncs[showDate](value);
+                  saveSheet(value, showDate);
+                  setShowDate('');
+                }}
+              />
+            </S.CalendarPicker>
+          </>
+        )
+      }
       <S.DateCont1 isRange={useRange}>
         <S.IconCont1
           onClick={() => {
@@ -39,10 +73,10 @@ const DateSection = function DateSection() {
         <S.DateContainer>
           { useRange ? <S.FromContainer>From</S.FromContainer>
             : <S.FromContainer>Date</S.FromContainer>}
-          <S.CalendarCont>
+          <S.CalendarCont onClick={() => setShowDate('sheetDate1')}>
             <FontAwesomeIcon icon={faCalendarDays} size="2x" />
           </S.CalendarCont>
-          {sheetDate1}
+          {getSheetDate(sheetDateDate1)}
           <br />
           { getIsToday(sheetDateDate1) && <S.Today>Today</S.Today>}
         </S.DateContainer>
@@ -80,10 +114,10 @@ const DateSection = function DateSection() {
             </S.IconCont1>
             <S.DateContainer>
               <S.FromContainer>To</S.FromContainer>
-              <S.CalendarCont>
+              <S.CalendarCont onClick={() => setShowDate('sheetDate2')}>
                 <FontAwesomeIcon icon={faCalendarDays} size="2x" />
               </S.CalendarCont>
-              {sheetDate2}
+              {getSheetDate(sheetDateDate2)}
               <br />
               { getIsToday(sheetDateDate2) && <S.Today>Today</S.Today>}
             </S.DateContainer>

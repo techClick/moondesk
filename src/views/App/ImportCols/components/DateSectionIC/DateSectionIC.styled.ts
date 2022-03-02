@@ -5,16 +5,26 @@ import { panelBorderColor, textColor, topBarColor } from 'views/App/styles';
 export const Container = styled.div`
 `;
 
+export const Background = styled.div`
+  background: black;
+  opacity: 0.3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+`;
+
 export const DateCont1 = styled.div<any>`
   display: flex;
   width: 100%;
   height: max-content;
-  margin-top: 75px;
+  margin-top: 48px;
   padding: 0px 40px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  position: relative;
   align-items: center;
 `;
 
@@ -96,6 +106,16 @@ export const CalendarCont = styled.div<any>`
   &:hover {
     color: ${topBarColor};
   }
+`;
+
+export const CalendarPicker = styled.div<any>`
+  height: max-content;
+  width: 300px;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+  z-index: 2;
 `;
 
 export const UseRange = styled.div`

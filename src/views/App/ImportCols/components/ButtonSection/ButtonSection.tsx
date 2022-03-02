@@ -2,10 +2,10 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { DataSheet, InputErrorCB, ShowPopup } from 'types/types';
 import { setNewIncomeSheet } from 'views/App/redux';
-import { Button } from 'views/App/styles';
+import { getImportType } from 'views/App/utils/utils';
 import { setInputError } from '../../redux';
 import * as S from './ButtonSection.styled';
-import { getDataFromCSV, uploadCSV } from './utils/utils';
+import { getDataFromCSV, importType, uploadCSV } from './utils/utils';
 
 const ButtonSection = function ButtonSection(
   { setShowPopup }
@@ -29,12 +29,12 @@ const ButtonSection = function ButtonSection(
           e.target.value = '';
         }}
       />
-      <Button onClick={() => uploadCSV(
+      <S.Button onClick={() => uploadCSV(
         (inputError: InputErrorCB) => dispatch(setInputError(inputError)),
       )}
       >
-        Upload CSV
-      </Button>
+        {`Upload ${importType[getImportType()]}`}
+      </S.Button>
     </S.Container>
   );
 };

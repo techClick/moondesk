@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { panelBorderColor, textColor, topBarColor } from 'views/App/styles';
 
 export const ContainerMain = styled.div`
-  margin-top: 40px;
 `;
 
 export const Container = styled.div`

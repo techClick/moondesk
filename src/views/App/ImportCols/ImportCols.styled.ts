@@ -4,24 +4,28 @@ import { minRes } from 'views/styles';
 import { containerPadding, panelBorderColor, textColor } from '../styles';
 
 export const Container = styled.div<any>`
-  margin-top: ${containerPadding};
+  padding: ${containerPadding} 0;
+  height: 100%;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
   @media(max-width: ${`${minRes}px`}) {
-    margin-top: 10px;
+    padding: 10px 0;
   }
 `;
 
 export const WhiteCard = styled.div<any>`
-  padding-bottom: ${(props) => { return props.hasTable ? '40px' : '30px'; }}; //23.5px;
+  padding-bottom: 30px; //23.5px;
   border-radius: 4px;
   padding-top: 25px;
   background: white;
-  width: max-content;
   width: calc(100% - 20px);
   max-width: 500px;
   height: max-content;
+  max-height: 100%;
   position: relative;
   margin: auto;
-  overflow: hidden;
+  overflow-y: auto;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
@@ -46,56 +50,22 @@ export const Line = styled.hr`
   left: 0;
 `;
 
+export const Padding = styled.div<any>`
+  margin-top: 43px;
+`;
+
 export const Header2 = styled.div`
+  width: 100%;
+  text-align: left;
   font-size: 18px;
   font-weight: 500;
   color: ${Color(textColor).lighten(0.2).toString()};
+  padding: 26px 0;
   padding-left: 40px;
-  margin-top: 55px;
-  width: max-content;
-`;
-
-export const Line2 = styled.hr`
-  height: 1px;
-  width: 100%;
-  position:absolute;
-  border: 0;
-  background-color: ${Color(panelBorderColor).lighten(0.2).toString()};
-  top: 380px;
-  left: 0;
-`;
-
-export const Line3 = styled.hr`
-  height: 1px;
-  width: 100%;
-  position:absolute;
-  border: 0;
-  background-color: ${Color(panelBorderColor).lighten(0.2).toString()};
-  top: 455px;
-  left: 0;
-`;
-
-export const DateCont = styled.div`
-  background: lightgreen;
-  width: 100%;
-  height: 80px;
-  margin-top: 60px;
-  padding: 0px 40px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-`;
-
-export const FromContainer = styled.div`
-  background: lightblue;
-  float: left;
-  width: 80px;
-  height: 100%;
-`;
-
-export const ToContainer = styled.div`
-  background: lightblue;
-  float: right;
-  width: 80px;
-  height: 100%;
+  margin-top: 33px;
+  border-top: 1px solid ${Color(panelBorderColor).lighten(0.2).toString()};
+  border-bottom: 1px solid ${Color(panelBorderColor).lighten(0.2).toString()};
 `;
