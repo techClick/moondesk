@@ -29,7 +29,7 @@ const ColumnBuilder = function ColumnBuilder() {
                 <S.FillColumn
                   onClick={() => {
                     const thisInput: any = fileHeader.toLowerCase();
-                    saveRowEntry(thisInput, thisInput);
+                    saveRowEntry(thisInput, String(input[thisInput]));
                     dispatch(setInputError({ ...inputError, [thisInput]: null }));
                     setInput({ ...input, [thisInput]: getFieldName(fileHeader).toLowerCase() });
                   }}

@@ -142,7 +142,7 @@ const DateSection = function DateSection() {
           checked={useRange}
           onChange={() => saveUseRange(useRange, setUseRange)}
         />
-        Use a range of dates.
+        Use range of dates.
       </S.UseRange>
     </S.Container>
   );

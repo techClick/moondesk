@@ -134,6 +134,7 @@ const saveCSVStart = function saveCSVStart(
     amount: rowEntries.amount.toLowerCase(),
   };
   const rawCSVData = JSON.parse(getStorageItem(`rawCSVData_${getCurrentTab()}`));
+  console.log('start', rowEntries, rawCSVData);
   const newSheet: DataSheet = JSON.parse(getStorageItem(`new_${getCurrentTab()}`) || '[]');
   let count = 0;
   let successfulExtractions = 0;
@@ -222,7 +223,13 @@ export const getDataFromCSV = function getDataFromCSV(
   setShowPopup: Function,
 ) {
   Papa.parse(files[0], {
+    step: (row, parser) => {
+      parser.pause();
+      parser.resume();
+      // parser.abort();
+    },
     complete: (result) => {
+      console.log('initial result', result);
       setStorageItem(`rawCSVData_${getCurrentTab()}`, JSON.stringify(result.data));
       saveCSVStart(showNewSheet, setShowPopup);
     },
