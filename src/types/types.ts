@@ -23,7 +23,7 @@ export type CallArgs = {
 export type RowBuilderInput = {
   [key: string]: string | Date | undefined,
   group?: string,
-  timestamp?: Date,
+  timestamp?: string,
   source?: string,
   amount?: string,
   sheetDate1?: Date,
@@ -41,7 +41,7 @@ export type InputErrorCB = {
 export type SheetEntry = {
   [key: string]: string | Date | number | undefined,
   group?: string,
-  timestamp?: Date,
+  timestamp: Date,
   source: string,
   amount: number,
 };

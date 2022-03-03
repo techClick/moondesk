@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import {
-  getDateIsFar, getDateLimit, getIsSameDay, getIsToday, getStorageItem,
+  getDateIsFar, getDateLimit, getIsSameDay, getIsToday, getStorageItem, setStorageItem,
 } from 'views/App/utils/utils';
 import Calendar from 'react-calendar';
 import * as S from './DateSectionIC.styled';
@@ -14,11 +14,14 @@ import './react-calendar.css';
 const DateSection = function DateSection() {
   const useRangeStore: string | null = getStorageItem(getUseRangeId());
   const [useRange, setUseRange] = useState<boolean>(Boolean(useRangeStore));
+  if (!getStorageItem(getRowEntryId())) {
+    setStorageItem(getRowEntryId(), JSON.stringify({ sheetDate1: new Date() }));
+  }
   const [sheetDateDate1, setSheetDateDate1] = useState<Date>(JSON.parse(
-    getStorageItem(getRowEntryId()) || JSON.stringify({ sheetDate1: new Date() }),
+    getStorageItem(getRowEntryId()),
   ).sheetDate1 || new Date());
   const [sheetDateDate2, setSheetDateDate2] = useState<Date>(JSON.parse(
-    getStorageItem(getRowEntryId()) || JSON.stringify({ sheetDate2: new Date() }),
+    getStorageItem(getRowEntryId()),
   ).sheetDate2 || new Date());
   const [showDate, setShowDate] = useState<string>('');
 
