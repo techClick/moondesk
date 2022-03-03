@@ -1,7 +1,7 @@
 import React from 'react';
 import Papa from 'papaparse';
 import { toast } from 'react-toastify';
-import { DataSheet, RowBuilderInput, InputErrorCB } from 'types/types';
+import { DataSheet, RowBuilderInput, InputErrorCB, SheetEntry } from 'types/types';
 import { getStorageItem, setStorageItem, getCurrentTab } from 'views/App/utils/utils';
 import { getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import AdditionDialogue from '../components/AdditionDialogue';
@@ -12,7 +12,7 @@ export const importType: any = {
   dbf: '.db File',
 };
 
-let columns: RowBuilderInput;
+let rows: RowBuilderInput;
 type NewSheetResult = {
   dataSheet: DataSheet,
   numericalErrors: number,
@@ -66,14 +66,14 @@ const sendToast = function sendToast(
   if (successfulExtractions === 0) {
     if (numericalErrors > 0) {
       toast(`No data was loaded. 
-        The ${columns.amount} column in your file contains non numerical 
+        The ${rows.amount} column in your file contains non numerical 
         entries`, { type: 'error', autoClose: 12000 });
     } else {
       toast(
-        `Data upload failed. The CSV file does not contain the columns ${columns.group && ' '}
-        ${columns.group && columns.group.toUpperCase()}${columns.group && ','}
-        ${' '}${columns.source?.toUpperCase()}
-        and ${columns.amount?.toUpperCase()} combined.`,
+        `Data upload failed. The CSV file does not contain the rows ${rows.group && ' '}
+        ${rows.group && rows.group.toUpperCase()}${rows.group && ','}
+        ${' '}${rows.source?.toUpperCase()}
+        and ${rows.amount?.toUpperCase()} combined.`,
         { type: 'error', autoClose: 15000 },
       );
     }
@@ -85,7 +85,7 @@ const sendToast = function sendToast(
     );
     if (numericalErrors > 0) {
       toast(`${numericalErrors} non numerical entries in the 
-        ${columns.amount?.toUpperCase()} column
+        ${rows.amount?.toUpperCase()} column
         were ignored.`, { type: 'warning', autoClose: 12000 });
     }
   }
@@ -127,14 +127,8 @@ const saveCSVStart = function saveCSVStart(
   showNewSheet: Function,
   setShowPopup: Function,
 ) {
-  const rowEntries = JSON.parse(getStorageItem(getRowEntryId()));
-  columns = {
-    group: rowEntries.group.toLowerCase(),
-    source: rowEntries.source.toLowerCase(),
-    amount: rowEntries.amount.toLowerCase(),
-  };
   const rawCSVData = JSON.parse(getStorageItem(`rawCSVData_${getCurrentTab()}`));
-  console.log('start', rowEntries, rawCSVData);
+  console.log('start', rawCSVData);
   const newSheet: DataSheet = JSON.parse(getStorageItem(`new_${getCurrentTab()}`) || '[]');
   let count = 0;
   let successfulExtractions = 0;
@@ -142,21 +136,21 @@ const saveCSVStart = function saveCSVStart(
   for (const line of rawCSVData) {
     const keys: any = { source: null, amount: null };
     for (const key of Object.keys(line)) {
-      if (columns.group) {
-        if (key.toLowerCase() === columns.group) keys.group = key;
+      if (rows.group) {
+        if (key.toLowerCase() === rows.group) keys.group = key;
       }
-      if (key.toLowerCase() === columns.source) keys.source = key;
-      if (key.toLowerCase() === columns.amount) keys.amount = key;
+      if (key.toLowerCase() === rows.source) keys.source = key;
+      if (key.toLowerCase() === rows.amount) keys.amount = key;
       if (keys.source && keys.amount) {
-        if (columns.group && keys.group) {
+        if (rows.group && keys.group) {
           break;
-        } else if (!columns.group) break;
+        } else if (!rows.group) break;
       }
     }
     const amountIsNotANumber = getIsNotANumber(line[keys.amount] || '');
     if (amountIsNotANumber) {
       count += 1;
-    } else if (columns.group) {
+    } else if (rows.group) {
       const { foundItem, index } = getMatchingItemResults(newSheet, line, keys);
       if (keys.group && keys.source && keys.amount) {
         if (foundItem) {
@@ -174,6 +168,7 @@ const saveCSVStart = function saveCSVStart(
             group: line[keys.group],
             amount: Number(line[keys.amount]),
             source: line[keys.source],
+            timestamp: rows.sheetDate1 || new Date(),
           });
         }
       }
@@ -193,6 +188,7 @@ const saveCSVStart = function saveCSVStart(
         newSheet.data.push({
           amount: Number(line[keys.amount]),
           source: line[keys.source],
+          timestamp: rows.sheetDate1 || new Date(),
         });
       }
     }
@@ -217,23 +213,77 @@ const saveCSVStart = function saveCSVStart(
   }
 };
 
+let parserData: any = [];
+let allKeysPresent: boolean = false;
 export const getDataFromCSV = function getDataFromCSV(
   files: any,
   showNewSheet: Function,
   setShowPopup: Function,
 ) {
+  parserData = [];
+  allKeysPresent = false;
+  const rowEntries: RowBuilderInput = JSON.parse(getStorageItem(getRowEntryId()));
+  rows = {
+    group: rowEntries.group?.toLowerCase(),
+    source: rowEntries.source?.toLowerCase(),
+    amount: rowEntries.amount?.toLowerCase(),
+    timestamp: rowEntries.timestamp?.toLowerCase(),
+  };
+  const rowsHere = [
+    rowEntries.source?.toLowerCase(),
+    rowEntries.amount?.toLowerCase(),
+  ];
+  if (rowEntries.group) rowsHere.push(rowEntries.group?.toLowerCase());
+  if (rowEntries.timestamp) rowsHere.push(rowEntries.timestamp?.toLowerCase());
+
   Papa.parse(files[0], {
-    step: (row, parser) => {
-      parser.pause();
-      parser.resume();
-      // parser.abort();
+    step: (row: any, parser) => {
+      const uploadData: any = {};
+      if (!allKeysPresent) {
+        parser.pause();
+        let timestampFound = true;
+        if (rowEntries.timestamp) {
+          timestampFound = false;
+          for (const [key] of Object.entries(row.data)) {
+            if (key.toLowerCase() === rowEntries.timestamp.toLowerCase()) {
+              timestampFound = true;
+            }
+          }
+        }
+        if (timestampFound) {
+          let keysFound = 0;
+          for (const [key, value] of Object.entries(row.data)) {
+            if (rowsHere.includes(key.toLowerCase())) {
+              keysFound += 1;
+              uploadData[key.toLowerCase()] = value;
+            }
+          }
+          if (keysFound === rowsHere.length) {
+            allKeysPresent = true;
+            parserData.push(uploadData);
+            parser.resume();
+          } else {
+            parser.abort();
+          }
+        } else {
+          parser.abort();
+        }
+      } else {
+        for (const [key, value] of Object.entries(row.data)) {
+          if (rowsHere.includes(key.toLowerCase())) {
+            uploadData[key.toLowerCase()] = value;
+          }
+        }
+        parserData.push(uploadData);
+      }
     },
-    complete: (result) => {
-      console.log('initial result', result);
-      setStorageItem(`rawCSVData_${getCurrentTab()}`, JSON.stringify(result.data));
-      saveCSVStart(showNewSheet, setShowPopup);
+    complete: () => {
+      console.log('initial result', parserData);
+      // setStorageItem(`rawCSVData_${getCurrentTab()}`, JSON.stringify(parserData));
+      // saveCSVStart(showNewSheet, setShowPopup);
     },
     header: true,
+    skipEmptyLines: true,
   });
 };
 
