@@ -72,3 +72,9 @@ export type Sheets = {
   income?: DataSheet[],
   resources?: DataSheet[],
 }
+
+export type ShowSheetBuilder = {
+  [key: string]: boolean | null
+  income: boolean | null,
+  resources: boolean | null,
+}

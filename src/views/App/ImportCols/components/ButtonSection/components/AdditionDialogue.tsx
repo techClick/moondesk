@@ -15,8 +15,8 @@ const AdditionDialogue = function AdditionDialogue(
   const showPopup = useAppSelector(selectShowPopup);
   const currentTab = getCurrentTab();
 
-  const labels2 = labels.filter((label, index) => index <= 3);
-  const nonLabels = labels.filter((label, index) => index > 3);
+  const labels2 = labels.filter((label, index) => index <= 2);
+  const nonLabels = labels.filter((label, index) => index > 2);
   return (
     <S.Container>
       <S.Header>Extracting CSV contents</S.Header>
@@ -27,10 +27,12 @@ const AdditionDialogue = function AdditionDialogue(
       <S.LabelCont>
         <S.Label>
           { labels2.map((label, index) => {
-            const suffixTenary1 = nonLabels.length === 0 ? '.' : '';
-            const suffixTenary2 = nonLabels.length === 0 ? ' and ' : ', ';
-            const suffixTenary = index === 3 ? suffixTenary1 : suffixTenary2;
-            const suffix = index === 0 ? ', ' : suffixTenary;
+            const suffixTenary5 = labels2.length === 2 ? ' and ' : ', ';
+            const suffixTenary4 = labels2.length === 2 ? '. ' : ' and ';
+            const suffixTenary3 = nonLabels.length === 0 ? '.' : '';
+            const suffixTenary2 = index === 2 ? suffixTenary3 : suffixTenary4;
+            const suffixTenary1 = labels2.length === 1 ? '.' : suffixTenary5;
+            const suffix = index === 0 ? suffixTenary1 : suffixTenary2;
             return `${label}${suffix}`;
           })}
         </S.Label>

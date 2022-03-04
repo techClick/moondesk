@@ -5,6 +5,7 @@ import { DataSheet, RowBuild, Sheets } from 'types/types';
 import {
   getStorageItem, setStorageItem, getCurrentTab, getImportType,
   getIsSameDay, getDateIsOlder, getDateIsNewer } from 'views/App/utils/utils';
+import { setNewSheet, setShowPopup, setShowSheetBuilder } from 'views/App/ImportCols/redux';
 import LoadingDialogue from 'views/App/components/LoadingDialogue/Loading';
 import { getNewSheetId, getRawDataId, getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import AdditionDialogue from '../components/AdditionDialogue';
@@ -23,7 +24,7 @@ let emptyErrors: number;
 let emptyTimeErrors: number;
 let dateFormatErrors: number;
 let outOfDateErrors: number;
-let successfulExtractions: number;
+let totalErrors: number;
 let timestampFound: boolean;
 
 type NewSheetResult = {
@@ -40,8 +41,8 @@ const sendToast = function sendToast(): void {
   if (!timestampFound) {
     toast(`No timestamp row with the name
       ${rows.timestamp?.toUpperCase()} was found`, { type: 'error', autoClose: 6000 });
-  } else if (successfulExtractions === 0) {
-    if (numericalErrors > 0 || emptyErrors > 0) {
+  } else if (parserData.length === 0) {
+    if (totalErrors > 0) {
       toast('Data upload failed', { type: 'error', autoClose: 12000 });
       if (numericalErrors > 0) {
         toast(`The ${rows.amount.toUpperCase()} row in your file contains non numerical 
@@ -74,13 +75,13 @@ const sendToast = function sendToast(): void {
     }
   } else {
     toast(
-      `Successfully added ${successfulExtractions}/${parserData.length} entries`,
-      { type: 'success', autoClose: (numericalErrors || emptyErrors) > 0 ? 10000 : 5000 },
+      `Successfully added ${parserData.length}/${parserData.length + totalErrors} entries`,
+      { type: 'success', autoClose: totalErrors > 0 ? 13000 : 5000 },
     );
     if (numericalErrors > 0) {
-      toast(`${numericalErrors} non numerical entries in the 
-        ${rows.amount?.toUpperCase()} row
-        were ignored.`, { type: 'warning', autoClose: 12000 });
+      toast(`${numericalErrors} non numerical entr${numericalErrors > 1 ? 'ies' : 'y'} in the 
+        ${rows.amount?.toUpperCase()} row ${numericalErrors > 1 ? 'were' : 'was'}
+        ignored.`, { type: 'warning', autoClose: 12000 });
     }
     if (emptyErrors > 0) {
       toast(`${emptyErrors} empty entr${emptyErrors > 1 ? 'ies' : 'y'}
@@ -97,21 +98,20 @@ const sendToast = function sendToast(): void {
     }
     if (outOfDateErrors > 0) {
       toast(`${outOfDateErrors} date${outOfDateErrors > 1 ? 's' : ''} that occur(s) outside the selected
-        date ${outOfDateErrors > 1 ? 'were' : 'was'} ignored.`, { type: 'warning', autoClose: 12000 });
+        dates ${outOfDateErrors > 1 ? 'were' : 'was'} ignored.`, { type: 'warning', autoClose: 12000 });
     }
   }
 };
 
-const saveUploadDatatoSheet = function saveUploadDatatoSheet(
-  showNewSheet: Function,
-  setShowPopup: Function,
-): void {
+const saveUploadDatatoSheet = () => (dispatch: Function) => {
   const sheets: Sheets = JSON.parse(getStorageItem(getNewSheetId()) || '{}');
   const newSheet: DataSheet[] = newSheetResult.dataSheet;
+  const thisTab = getCurrentTab();
   localStorage.removeItem(getRawDataId());
-  setStorageItem(getNewSheetId(), JSON.stringify({ ...sheets, [getCurrentTab()]: newSheet }));
-  showNewSheet({ ...sheets, [getCurrentTab()]: newSheet });
-  setShowPopup({});
+  setStorageItem(getNewSheetId(), JSON.stringify({ ...sheets, [thisTab]: newSheet }));
+  dispatch(setNewSheet({ ...sheets, [thisTab]: newSheet }));
+  dispatch(setShowSheetBuilder(true));
+  dispatch(setShowPopup({}));
   sendToast();
 };
 
@@ -133,10 +133,7 @@ const getMatchingItemResults = function getMatchingItemResults(
   return { foundItem: found, index };
 };
 
-const saveUploadDataStart = function saveUploadDataStart(
-  showNewSheet: Function,
-  setShowPopup: Function,
-) {
+const saveUploadDataStart = () => (dispatch: Function) => {
   const newSheet: DataSheet = { date: new Date(rows.sheetDate1), data: [] };
   const additionSources: Array<string> = [];
   for (const line of parserData) {
@@ -162,27 +159,38 @@ const saveUploadDataStart = function saveUploadDataStart(
     additions: additionSources,
   };
   if (parserData.length === 0) {
-    setShowPopup({});
+    dispatch(setShowPopup({}));
     sendToast();
   } else if (additionSources.length > 0) {
-    setShowPopup({
+    dispatch(setShowPopup({
       income: <AdditionDialogue
-        onComplete={() => saveUploadDatatoSheet(showNewSheet, setShowPopup)}
+        onComplete={() => dispatch(saveUploadDatatoSheet())}
         labels={additionSources}
       />,
-      resources: null,
-    });
+      resources: false,
+    }));
   } else {
-    saveUploadDatatoSheet(showNewSheet, setShowPopup);
+    dispatch(saveUploadDatatoSheet());
+  }
+};
+
+const arrangeUploadData = () => () => {
+  const useRange = getStorageItem(getUseRangeId());
+  if (useRange) {
+    const uploadDateStrings: string[] = [];
+    const uploadDates: Date[] = [];
+    for (let i = 0; i < parserData.length; i += 1) {
+      if (!uploadDateStrings.includes(parserData[i][rows.timestamp || 'null'])) {
+        uploadDateStrings.push(parserData[i][rows.timestamp || 'null']);
+        uploadDates.push(new Date(parserData[i][rows.timestamp || 'null']));
+      }
+    }
+    console.log(uploadDates);
   }
 };
 
 let allKeysPresent: boolean = false;
-export const getDataFromCSV = function getDataFromCSV(
-  files: any,
-  showNewSheet: Function,
-  setShowPopup: Function,
-) {
+export const getDataFromCSV = (files: any) => (dispatch: Function) => {
   parserData = [];
   allKeysPresent = false;
   numericalErrors = 0;
@@ -190,7 +198,7 @@ export const getDataFromCSV = function getDataFromCSV(
   emptyTimeErrors = 0;
   dateFormatErrors = 0;
   outOfDateErrors = 0;
-  successfulExtractions = 0;
+  totalErrors = 0;
   const useRange = getStorageItem(getUseRangeId());
   rows = JSON.parse(getStorageItem(getRowEntryId()));
   const inputRows = [
@@ -204,6 +212,7 @@ export const getDataFromCSV = function getDataFromCSV(
     step: (row: any, parser) => {
       const uploadData: any = {};
       if (!allKeysPresent) {
+        dispatch(setShowPopup({ income: <LoadingDialogue text={`Parsing ${getImportType()}`} /> }));
         parser.pause();
         timestampFound = true;
         if (rows.timestamp) {
@@ -224,39 +233,41 @@ export const getDataFromCSV = function getDataFromCSV(
           }
           if (keysFound === inputRows.length) {
             allKeysPresent = true;
-            const amountIsNotANumber = getIsNotANumber(uploadData.amount);
+            const amountIsNotANumber = getIsNotANumber(uploadData[rows.amount]);
             if (!uploadData[rows.source] || !uploadData[rows.amount]) {
               emptyErrors += 1;
+              totalErrors += 1;
             } else if (amountIsNotANumber) {
               numericalErrors += 1;
+              totalErrors += 1;
             } else if (rows.timestamp) {
               if (!uploadData[rows.timestamp]) {
                 emptyTimeErrors += 1;
+                totalErrors += 1;
               } else if (isNaN(new Date(uploadData[rows.timestamp]).getTime())) {
                 dateFormatErrors += 1;
+                totalErrors += 1;
               } else if (!useRange
                 && !getIsSameDay(new Date(uploadData[rows.timestamp]), new Date(rows.sheetDate1))
               ) {
                 outOfDateErrors += 1;
+                totalErrors += 1;
               } else if (useRange
                 && (getDateIsOlder(rows.sheetDate1, new Date(uploadData[rows.timestamp]))
                 || getDateIsNewer(rows.sheetDate2, new Date(uploadData[rows.timestamp])))) {
                 outOfDateErrors += 1;
+                totalErrors += 1;
               } else {
-                successfulExtractions += 1;
                 parserData.push(uploadData);
               }
             } else {
-              successfulExtractions += 1;
               parserData.push(uploadData);
             }
             parser.resume();
           } else {
-            sendToast();
             parser.abort();
           }
         } else {
-          sendToast();
           parser.abort();
         }
       } else {
@@ -265,39 +276,41 @@ export const getDataFromCSV = function getDataFromCSV(
             uploadData[key.toLowerCase()] = value;
           }
         }
-        const amountIsNotANumber = getIsNotANumber(uploadData.amount);
+        const amountIsNotANumber = getIsNotANumber(uploadData[rows.amount]);
         if (!uploadData[rows.source] || !uploadData[rows.amount]) {
           emptyErrors += 1;
+          totalErrors += 1;
         } else if (amountIsNotANumber) {
           numericalErrors += 1;
+          totalErrors += 1;
         } else if (rows.timestamp) {
           if (!uploadData[rows.timestamp]) {
             emptyTimeErrors += 1;
+            totalErrors += 1;
           } else if (isNaN(new Date(uploadData[rows.timestamp]).getTime())) {
             dateFormatErrors += 1;
+            totalErrors += 1;
           } else if (!useRange
             && !getIsSameDay(new Date(uploadData[rows.timestamp]), new Date(rows.sheetDate1))
           ) {
             outOfDateErrors += 1;
+            totalErrors += 1;
           } else if (useRange
             && (getDateIsOlder(rows.sheetDate1, new Date(uploadData[rows.timestamp]))
             || getDateIsNewer(rows.sheetDate2, new Date(uploadData[rows.timestamp])))) {
             outOfDateErrors += 1;
+            totalErrors += 1;
           } else {
-            successfulExtractions += 1;
             parserData.push(uploadData);
           }
         } else {
-          successfulExtractions += 1;
           parserData.push(uploadData);
         }
       }
     },
     complete: () => {
-      console.log('initial result', parserData);
-      setShowPopup({ incomeu: 4 });
-      // setStorageItem(getRawDataId(), JSON.stringify(parserData));
-      // saveUploadDataStart(showNewSheet, setShowPopup);
+      setStorageItem(getRawDataId(), JSON.stringify(parserData));
+      dispatch(arrangeUploadData());
     },
     header: true,
     skipEmptyLines: true,

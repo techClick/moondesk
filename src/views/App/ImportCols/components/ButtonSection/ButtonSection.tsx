@@ -1,18 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from 'redux/hooks';
-import { InputError, Sheets, ShowPopup } from 'types/types';
-import {
-  selectShowSheetBuilder, setNewSheet, setShowPopup, setShowSheetBuilder,
-} from 'views/App/ImportCols/redux';
-import { getCurrentTab, getImportType } from 'views/App/utils/utils';
+import { InputError } from 'types/types';
+import { getImportType } from 'views/App/utils/utils';
 import { setInputError } from '../../redux';
 import * as S from './ButtonSection.styled';
 import { uploadStart } from './utils/utils';
 import { getDataFromCSV, importType } from './utils/DataUtils';
 
 const ButtonSection = function ButtonSection() {
-  const showSheetBuilder = useAppSelector(selectShowSheetBuilder);
   const dispatch = useDispatch();
 
   return (
@@ -22,14 +17,7 @@ const ButtonSection = function ButtonSection() {
         type="file"
         id="uploadSheet"
         onChange={(e) => {
-          getDataFromCSV(
-            e.target.files,
-            (sheets: Sheets) => {
-              dispatch(setNewSheet(sheets));
-              dispatch(setShowSheetBuilder({ ...showSheetBuilder, [getCurrentTab()]: true }));
-            },
-            (showPopup: ShowPopup) => dispatch(setShowPopup(showPopup)),
-          );
+          dispatch(getDataFromCSV(e.target.files));
           e.target.value = '';
         }}
       />

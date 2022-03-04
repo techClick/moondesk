@@ -1,14 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'redux/store';
-import { InputError, Sheets, ShowPopup } from 'types/types';
+import { ShowSheetBuilder, InputError, Sheets, ShowPopup } from 'types/types';
 import { getNewSheetId } from '../utils/GlobalUtils';
-import { getStorageItem } from '../utils/utils';
-
-type ShowSheetBuilder = {
-  [key: string]: boolean | null
-  income: boolean | null,
-  resources: boolean | null,
-}
+import { getCurrentTab, getStorageItem } from '../utils/utils';
 
 export interface AppState {
   inputError: InputError,
@@ -37,8 +31,8 @@ export const counterSlice = createSlice({
     setNewSheet: (state, action: PayloadAction<Sheets>) => {
       state.newSheet = action.payload;
     },
-    setShowSheetBuilder: (state, action: PayloadAction<ShowSheetBuilder>) => {
-      state.showSheetBuilder = action.payload;
+    setShowSheetBuilder: (state, action: PayloadAction<boolean>) => {
+      state.showSheetBuilder = { ...state.showSheetBuilder, [getCurrentTab()]: action.payload };
     },
     setShowPopup: (state, action: PayloadAction<ShowPopup>) => {
       state.showPopup = action.payload;
