@@ -2,18 +2,24 @@ import React from 'react';
 import { FormattedNumber } from 'react-intl';
 import { useAppSelector } from 'redux/hooks';
 import { DataSheet } from 'types/types';
-import { selectNewIncomeSheet } from 'views/App/redux';
+import { selectNewSheet } from 'views/App/ImportCols/redux';
 import { MainButton } from 'views/App/styles';
-import { getStorageItem } from 'views/App/utils/utils';
+import { getCurrentTab, getIsSameDay, getStorageItem } from 'views/App/utils/utils';
+import { getNewSheetDate } from '../../../../utils/utils';
 import * as S from './GrossPart.styled';
 
 const GrossPart = function GrossPart() {
-  const newIncomeSheet: DataSheet = useAppSelector(selectNewIncomeSheet);
+  const currency = getStorageItem('currency') || '$';
+  const newSheetDate = getNewSheetDate(
+    useAppSelector(selectNewSheet)?.[getCurrentTab()] || [{ date: new Date(), data: [] }],
+  );
+  const newSheet: DataSheet = useAppSelector(selectNewSheet)?.[getCurrentTab()]?.find(
+    (dataSheet) => getIsSameDay(dataSheet.date, new Date(newSheetDate)),
+  ) || { date: new Date(), data: [] };
   let grossAmount = 0;
-  for (const entry of newIncomeSheet.data) {
+  for (const entry of newSheet.data) {
     grossAmount += entry.amount || 0;
   }
-  const currency = getStorageItem('currency') || '$';
 
   return (
     <S.Container>

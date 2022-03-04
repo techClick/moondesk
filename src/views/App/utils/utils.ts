@@ -90,3 +90,25 @@ export const getIsSameDay = function getIsSameDay(date1: Date, date2: Date): boo
   }
   return false;
 };
+
+export const getDateIsOlder = function getDateIsOlder(date1: Date, date2: Date): boolean {
+  date1 = new Date(date1);
+  date2 = new Date(date2);
+  date1.setHours(0, 0, 0, 0);
+  date2.setHours(0, 0, 0, 0);
+  if (date2 < date1) {
+    return true;
+  }
+  return false;
+};
+
+export const getDateIsNewer = function getDateIsNewer(date1: Date, date2: Date): boolean {
+  date1 = new Date(date1);
+  date2 = new Date(date2);
+  date1.setHours(0, 0, 0, 0);
+  date2.setHours(0, 0, 0, 0);
+  if (date2 > date1) {
+    return true;
+  }
+  return false;
+};

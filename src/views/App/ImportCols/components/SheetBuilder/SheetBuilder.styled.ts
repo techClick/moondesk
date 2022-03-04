@@ -1,6 +1,6 @@
 import Color from 'color';
 import styled, { keyframes } from 'styled-components';
-import { containerPadding, panelBorderColor } from '../../styles';
+import { containerPadding, panelBorderColor } from 'views/App/styles';
 
 const breatheAnimation = keyframes`
  0% { opacity: 0 }

@@ -30,7 +30,17 @@ export type RowBuilderInput = {
   sheetDate2?: Date,
 }
 
-export type InputErrorCB = {
+export type RowBuild = {
+  [key: string]: string | Date | undefined,
+  group?: string,
+  timestamp?: string,
+  source: string,
+  amount: string,
+  sheetDate1: Date,
+  sheetDate2: Date,
+}
+
+export type InputError = {
   [key: string]: string | Date | undefined | false,
   group?: string | false,
   timestamp?: string | false,
@@ -41,15 +51,8 @@ export type InputErrorCB = {
 export type SheetEntry = {
   [key: string]: string | Date | number | undefined,
   group?: string,
-  timestamp: Date,
   source: string,
   amount: number,
-};
-
-export type Sheet = {
-  [key: string]: Date | Array<SheetEntry>,
-  date: Date,
-  data: Array<SheetEntry>,
 };
 
 export type DataSheet = {
@@ -63,3 +66,9 @@ export type ShowPopup = {
   income: ReactElement | null,
   resources: ReactElement | null,
 };
+
+export type Sheets = {
+  [key: string]: DataSheet[] | null | undefined
+  income?: DataSheet[],
+  resources?: DataSheet[],
+}

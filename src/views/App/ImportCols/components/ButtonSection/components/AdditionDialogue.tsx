@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/hooks';
-import { selectShowPopup, setShowPopup } from 'views/App/components/SheetBuilder/redux';
+import { selectShowPopup, setShowPopup } from 'views/App/ImportCols/components/SheetBuilder/redux';
 import { getCurrentTab } from 'views/App/utils/utils';
 import { MainButton } from 'views/App/styles';
 import * as S from './AdditionDialogue.styled';

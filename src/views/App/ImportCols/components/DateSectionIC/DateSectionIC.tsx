@@ -15,14 +15,17 @@ const DateSection = function DateSection() {
   const useRangeStore: string | null = getStorageItem(getUseRangeId());
   const [useRange, setUseRange] = useState<boolean>(Boolean(useRangeStore));
   if (!getStorageItem(getRowEntryId())) {
-    setStorageItem(getRowEntryId(), JSON.stringify({ sheetDate1: new Date() }));
+    setStorageItem(getRowEntryId(), JSON.stringify({
+      sheetDate1: new Date(),
+      sheetDate2: new Date(),
+    }));
   }
   const [sheetDateDate1, setSheetDateDate1] = useState<Date>(JSON.parse(
     getStorageItem(getRowEntryId()),
-  ).sheetDate1 || new Date());
+  ).sheetDate1);
   const [sheetDateDate2, setSheetDateDate2] = useState<Date>(JSON.parse(
     getStorageItem(getRowEntryId()),
-  ).sheetDate2 || new Date());
+  ).sheetDate2);
   const [showDate, setShowDate] = useState<string>('');
 
   const minDates: any = {

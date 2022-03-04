@@ -1,32 +1,39 @@
 import React from 'react';
 import Papa from 'papaparse';
 import { toast } from 'react-toastify';
-import { DataSheet, RowBuilderInput, InputErrorCB, SheetEntry } from 'types/types';
-import { getStorageItem, setStorageItem, getCurrentTab } from 'views/App/utils/utils';
-import { getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
+import { DataSheet, RowBuilderInput, InputError, RowBuild } from 'types/types';
+import { getStorageItem, setStorageItem, getCurrentTab, getImportType, getIsSameDay, getDateIsOlder, getDateIsNewer } from 'views/App/utils/utils';
+import { getRawDataId, getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import AdditionDialogue from '../components/AdditionDialogue';
 
 export const importType: any = {
   csv: 'CSV',
   excel: 'EXCEL',
-  dbf: '.db File',
+  dbf: '.db',
 };
 
-let rows: RowBuilderInput;
+let rows: RowBuild;
+let parserData: any;
+let numericalErrors: number;
+let emptyErrors: number;
+let emptyTimeErrors: number;
+let dateFormatErrors: number;
+let outOfDateErrors: number;
+let successfulExtractions: number;
+let timestampFound: boolean;
+
 type NewSheetResult = {
   dataSheet: DataSheet,
-  numericalErrors: number,
   additions: Array<string>,
 };
 let newSheetResult: NewSheetResult = {
   dataSheet: { date: new Date(), data: [] },
-  numericalErrors: 0,
   additions: [],
 };
 
 const getIsUploadError = function getIsUploadError() {
   const input: RowBuilderInput = JSON.parse(getStorageItem(getRowEntryId()) || '{}');
-  const errorTmp: InputErrorCB = { source: false, amount: false };
+  const errorTmp: InputError = { source: false, amount: false };
   if (!input.amount) {
     errorTmp.amount = 'Required';
   }
@@ -59,62 +66,94 @@ const getIsNotANumber = function getIsNotANumber(amount: string | null): boolean
   return false;
 };
 
-const sendToast = function sendToast(
-  successfulExtractions: number,
-  numericalErrors: number,
-): void {
-  if (successfulExtractions === 0) {
-    if (numericalErrors > 0) {
-      toast(`No data was loaded. 
-        The ${rows.amount} column in your file contains non numerical 
-        entries`, { type: 'error', autoClose: 12000 });
+const sendToast = function sendToast(): void {
+  if (!timestampFound) {
+    toast(`No timestamp row with the name
+      ${rows.timestamp?.toUpperCase()} was found`, { type: 'error', autoClose: 6000 });
+  } else if (successfulExtractions === 0) {
+    if (numericalErrors > 0 || emptyErrors > 0) {
+      toast('Data upload failed', { type: 'error', autoClose: 12000 });
+      if (numericalErrors > 0) {
+        toast(`The ${rows.amount.toUpperCase()} row in your file contains non numerical 
+          entries`, { type: 'error', autoClose: 12000 });
+      }
+      if (emptyErrors > 0) {
+        toast('Empty entries were found', { type: 'error', autoClose: 12000 });
+      }
+      if (emptyTimeErrors > 0) {
+        toast(`The ${rows.timestamp?.toUpperCase()}
+          row contains empty date entries`, { type: 'error', autoClose: 12000 });
+      }
+      if (dateFormatErrors > 0) {
+        toast(`The ${rows.timestamp?.toUpperCase()}
+          row contains wrongly formatted dates`, { type: 'error', autoClose: 12000 });
+      }
+      if (outOfDateErrors > 0) {
+        toast(`The ${rows.timestamp?.toUpperCase()} row contains ${outOfDateErrors} date(s) that 
+        occur outside the selected date`, { type: 'error', autoClose: 12000 });
+      }
     } else {
       toast(
-        `Data upload failed. The CSV file does not contain the rows ${rows.group && ' '}
+        `Data upload failed. The ${importType[getImportType()]} 
+        ${' '}file does not contain the rows ${rows.group && ' '}
         ${rows.group && rows.group.toUpperCase()}${rows.group && ','}
-        ${' '}${rows.source?.toUpperCase()}
-        and ${rows.amount?.toUpperCase()} combined.`,
+        ${' '}${rows.source.toUpperCase()}
+        and ${rows.amount.toUpperCase()} combined.`,
         { type: 'error', autoClose: 15000 },
       );
     }
   } else {
-    const rawCSVData = JSON.parse(getStorageItem(`rawCSVData_${getCurrentTab()}`));
     toast(
-      `Successfully added ${successfulExtractions}/${rawCSVData.length} entries`,
-      { type: 'success', autoClose: numericalErrors > 0 ? 9000 : 5000 },
+      `Successfully added ${successfulExtractions}/${parserData.length} entries`,
+      { type: 'success', autoClose: (numericalErrors || emptyErrors) > 0 ? 10000 : 5000 },
     );
     if (numericalErrors > 0) {
       toast(`${numericalErrors} non numerical entries in the 
-        ${rows.amount?.toUpperCase()} column
+        ${rows.amount?.toUpperCase()} row
         were ignored.`, { type: 'warning', autoClose: 12000 });
+    }
+    if (emptyErrors > 0) {
+      toast(`${emptyErrors} empty entr${emptyErrors > 1 ? 'ies' : 'y'}
+      ${emptyErrors > 1 ? 'were' : 'was'} ignored.`, { type: 'warning', autoClose: 12000 });
+    }
+    if (emptyTimeErrors > 0) {
+      toast(`${emptyTimeErrors} empty date entr${emptyTimeErrors > 1 ? 'ies' : 'y'}
+      in ${rows.timestamp?.toUpperCase()} ${emptyTimeErrors > 1 ? 'were' : 'was'} 
+      ignored.`, { type: 'warning', autoClose: 12000 });
+    }
+    if (dateFormatErrors > 0) {
+      toast(`${dateFormatErrors} empty wrongly formatted date${dateFormatErrors > 1 ? 's' : ''}
+      ${dateFormatErrors > 1 ? 'were' : 'was'} ignored.`, { type: 'warning', autoClose: 12000 });
+    }
+    if (outOfDateErrors > 0) {
+      toast(`${outOfDateErrors} date${outOfDateErrors > 1 ? 's' : ''} that occur(s) outside the selected
+        date ${outOfDateErrors > 1 ? 'were' : 'was'} ignored.`, { type: 'warning', autoClose: 12000 });
     }
   }
 };
 
 const saveCSVtoSheet = function saveCSVtoSheet(
   showNewSheet: Function,
-  successfulExtractions: number,
   setShowPopup: Function,
 ): void {
   const newSheet: DataSheet = newSheetResult.dataSheet;
-  setStorageItem(`new_${getCurrentTab()}`, JSON.stringify(newSheet));
+  setStorageItem(`new_${getCurrentTab()}`, JSON.stringify([newSheet]));
   localStorage.removeItem(`rawCSVData_${getCurrentTab()}`);
   showNewSheet(newSheet);
   setShowPopup({ income: null, resources: null });
-  sendToast(successfulExtractions, newSheetResult.numericalErrors);
+  sendToast();
 };
 
 const getMatchingItemResults = function getMatchingItemResults(
   newSheet: DataSheet,
   line: any,
-  keys: any,
 ) {
   const found = newSheet.data.find((entry) => {
-    return (line[keys.group] && entry.group
-      && line[keys.group].toLowerCase() === entry.group.toLowerCase()
-      && line[keys.source].toLowerCase() === entry.source.toLowerCase())
-      || ((!line[keys.group] && !entry.group)
-      && line[keys.source].toLowerCase() === entry.source.toLowerCase());
+    return (rows.group && line[rows.group] && entry.group
+      && line[rows.group].toLowerCase() === entry.group.toLowerCase()
+      && line[rows.source].toLowerCase() === entry.source.toLowerCase())
+      || (!rows.group && !entry.group
+      && line[rows.source].toLowerCase() === entry.source.toLowerCase());
   });
   let index = -1;
   if (found) {
@@ -127,93 +166,45 @@ const saveCSVStart = function saveCSVStart(
   showNewSheet: Function,
   setShowPopup: Function,
 ) {
-  const rawCSVData = JSON.parse(getStorageItem(`rawCSVData_${getCurrentTab()}`));
-  console.log('start', rawCSVData);
-  const newSheet: DataSheet = JSON.parse(getStorageItem(`new_${getCurrentTab()}`) || '[]');
-  let count = 0;
-  let successfulExtractions = 0;
+  const newSheet: DataSheet = { date: new Date(rows.sheetDate1), data: [] };
   const additionSources: Array<string> = [];
-  for (const line of rawCSVData) {
-    const keys: any = { source: null, amount: null };
-    for (const key of Object.keys(line)) {
-      if (rows.group) {
-        if (key.toLowerCase() === rows.group) keys.group = key;
+  for (const line of parserData) {
+    const { foundItem, index } = getMatchingItemResults(newSheet, line);
+    if (foundItem) {
+      if (!additionSources.find((source) => source === foundItem.source.toUpperCase())) {
+        additionSources.push(foundItem.source.toUpperCase());
       }
-      if (key.toLowerCase() === rows.source) keys.source = key;
-      if (key.toLowerCase() === rows.amount) keys.amount = key;
-      if (keys.source && keys.amount) {
-        if (rows.group && keys.group) {
-          break;
-        } else if (!rows.group) break;
-      }
-    }
-    const amountIsNotANumber = getIsNotANumber(line[keys.amount] || '');
-    if (amountIsNotANumber) {
-      count += 1;
-    } else if (rows.group) {
-      const { foundItem, index } = getMatchingItemResults(newSheet, line, keys);
-      if (keys.group && keys.source && keys.amount) {
-        if (foundItem) {
-          if (!additionSources.find((source) => source === foundItem.source.toUpperCase())) {
-            additionSources.push(foundItem.source.toUpperCase());
-          }
-          successfulExtractions += 1;
-          newSheet.data[index] = {
-            ...newSheet.data[index],
-            amount: Number(line[keys.amount]) + newSheet.data[index].amount,
-          };
-        } else {
-          successfulExtractions += 1;
-          newSheet.data.push({
-            group: line[keys.group],
-            amount: Number(line[keys.amount]),
-            source: line[keys.source],
-            timestamp: rows.sheetDate1 || new Date(),
-          });
-        }
-      }
-    } else if (keys.source && keys.amount) {
-      const { foundItem, index } = getMatchingItemResults(newSheet, line, keys);
-      if (foundItem) {
-        if (!additionSources.find((source) => source === foundItem.source.toUpperCase())) {
-          additionSources.push(foundItem.source.toUpperCase());
-        }
-        successfulExtractions += 1;
-        newSheet.data[index] = {
-          ...newSheet.data[index],
-          amount: Number(line[keys.amount]) + newSheet.data[index].amount,
-        };
-      } else {
-        successfulExtractions += 1;
-        newSheet.data.push({
-          amount: Number(line[keys.amount]),
-          source: line[keys.source],
-          timestamp: rows.sheetDate1 || new Date(),
-        });
-      }
+      newSheet.data[index] = {
+        ...newSheet.data[index],
+        amount: Number(line[rows.amount]) + newSheet.data[index].amount,
+      };
+    } else {
+      newSheet.data.push({
+        group: rows.group && line[rows.group],
+        amount: Number(line[rows.amount]),
+        source: line[rows.source],
+      });
     }
   }
   newSheetResult = {
     dataSheet: newSheet,
-    numericalErrors: count,
     additions: additionSources,
   };
-  if (successfulExtractions === 0) {
-    sendToast(0, newSheetResult.numericalErrors);
+  if (parserData.length === 0) {
+    sendToast();
   } else if (additionSources.length > 0) {
     setShowPopup({
       income: <AdditionDialogue
-        onComplete={() => saveCSVtoSheet(showNewSheet, successfulExtractions, setShowPopup)}
+        onComplete={() => saveCSVtoSheet(showNewSheet, setShowPopup)}
         labels={additionSources}
       />,
       resources: null,
     });
   } else {
-    saveCSVtoSheet(showNewSheet, successfulExtractions, setShowPopup);
+    saveCSVtoSheet(showNewSheet, setShowPopup);
   }
 };
 
-let parserData: any = [];
 let allKeysPresent: boolean = false;
 export const getDataFromCSV = function getDataFromCSV(
   files: any,
@@ -222,30 +213,31 @@ export const getDataFromCSV = function getDataFromCSV(
 ) {
   parserData = [];
   allKeysPresent = false;
-  const rowEntries: RowBuilderInput = JSON.parse(getStorageItem(getRowEntryId()));
-  rows = {
-    group: rowEntries.group?.toLowerCase(),
-    source: rowEntries.source?.toLowerCase(),
-    amount: rowEntries.amount?.toLowerCase(),
-    timestamp: rowEntries.timestamp?.toLowerCase(),
-  };
-  const rowsHere = [
-    rowEntries.source?.toLowerCase(),
-    rowEntries.amount?.toLowerCase(),
+  numericalErrors = 0;
+  emptyErrors = 0;
+  emptyTimeErrors = 0;
+  dateFormatErrors = 0;
+  outOfDateErrors = 0;
+  successfulExtractions = 0;
+  const useRange = getStorageItem(getUseRangeId());
+  rows = JSON.parse(getStorageItem(getRowEntryId()));
+  const inputRows = [
+    rows.source,
+    rows.amount,
   ];
-  if (rowEntries.group) rowsHere.push(rowEntries.group?.toLowerCase());
-  if (rowEntries.timestamp) rowsHere.push(rowEntries.timestamp?.toLowerCase());
+  if (rows.group) inputRows.push(rows.group);
+  if (rows.timestamp) inputRows.push(rows.timestamp);
 
   Papa.parse(files[0], {
     step: (row: any, parser) => {
       const uploadData: any = {};
       if (!allKeysPresent) {
         parser.pause();
-        let timestampFound = true;
-        if (rowEntries.timestamp) {
+        timestampFound = true;
+        if (rows.timestamp) {
           timestampFound = false;
           for (const [key] of Object.entries(row.data)) {
-            if (key.toLowerCase() === rowEntries.timestamp.toLowerCase()) {
+            if (key.toLowerCase() === rows.timestamp) {
               timestampFound = true;
             }
           }
@@ -253,33 +245,85 @@ export const getDataFromCSV = function getDataFromCSV(
         if (timestampFound) {
           let keysFound = 0;
           for (const [key, value] of Object.entries(row.data)) {
-            if (rowsHere.includes(key.toLowerCase())) {
+            if (inputRows.includes(key.toLowerCase())) {
               keysFound += 1;
               uploadData[key.toLowerCase()] = value;
             }
           }
-          if (keysFound === rowsHere.length) {
+          if (keysFound === inputRows.length) {
             allKeysPresent = true;
-            parserData.push(uploadData);
+            const amountIsNotANumber = getIsNotANumber(uploadData.amount);
+            if (!uploadData[rows.source] || !uploadData[rows.amount]) {
+              emptyErrors += 1;
+            } else if (amountIsNotANumber) {
+              numericalErrors += 1;
+            } else if (rows.timestamp) {
+              if (!uploadData[rows.timestamp]) {
+                emptyTimeErrors += 1;
+              } else if (isNaN(new Date(uploadData[rows.timestamp]).getTime())) {
+                dateFormatErrors += 1;
+              } else if (!useRange
+                && !getIsSameDay(new Date(uploadData[rows.timestamp]), new Date(rows.sheetDate1))
+              ) {
+                outOfDateErrors += 1;
+              } else if (useRange
+                && (getDateIsOlder(rows.sheetDate1, new Date(uploadData[rows.timestamp]))
+                || getDateIsNewer(rows.sheetDate2, new Date(uploadData[rows.timestamp])))) {
+                outOfDateErrors += 1;
+              } else {
+                successfulExtractions += 1;
+                parserData.push(uploadData);
+              }
+            } else {
+              successfulExtractions += 1;
+              parserData.push(uploadData);
+            }
             parser.resume();
           } else {
+            sendToast();
             parser.abort();
           }
         } else {
+          sendToast();
           parser.abort();
         }
       } else {
         for (const [key, value] of Object.entries(row.data)) {
-          if (rowsHere.includes(key.toLowerCase())) {
+          if (inputRows.includes(key.toLowerCase())) {
             uploadData[key.toLowerCase()] = value;
           }
         }
-        parserData.push(uploadData);
+        const amountIsNotANumber = getIsNotANumber(uploadData.amount);
+        if (!uploadData[rows.source] || !uploadData[rows.amount]) {
+          emptyErrors += 1;
+        } else if (amountIsNotANumber) {
+          numericalErrors += 1;
+        } else if (rows.timestamp) {
+          if (!uploadData[rows.timestamp]) {
+            emptyTimeErrors += 1;
+          } else if (isNaN(new Date(uploadData[rows.timestamp]).getTime())) {
+            dateFormatErrors += 1;
+          } else if (!useRange
+            && !getIsSameDay(new Date(uploadData[rows.timestamp]), new Date(rows.sheetDate1))
+          ) {
+            outOfDateErrors += 1;
+          } else if (useRange
+            && (getDateIsOlder(rows.sheetDate1, new Date(uploadData[rows.timestamp]))
+            || getDateIsNewer(rows.sheetDate2, new Date(uploadData[rows.timestamp])))) {
+            outOfDateErrors += 1;
+          } else {
+            successfulExtractions += 1;
+            parserData.push(uploadData);
+          }
+        } else {
+          successfulExtractions += 1;
+          parserData.push(uploadData);
+        }
       }
     },
     complete: () => {
       console.log('initial result', parserData);
-      // setStorageItem(`rawCSVData_${getCurrentTab()}`, JSON.stringify(parserData));
+      // setStorageItem(getRawDataId(), JSON.stringify(parserData));
       // saveCSVStart(showNewSheet, setShowPopup);
     },
     header: true,
@@ -289,7 +333,7 @@ export const getDataFromCSV = function getDataFromCSV(
 
 export const useDirectly = function useDirectly(setError: Function) {
   const input: RowBuilderInput = JSON.parse(getStorageItem(getRowEntryId()));
-  const errorTmp: InputErrorCB = getIsUploadError();
+  const errorTmp: InputError = getIsUploadError();
   if (isNaN(Number(input.amount))) errorTmp.amount = 'Numbers only';
   if (input.amount?.includes('-')
     || input.amount?.includes('+')) errorTmp.amount = 'Don\'t use operators';

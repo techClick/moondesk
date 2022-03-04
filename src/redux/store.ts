@@ -2,7 +2,7 @@ import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import viewsReducer from 'views/redux';
 import navigationReducer from 'views/App/Navigation/redux';
 import appReducer from 'views/App/redux';
-import sheetBuilderReducer from 'views/App/components/SheetBuilder/redux';
+import sheetBuilderReducer from 'views/App/ImportCols/components/SheetBuilder/redux';
 import importColsReducer from 'views/App/ImportCols/redux';
 
 export interface AppState {

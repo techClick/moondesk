@@ -11,3 +11,11 @@ export const getRowEntryId = function getRowEntryId(): string {
 export const getUseRangeId = function getUseRangeId(): string {
   return `${getProjectId()}_${getImportType()}_useRange_${getCurrentTab()}`;
 };
+
+export const getRawDataId = function getRawDataId(): string {
+  return `${getProjectId()}_rawData_${getCurrentTab()}`;
+};
+
+export const getNewSheetId = function getNewSheetId(): string {
+  return `${getProjectId()}_new_${getCurrentTab()}`;
+};

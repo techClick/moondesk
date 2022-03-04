@@ -3,7 +3,7 @@ import { useAppSelector } from 'redux/hooks';
 import { useDispatch } from 'react-redux';
 import { getStorageItem } from 'views/App/utils/utils';
 import { getRowEntryId } from 'views/App/utils/GlobalUtils';
-import { RowBuilderInput, InputErrorCB } from 'types/types';
+import { RowBuilderInput, InputError } from 'types/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
 import * as S from './ColumnBuilder.styled';
@@ -14,7 +14,7 @@ const ColumnBuilder = function ColumnBuilder() {
   const [input, setInput] = useState<RowBuilderInput>(
     JSON.parse(getStorageItem(getRowEntryId()) || JSON.stringify({ source: '', amount: '' })),
   );
-  const inputError: InputErrorCB = useAppSelector(selectInputError);
+  const inputError: InputError = useAppSelector(selectInputError);
   const dispatch = useDispatch();
 
   return (
@@ -29,7 +29,7 @@ const ColumnBuilder = function ColumnBuilder() {
                 <S.FillColumn
                   onClick={() => {
                     const thisInput: any = fileHeader.toLowerCase();
-                    saveRowEntry(thisInput, String(input[thisInput]));
+                    saveRowEntry(thisInput, getFieldName(fileHeader).toLowerCase());
                     dispatch(setInputError({ ...inputError, [thisInput]: null }));
                     setInput({ ...input, [thisInput]: getFieldName(fileHeader).toLowerCase() });
                   }}
@@ -43,7 +43,7 @@ const ColumnBuilder = function ColumnBuilder() {
                   value={input[fileHeader.toLowerCase()]}
                   onChange={(e: any) => {
                     const thisInput: any = fileHeader.toLowerCase();
-                    saveRowEntry(thisInput, e.target.value);
+                    saveRowEntry(thisInput, e.target.value.toLowerCase());
                     dispatch(setInputError({ ...inputError, [thisInput]: null }));
                     setInput({ ...input, [thisInput]: e.target.value });
                   }}

@@ -8,6 +8,7 @@ import * as S from './ImportCols.styled';
 import DateSection from './components/DateSectionIC/DateSectionIC';
 import TopInfo from './components/TopInfo/TopInfo';
 import DateInfo from './components/DateInfo/DateInfo';
+import SheetBuilder from './components/SheetBuilder/SheetBuilder';
 
 const ImportCols = function ImportCols() {
   const [showPopup, setShowPopup] = useState<ShowPopup>({ income: null, resources: null });
