@@ -5,6 +5,7 @@ import { DataSheet, RowBuild, Sheets } from 'types/types';
 import {
   getStorageItem, setStorageItem, getCurrentTab, getImportType,
   getIsSameDay, getDateIsOlder, getDateIsNewer } from 'views/App/utils/utils';
+import LoadingDialogue from 'views/App/components/LoadingDialogue/Loading';
 import { getNewSheetId, getRawDataId, getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import AdditionDialogue from '../components/AdditionDialogue';
 import { getIsNotANumber } from './utils';
@@ -294,6 +295,7 @@ export const getDataFromCSV = function getDataFromCSV(
     },
     complete: () => {
       console.log('initial result', parserData);
+      setShowPopup({ incomeu: 4 });
       // setStorageItem(getRawDataId(), JSON.stringify(parserData));
       // saveUploadDataStart(showNewSheet, setShowPopup);
     },
