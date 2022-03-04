@@ -1,10 +1,13 @@
 import React from 'react';
 import Papa from 'papaparse';
 import { toast } from 'react-toastify';
-import { DataSheet, RowBuilderInput, InputError, RowBuild } from 'types/types';
-import { getStorageItem, setStorageItem, getCurrentTab, getImportType, getIsSameDay, getDateIsOlder, getDateIsNewer } from 'views/App/utils/utils';
-import { getRawDataId, getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
+import { DataSheet, RowBuild, Sheets } from 'types/types';
+import {
+  getStorageItem, setStorageItem, getCurrentTab, getImportType,
+  getIsSameDay, getDateIsOlder, getDateIsNewer } from 'views/App/utils/utils';
+import { getNewSheetId, getRawDataId, getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import AdditionDialogue from '../components/AdditionDialogue';
+import { getIsNotANumber } from './utils';
 
 export const importType: any = {
   csv: 'CSV',
@@ -23,47 +26,13 @@ let successfulExtractions: number;
 let timestampFound: boolean;
 
 type NewSheetResult = {
-  dataSheet: DataSheet,
+  dataSheet: DataSheet[],
   additions: Array<string>,
 };
+
 let newSheetResult: NewSheetResult = {
-  dataSheet: { date: new Date(), data: [] },
+  dataSheet: [],
   additions: [],
-};
-
-const getIsUploadError = function getIsUploadError() {
-  const input: RowBuilderInput = JSON.parse(getStorageItem(getRowEntryId()) || '{}');
-  const errorTmp: InputError = { source: false, amount: false };
-  if (!input.amount) {
-    errorTmp.amount = 'Required';
-  }
-  if (!input.source) {
-    errorTmp.source = 'Required';
-  }
-  const useRange = getStorageItem(getUseRangeId());
-  if (useRange && !input.timestamp) {
-    errorTmp.timestamp = 'Required when using date range';
-  }
-  return errorTmp;
-};
-
-export const uploadCSV = function uploadCSV(setError: Function) {
-  const errorTmp = getIsUploadError();
-  setError(errorTmp);
-  if (!errorTmp.amount && !errorTmp.source && !errorTmp.timestamp) {
-    const fileUploader = document.getElementById('uploadSheet');
-    if (fileUploader) {
-      fileUploader.click();
-    }
-  } else {
-    document.getElementById('importColsWhiteCard')?.scroll({ top: 0, behavior: 'smooth' });
-  }
-};
-
-const getIsNotANumber = function getIsNotANumber(amount: string | null): boolean {
-  if (isNaN(Number(amount)) || amount?.includes('-')
-    || amount?.includes('+') || amount?.includes('e')) return true;
-  return false;
 };
 
 const sendToast = function sendToast(): void {
@@ -132,15 +101,16 @@ const sendToast = function sendToast(): void {
   }
 };
 
-const saveCSVtoSheet = function saveCSVtoSheet(
+const saveUploadDatatoSheet = function saveUploadDatatoSheet(
   showNewSheet: Function,
   setShowPopup: Function,
 ): void {
-  const newSheet: DataSheet = newSheetResult.dataSheet;
-  setStorageItem(`new_${getCurrentTab()}`, JSON.stringify([newSheet]));
-  localStorage.removeItem(`rawCSVData_${getCurrentTab()}`);
-  showNewSheet(newSheet);
-  setShowPopup({ income: null, resources: null });
+  const sheets: Sheets = JSON.parse(getStorageItem(getNewSheetId()) || '{}');
+  const newSheet: DataSheet[] = newSheetResult.dataSheet;
+  localStorage.removeItem(getRawDataId());
+  setStorageItem(getNewSheetId(), JSON.stringify({ ...sheets, [getCurrentTab()]: newSheet }));
+  showNewSheet({ ...sheets, [getCurrentTab()]: newSheet });
+  setShowPopup({});
   sendToast();
 };
 
@@ -162,7 +132,7 @@ const getMatchingItemResults = function getMatchingItemResults(
   return { foundItem: found, index };
 };
 
-const saveCSVStart = function saveCSVStart(
+const saveUploadDataStart = function saveUploadDataStart(
   showNewSheet: Function,
   setShowPopup: Function,
 ) {
@@ -187,21 +157,22 @@ const saveCSVStart = function saveCSVStart(
     }
   }
   newSheetResult = {
-    dataSheet: newSheet,
+    dataSheet: [newSheet],
     additions: additionSources,
   };
   if (parserData.length === 0) {
+    setShowPopup({});
     sendToast();
   } else if (additionSources.length > 0) {
     setShowPopup({
       income: <AdditionDialogue
-        onComplete={() => saveCSVtoSheet(showNewSheet, setShowPopup)}
+        onComplete={() => saveUploadDatatoSheet(showNewSheet, setShowPopup)}
         labels={additionSources}
       />,
       resources: null,
     });
   } else {
-    saveCSVtoSheet(showNewSheet, setShowPopup);
+    saveUploadDatatoSheet(showNewSheet, setShowPopup);
   }
 };
 
@@ -324,22 +295,9 @@ export const getDataFromCSV = function getDataFromCSV(
     complete: () => {
       console.log('initial result', parserData);
       // setStorageItem(getRawDataId(), JSON.stringify(parserData));
-      // saveCSVStart(showNewSheet, setShowPopup);
+      // saveUploadDataStart(showNewSheet, setShowPopup);
     },
     header: true,
     skipEmptyLines: true,
   });
-};
-
-export const useDirectly = function useDirectly(setError: Function) {
-  const input: RowBuilderInput = JSON.parse(getStorageItem(getRowEntryId()));
-  const errorTmp: InputError = getIsUploadError();
-  if (isNaN(Number(input.amount))) errorTmp.amount = 'Numbers only';
-  if (input.amount?.includes('-')
-    || input.amount?.includes('+')) errorTmp.amount = 'Don\'t use operators';
-  if (input.amount?.includes('e')) errorTmp.amount = 'Numbers only';
-  setError(errorTmp);
-  if (!errorTmp.amount && !errorTmp.source) {
-    // proceed
-  }
 };

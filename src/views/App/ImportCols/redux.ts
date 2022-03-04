@@ -1,17 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'redux/store';
-import { InputError, Sheets } from 'types/types';
+import { InputError, Sheets, ShowPopup } from 'types/types';
 import { getNewSheetId } from '../utils/GlobalUtils';
 import { getStorageItem } from '../utils/utils';
+
+type ShowSheetBuilder = {
+  [key: string]: boolean | null
+  income: boolean | null,
+  resources: boolean | null,
+}
 
 export interface AppState {
   inputError: InputError,
   newSheet: Sheets,
+  showSheetBuilder: ShowSheetBuilder,
+  showPopup: ShowPopup,
 }
 
 const initialState: AppState = {
   inputError: { source: false, amount: false },
   newSheet: JSON.parse(getStorageItem(getNewSheetId()) || '{}'),
+  showSheetBuilder: {
+    income: JSON.parse(getStorageItem(getNewSheetId()) || '{}').income?.length > 0,
+    resources: JSON.parse(getStorageItem(getNewSheetId()) || '{}').resources?.length > 0,
+  },
+  showPopup: {},
 };
 
 export const counterSlice = createSlice({
@@ -24,12 +37,22 @@ export const counterSlice = createSlice({
     setNewSheet: (state, action: PayloadAction<Sheets>) => {
       state.newSheet = action.payload;
     },
+    setShowSheetBuilder: (state, action: PayloadAction<ShowSheetBuilder>) => {
+      state.showSheetBuilder = action.payload;
+    },
+    setShowPopup: (state, action: PayloadAction<ShowPopup>) => {
+      state.showPopup = action.payload;
+    },
   },
 });
 
-export const { setInputError, setNewSheet } = counterSlice.actions;
+export const {
+  setInputError, setNewSheet, setShowSheetBuilder, setShowPopup,
+} = counterSlice.actions;
 
 export const selectInputError = (state: RootState) => state.importCols.inputError;
 export const selectNewSheet = (state: RootState) => state.importCols.newSheet;
+export const selectShowSheetBuilder = (state: RootState) => state.importCols.showSheetBuilder;
+export const selectShowPopup = (state: RootState) => state.importCols.showPopup;
 
 export default counterSlice.reducer;

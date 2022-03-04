@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/hooks';
-import { selectShowPopup, setShowPopup } from 'views/App/ImportCols/components/SheetBuilder/redux';
+import { getRawDataId } from 'views/App/utils/GlobalUtils';
+import { selectShowPopup, setShowPopup } from 'views/App/ImportCols/redux';
 import { getCurrentTab } from 'views/App/utils/utils';
 import { MainButton } from 'views/App/styles';
 import * as S from './AdditionDialogue.styled';
@@ -45,8 +46,8 @@ const AdditionDialogue = function AdditionDialogue(
           Combine values
         </MainButton>
         <S.Button onClick={() => {
-          localStorage.removeItem(`rawCSVData_${currentTab}`);
-          dispatch(setShowPopup({ ...showPopup, [currentTab]: null }));
+          localStorage.removeItem(getRawDataId());
+          dispatch(setShowPopup({ ...showPopup, [currentTab]: false }));
         }}
         >
           Cancel

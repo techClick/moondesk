@@ -15,7 +15,7 @@ export const Container = styled.div`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  box-shadow: 0.5px 0.5px 1px 1px ${Color('white').darken(0.15).toString()};
+  box-shadow: 0px 0px 3px 0.55px ${Color('white').darken(0.14).toString()};
   font-size: 15px;
   color: ${Color(textColor).lighten(0.15).toString()};
   display: flex;

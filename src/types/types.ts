@@ -62,9 +62,9 @@ export type DataSheet = {
 }
 
 export type ShowPopup = {
-  [key: string]: ReactElement | null
-  income: ReactElement | null,
-  resources: ReactElement | null,
+  [key: string]: ReactElement | undefined | false
+  income?: ReactElement | false,
+  resources?: ReactElement | false,
 };
 
 export type Sheets = {

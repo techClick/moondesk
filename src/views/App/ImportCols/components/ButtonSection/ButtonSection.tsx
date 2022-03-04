@@ -1,19 +1,18 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/hooks';
-import { InputError, DataSheet, ShowPopup } from 'types/types';
-import { selectNewSheet, setNewSheet } from 'views/App/ImportCols/redux';
+import { InputError, Sheets, ShowPopup } from 'types/types';
+import {
+  selectShowSheetBuilder, setNewSheet, setShowPopup, setShowSheetBuilder,
+} from 'views/App/ImportCols/redux';
 import { getCurrentTab, getImportType } from 'views/App/utils/utils';
 import { setInputError } from '../../redux';
 import * as S from './ButtonSection.styled';
-import { getDataFromCSV, importType, uploadCSV } from './utils/utils';
+import { uploadStart } from './utils/utils';
+import { getDataFromCSV, importType } from './utils/DataUtils';
 
-const ButtonSection = function ButtonSection(
-  { setShowPopup }
-  :
-  { setShowPopup: Function },
-) {
-  const newSheet = useAppSelector(selectNewSheet);
+const ButtonSection = function ButtonSection() {
+  const showSheetBuilder = useAppSelector(selectShowSheetBuilder);
   const dispatch = useDispatch();
 
   return (
@@ -25,14 +24,16 @@ const ButtonSection = function ButtonSection(
         onChange={(e) => {
           getDataFromCSV(
             e.target.files,
-            (sheet: DataSheet[]) => (
-              dispatch(setNewSheet({ ...newSheet, [getCurrentTab()]: sheet }))),
+            (sheets: Sheets) => {
+              dispatch(setNewSheet(sheets));
+              dispatch(setShowSheetBuilder({ ...showSheetBuilder, [getCurrentTab()]: true }));
+            },
             (showPopup: ShowPopup) => dispatch(setShowPopup(showPopup)),
           );
           e.target.value = '';
         }}
       />
-      <S.Button onClick={() => uploadCSV(
+      <S.Button onClick={() => uploadStart(
         (inputError: InputError) => dispatch(setInputError(inputError)),
       )}
       >
