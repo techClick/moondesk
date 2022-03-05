@@ -78,3 +78,9 @@ export type ShowSheetBuilder = {
   income: boolean | null,
   resources: boolean | null,
 }
+
+export type SelectedSheet = {
+  [key: string]: number | undefined
+  income?: number,
+  resources?: number,
+};

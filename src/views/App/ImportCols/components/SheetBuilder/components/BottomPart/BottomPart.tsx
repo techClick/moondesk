@@ -9,7 +9,6 @@ const BottomPart = function BottomPart() {
   return (
     <>
       <S.Container>
-        <S.Line />
         <MediaQuery minWidth={bigRes + 0.0001}>
           <Table />
         </MediaQuery>

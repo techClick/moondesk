@@ -4,7 +4,7 @@ import { panelBorderColor, textColor } from 'views/App/styles';
 
 const tableBorderColor = Color(panelBorderColor).lighten(0.1).toString();
 export const TR = styled.tr<any>`
-  border-top: .75px solid ${tableBorderColor};
+  border-top: .75px solid ${Color(tableBorderColor).lighten(0.055).toString()};
   position: relative;
 `;
 
@@ -26,7 +26,7 @@ export const TD = styled.td<any>`
   }
 `;
 
-export const IconsDiv = styled.td<any>`
+export const IconsDiv = styled.div<any>`
   position: absolute;
   right: 0;
   bottom: 50%;
@@ -36,7 +36,7 @@ export const IconsDiv = styled.td<any>`
   align-items: center;
 `;
 
-export const TrashIcon = styled.td<any>`
+export const TrashIcon = styled.div<any>`
   border-radius: 4px;
   transform: scale(0.9);
   padding: 2px 5px;
@@ -50,7 +50,7 @@ export const TrashIcon = styled.td<any>`
   }
 `;
 
-export const EditIcon = styled.td<any>`
+export const EditIcon = styled.div<any>`
   border-radius: 4px;
   transform: scale(0.9);
   padding: 2px 5px;
@@ -64,7 +64,7 @@ export const EditIcon = styled.td<any>`
   }
 `;
 
-export const MenuIcon = styled.td<any>`
+export const MenuIcon = styled.div<any>`
   border-radius: 4px;
   transform: scale(0.65, 0.7);
   padding: 6px 11px;

@@ -17,8 +17,8 @@ const TopInfo = function TopInfo({ closeInfo }:{closeInfo: Function}) {
         are fields used by moondesk
         to create tables and analytic reports of your data.
         <S.MoreInfo>
-          The names you provide for these fields must correspond with
-          the appriopriate rows in your data.
+          The rows you provide for these fields must correspond with
+          their different functions.
         </S.MoreInfo>
         <S.CloseCont>
           <S.Close onClick={() => closeTopInfo(closeInfo)}>

@@ -36,7 +36,7 @@ const Tabs = function Tabs() {
     <>
       {
         tabOptions.map((tab, i) => (
-          <Link to={tab.route} style={{ textDecoration: 'none' }}>
+          <Link to={tab.route} style={{ textDecoration: 'none' }} key={`tabs${i}`}>
             { tab.path !== 'settings'
               ? (
                 <TopTabs

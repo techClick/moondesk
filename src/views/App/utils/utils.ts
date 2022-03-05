@@ -7,7 +7,7 @@ const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
 export const getTodaysDate = function getTodaysDate(datePicked?: Date): string {
   let date = new Date();
   if (datePicked) date = new Date(datePicked);
-  return `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  return `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
 };
 
 export const getDateFormat = function getDateFormat(datePicked?: Date): string {

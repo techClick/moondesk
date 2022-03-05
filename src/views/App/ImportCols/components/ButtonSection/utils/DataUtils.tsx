@@ -79,13 +79,14 @@ const sendToast = function sendToast(): void {
       { type: 'success', autoClose: totalErrors > 0 ? 13000 : 5000 },
     );
     if (numericalErrors > 0) {
-      toast(`${numericalErrors} non numerical entr${numericalErrors > 1 ? 'ies' : 'y'} in the 
+      toast(`${numericalErrors} non numerical entr${numericalErrors > 1 ? 'ies' : 'y'} in the
         ${rows.amount?.toUpperCase()} row ${numericalErrors > 1 ? 'were' : 'was'}
         ignored.`, { type: 'warning', autoClose: 12000 });
     }
     if (emptyErrors > 0) {
-      toast(`${emptyErrors} empty entr${emptyErrors > 1 ? 'ies' : 'y'}
-      ${emptyErrors > 1 ? 'were' : 'was'} ignored.`, { type: 'warning', autoClose: 12000 });
+      toast(`${emptyErrors} empty entr${emptyErrors > 1 ? 'ies' : 'y'} in the
+      ${rows.source?.toUpperCase()} row ${emptyErrors > 1 ? 'were' : 'was'}
+      ignored.`, { type: 'warning', autoClose: 12000 });
     }
     if (emptyTimeErrors > 0) {
       toast(`${emptyTimeErrors} empty date entr${emptyTimeErrors > 1 ? 'ies' : 'y'}
@@ -133,10 +134,17 @@ const getMatchingItemResults = function getMatchingItemResults(
   return { foundItem: found, index };
 };
 
-const saveUploadDataStart = () => (dispatch: Function) => {
-  const newSheet: DataSheet = { date: new Date(rows.sheetDate1), data: [] };
-  const additionSources: Array<string> = [];
-  for (const line of parserData) {
+type EntryResult = {
+  newSheet: DataSheet,
+  additionSources: Array<string>,
+};
+const getEntryResult = (
+  date: Date,
+  additionSources: Array<string>,
+  arrangedData: any[],
+): EntryResult => {
+  const newSheet: DataSheet = { date, data: [] };
+  for (const line of arrangedData) {
     const { foundItem, index } = getMatchingItemResults(newSheet, line);
     if (foundItem) {
       if (!additionSources.find((source) => source === foundItem.source.toUpperCase())) {
@@ -154,8 +162,59 @@ const saveUploadDataStart = () => (dispatch: Function) => {
       });
     }
   }
+  return { newSheet, additionSources };
+};
+
+const saveUploadDataStart = () => (dispatch: Function) => {
+  const newSheets: DataSheet[] = [];
+  let newSheet: DataSheet;
+  let additionSources: string[] = [];
+  const useRange = getStorageItem(getUseRangeId());
+  if (useRange) {
+    const uploadDateStrings: string[] = [];
+    const uploadDates: Date[] = [];
+    for (let i = 0; i < parserData.length; i += 1) {
+      let date: Date | string = new Date(parserData[i][rows.timestamp || 'null']);
+      date.setHours(0, 0, 0, 0);
+      date = date.toDateString();
+      if (!uploadDateStrings.includes(date)) {
+        uploadDateStrings.push(date);
+        uploadDates.push(new Date(date));
+      }
+    }
+    uploadDates.sort((a: any, b: any) => b - a);
+    let parserDataTmp = [...parserData];
+    let arrangedData: any[];
+    for (let i = 0; i < uploadDates.length; i += 1) {
+      arrangedData = [];
+      for (let j = 0; j < parserDataTmp.length; j += 1) {
+        if (
+          getIsSameDay(new Date(parserDataTmp[j][rows.timestamp || 'null']), new Date(uploadDates[i]))
+        ) {
+          arrangedData.push(parserDataTmp[j]);
+        }
+      }
+      parserDataTmp = parserDataTmp.filter((data: any) => (
+        arrangedData.find((aData) => (
+          !getIsSameDay(
+            new Date(data[rows.timestamp || 'null']),
+            new Date(aData[rows.timestamp || 'null']),
+          )
+        ))
+      ));
+      const entryResult = getEntryResult(uploadDates[i], additionSources, arrangedData);
+      newSheet = entryResult.newSheet;
+      additionSources = entryResult.additionSources;
+      newSheets.push(newSheet);
+    }
+  } else {
+    const entryResult = getEntryResult(rows.sheetDate1, additionSources, parserData);
+    newSheet = entryResult.newSheet;
+    additionSources = entryResult.additionSources;
+    newSheets.push(newSheet);
+  }
   newSheetResult = {
-    dataSheet: [newSheet],
+    dataSheet: newSheets,
     additions: additionSources,
   };
   if (parserData.length === 0) {
@@ -163,7 +222,7 @@ const saveUploadDataStart = () => (dispatch: Function) => {
     sendToast();
   } else if (additionSources.length > 0) {
     dispatch(setShowPopup({
-      income: <AdditionDialogue
+      [getCurrentTab()]: <AdditionDialogue
         onComplete={() => dispatch(saveUploadDatatoSheet())}
         labels={additionSources}
       />,
@@ -171,21 +230,6 @@ const saveUploadDataStart = () => (dispatch: Function) => {
     }));
   } else {
     dispatch(saveUploadDatatoSheet());
-  }
-};
-
-const arrangeUploadData = () => () => {
-  const useRange = getStorageItem(getUseRangeId());
-  if (useRange) {
-    const uploadDateStrings: string[] = [];
-    const uploadDates: Date[] = [];
-    for (let i = 0; i < parserData.length; i += 1) {
-      if (!uploadDateStrings.includes(parserData[i][rows.timestamp || 'null'])) {
-        uploadDateStrings.push(parserData[i][rows.timestamp || 'null']);
-        uploadDates.push(new Date(parserData[i][rows.timestamp || 'null']));
-      }
-    }
-    console.log(uploadDates);
   }
 };
 
@@ -212,7 +256,7 @@ export const getDataFromCSV = (files: any) => (dispatch: Function) => {
     step: (row: any, parser) => {
       const uploadData: any = {};
       if (!allKeysPresent) {
-        dispatch(setShowPopup({ income: <LoadingDialogue text={`Parsing ${getImportType()}`} /> }));
+        dispatch(setShowPopup({ [getCurrentTab()]: <LoadingDialogue text={`Parsing ${getImportType()}`} /> }));
         parser.pause();
         timestampFound = true;
         if (rows.timestamp) {
@@ -310,7 +354,7 @@ export const getDataFromCSV = (files: any) => (dispatch: Function) => {
     },
     complete: () => {
       setStorageItem(getRawDataId(), JSON.stringify(parserData));
-      dispatch(arrangeUploadData());
+      dispatch(saveUploadDataStart());
     },
     header: true,
     skipEmptyLines: true,

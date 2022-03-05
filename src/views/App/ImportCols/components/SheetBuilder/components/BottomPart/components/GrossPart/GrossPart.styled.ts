@@ -1,17 +1,16 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { panelBorderColor } from 'views/App/styles';
+import { panelBorderColor, tableBorderColor } from 'views/App/styles';
 
 export const Container = styled.div`
   // margin-top: 23px;
-  border-top: 1px solid ${Color(panelBorderColor).lighten(0).toString()};
-  border-bottom: 1px solid ${Color(panelBorderColor).lighten(0).toString()};
+  border-top: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
+  border-bottom: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
   height: 76px;
   display: flex;
 `;
 
 export const GrossPartCont = styled.div`
-  // width: calc(100% - 130px);
   height: 100%;
   text-align: right;
 `;
@@ -34,7 +33,7 @@ export const GrossPart = styled.div`
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  border-bottom: 1px solid ${panelBorderColor};
+  border-bottom: 1px solid ${tableBorderColor};
   position: relative;
 `;
 
@@ -54,7 +53,7 @@ export const GrossAmtPart = styled.div`
   font-size: 20px;
   font-weight: 500;
   padding: 0;
-  margin-top: -3px;
+  margin-top: 0px;
   max-width: 100%;
 `;
 

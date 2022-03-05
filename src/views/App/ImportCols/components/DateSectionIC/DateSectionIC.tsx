@@ -2,16 +2,19 @@ import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import {
-  getDateIsFar, getDateLimit, getIsSameDay, getIsToday, getStorageItem, setStorageItem,
+  getCurrentTab,
+  getDateIsFar, getIsSameDay, getIsToday, getStorageItem, setStorageItem,
 } from 'views/App/utils/utils';
-import Calendar from 'react-calendar';
 import * as S from './DateSectionIC.styled';
-import { getSheetDate, moveDay, saveSheet, saveUseRange } from './utils/utils';
-import './react-calendar.css';
+import { getSheetDate, moveDay, saveUseRange } from './utils/utils';
+import { setShowPopup } from '../../redux';
+import CalendarParts from './components/CalendarParts';
 
 const DateSection = function DateSection() {
+  const dispatch = useDispatch();
   const useRangeStore: string | null = getStorageItem(getUseRangeId());
   const [useRange, setUseRange] = useState<boolean>(Boolean(useRangeStore));
   if (!getStorageItem(getRowEntryId())) {
@@ -26,43 +29,9 @@ const DateSection = function DateSection() {
   const [sheetDateDate2, setSheetDateDate2] = useState<Date>(JSON.parse(
     getStorageItem(getRowEntryId()),
   ).sheetDate2);
-  const [showDate, setShowDate] = useState<string>('');
-
-  const minDates: any = {
-    sheetDate1: new Date(getDateLimit()),
-    sheetDate2: new Date(sheetDateDate1),
-  };
-  const dates: any = {
-    sheetDate1: new Date(sheetDateDate1),
-    sheetDate2: new Date(sheetDateDate2),
-  };
-  const dateFuncs: any = {
-    sheetDate1: setSheetDateDate1,
-    sheetDate2: setSheetDateDate2,
-  };
 
   return (
     <S.Container>
-      {
-        showDate && (
-          <>
-            <S.Background onClick={() => setShowDate('')} />
-            <S.CalendarPicker>
-              <Calendar
-                value={dates[showDate]}
-                maxDate={new Date()}
-                minDate={minDates[showDate]}
-                onChange={(value: Date) => {
-                  if (value > new Date(sheetDateDate2)) dateFuncs.sheetDate2(value);
-                  dateFuncs[showDate](value);
-                  saveSheet(value, showDate);
-                  setShowDate('');
-                }}
-              />
-            </S.CalendarPicker>
-          </>
-        )
-      }
       <S.DateCont1 isRange={useRange}>
         <S.IconCont1
           onClick={() => {
@@ -79,7 +48,17 @@ const DateSection = function DateSection() {
         <S.DateContainer>
           { useRange ? <S.FromContainer>From</S.FromContainer>
             : <S.FromContainer>Date</S.FromContainer>}
-          <S.CalendarCont onClick={() => setShowDate('sheetDate1')}>
+          <S.CalendarCont
+            onClick={() => dispatch(setShowPopup({
+              [getCurrentTab()]: <CalendarParts
+                sheetDateDate1={sheetDateDate1}
+                sheetDateDate2={sheetDateDate2}
+                showDate="sheetDate1"
+                setSheetDateDate1={setSheetDateDate1}
+                setSheetDateDate2={setSheetDateDate2}
+              />,
+            }))}
+          >
             <FontAwesomeIcon icon={faCalendarDays} size="2x" />
           </S.CalendarCont>
           {getSheetDate(sheetDateDate1)}
@@ -120,7 +99,17 @@ const DateSection = function DateSection() {
             </S.IconCont1>
             <S.DateContainer>
               <S.FromContainer>To</S.FromContainer>
-              <S.CalendarCont onClick={() => setShowDate('sheetDate2')}>
+              <S.CalendarCont
+                onClick={() => dispatch(setShowPopup({
+                  [getCurrentTab()]: <CalendarParts
+                    sheetDateDate1={sheetDateDate1}
+                    sheetDateDate2={sheetDateDate2}
+                    showDate="sheetDate2"
+                    setSheetDateDate1={setSheetDateDate1}
+                    setSheetDateDate2={setSheetDateDate2}
+                  />,
+                }))}
+              >
                 <FontAwesomeIcon icon={faCalendarDays} size="2x" />
               </S.CalendarCont>
               {getSheetDate(sheetDateDate2)}

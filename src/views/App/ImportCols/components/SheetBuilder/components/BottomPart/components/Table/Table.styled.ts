@@ -1,6 +1,6 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { panelBorderColor, textColor, topBarHeight } from 'views/App/styles';
+import { panelBorderColor, tableBorderColor, textColor, topBarHeight } from 'views/App/styles';
 import { bigRes } from 'views/styles';
 
 const getTableHeight = function getTableHeight() {
@@ -29,7 +29,6 @@ export const TableDiv = styled.div<any>`
   width: 102%;
 `;
 
-const tableBorderColor = Color(panelBorderColor).lighten(0.1).toString();
 const getScreenCalc = function getBigScreenCalc(): string {
   return window.innerWidth > 600 ? '150px' : '0px';
 };
@@ -37,7 +36,8 @@ export const Table = styled.table`
   // min-width: calc(320px + ${() => getScreenCalc()});
   min-width: 100%;
   width: max-content;
-  border-right: 1px solid ${tableBorderColor};
+  border-top: 1px solid ${tableBorderColor};
+  // border-right: 1px solid ${tableBorderColor};
   border-collapse: collapse;
   text-align: left;
   color: #3b3b3b;
