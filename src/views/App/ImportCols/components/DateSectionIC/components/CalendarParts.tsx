@@ -1,9 +1,11 @@
 import React from 'react';
 import { getDateLimit } from 'views/App/utils/utils';
+import { useDispatch } from 'react-redux';
+import { setShowPopup } from 'views/App/ImportCols/redux';
 import Calendar from 'react-calendar';
 import * as S from './CalendarParts.styled';
 import { saveSheet } from '../utils/utils';
-import './react-calendar.css';
+import 'views/App/react-calendar.css';
 
 const CalendarParts = function CalendarParts(
   {
@@ -15,6 +17,7 @@ const CalendarParts = function CalendarParts(
     setSheetDateDate1: Function, setSheetDateDate2: Function,
   },
 ) {
+  const dispatch = useDispatch();
   const minDates: any = {
     sheetDate1: new Date(getDateLimit()),
     sheetDate2: new Date(sheetDateDate1),
@@ -39,6 +42,7 @@ const CalendarParts = function CalendarParts(
           }
           dateFuncs[showDate](value);
           saveSheet(value, showDate);
+          dispatch(setShowPopup(false));
         }}
       />
     </S.CalendarPicker>

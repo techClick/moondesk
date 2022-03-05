@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
 import {
-  getCurrentTab,
   getDateIsFar, getIsSameDay, getIsToday, getStorageItem, setStorageItem,
 } from 'views/App/utils/utils';
 import * as S from './DateSectionIC.styled';
@@ -50,13 +49,14 @@ const DateSection = function DateSection() {
             : <S.FromContainer>Date</S.FromContainer>}
           <S.CalendarCont
             onClick={() => dispatch(setShowPopup({
-              [getCurrentTab()]: <CalendarParts
+              component: <CalendarParts
                 sheetDateDate1={sheetDateDate1}
                 sheetDateDate2={sheetDateDate2}
                 showDate="sheetDate1"
                 setSheetDateDate1={setSheetDateDate1}
                 setSheetDateDate2={setSheetDateDate2}
               />,
+              exitOnClick: true,
             }))}
           >
             <FontAwesomeIcon icon={faCalendarDays} size="2x" />
@@ -101,13 +101,14 @@ const DateSection = function DateSection() {
               <S.FromContainer>To</S.FromContainer>
               <S.CalendarCont
                 onClick={() => dispatch(setShowPopup({
-                  [getCurrentTab()]: <CalendarParts
+                  component: <CalendarParts
                     sheetDateDate1={sheetDateDate1}
                     sheetDateDate2={sheetDateDate2}
                     showDate="sheetDate2"
                     setSheetDateDate1={setSheetDateDate1}
                     setSheetDateDate2={setSheetDateDate2}
                   />,
+                  exitOnClick: true,
                 }))}
               >
                 <FontAwesomeIcon icon={faCalendarDays} size="2x" />

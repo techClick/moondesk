@@ -1,9 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from 'redux/hooks';
 import { getRawDataId } from 'views/App/utils/GlobalUtils';
-import { selectShowPopup, setShowPopup } from 'views/App/ImportCols/redux';
-import { getCurrentTab } from 'views/App/utils/utils';
+import { setShowPopup } from 'views/App/ImportCols/redux';
 import { MainButton } from 'views/App/styles';
 import * as S from './AdditionDialogue.styled';
 
@@ -12,9 +10,6 @@ const AdditionDialogue = function AdditionDialogue(
   { onComplete: Function, labels: Array<string> },
 ) {
   const dispatch = useDispatch();
-  const showPopup = useAppSelector(selectShowPopup);
-  const currentTab = getCurrentTab();
-
   const labels2 = labels.filter((label, index) => index <= 2);
   const nonLabels = labels.filter((label, index) => index > 2);
   return (
@@ -49,7 +44,7 @@ const AdditionDialogue = function AdditionDialogue(
         </MainButton>
         <S.Button onClick={() => {
           localStorage.removeItem(getRawDataId());
-          dispatch(setShowPopup({ ...showPopup, [currentTab]: false }));
+          dispatch(setShowPopup(false));
         }}
         >
           Cancel

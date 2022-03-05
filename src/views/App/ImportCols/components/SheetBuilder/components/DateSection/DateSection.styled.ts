@@ -11,7 +11,7 @@ export const Container = styled.div`
 export const DatePart = styled.div`
   font-size: 20px;
   width: 170px;
-  padding-left: 3px;
+  padding-left: 5px;
   font-weight: 500;
   color: ${Color(textColor).lighten(0.4).toString()};
 `;
@@ -39,8 +39,22 @@ export const IconContainer = styled.div<any>`
   transform: scale(0.65);
   display: flex;
   justify-content: center;
-  padding: 0px 6px;
+  // padding: 0px 6px;
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
+`;
+
+export const CalendarCont = styled.div<any>`
+  color: ${Color(textColor).lighten(0.3).toString()};
+  margin-left: 3px;
+  cursor: pointer;
+  &:hover {
+    color: ${topBarColor};
+  }
+  margin-top: -2px;
+`;
+
+export const CalendarCont1 = styled.div<any>`
+  transform: scale(0.6);
 `;

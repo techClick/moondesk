@@ -20,8 +20,8 @@ const ColumnBuilder = function ColumnBuilder() {
   return (
     <S.ContainerMain>
       {
-        ['Group', 'Source', 'Amount', 'Timestamp'].map((fileHeader) => (
-          <S.Container>
+        ['Group', 'Source', 'Amount', 'Timestamp'].map((fileHeader, i) => (
+          <S.Container key={`columnbuilder${i}`}>
             <S.ColumnBuild>
               <S.ColumnName>
                 {getFieldName(fileHeader)}
@@ -30,7 +30,7 @@ const ColumnBuilder = function ColumnBuilder() {
                   onClick={() => {
                     const thisInput: any = fileHeader.toLowerCase();
                     saveRowEntry(thisInput, getFieldName(fileHeader).toLowerCase());
-                    dispatch(setInputError({ ...inputError, [thisInput]: null }));
+                    dispatch(setInputError({ ...inputError, [thisInput]: false }));
                     setInput({ ...input, [thisInput]: getFieldName(fileHeader).toLowerCase() });
                   }}
                 >
@@ -44,7 +44,7 @@ const ColumnBuilder = function ColumnBuilder() {
                   onChange={(e: any) => {
                     const thisInput: any = fileHeader.toLowerCase();
                     saveRowEntry(thisInput, e.target.value.toLowerCase());
-                    dispatch(setInputError({ ...inputError, [thisInput]: null }));
+                    dispatch(setInputError({ ...inputError, [thisInput]: false }));
                     setInput({ ...input, [thisInput]: e.target.value });
                   }}
                 />

@@ -15,7 +15,7 @@ const Resources = lazy(() => import('./views/App/Resources/Resources'));
 const Settings = lazy(() => import('./views/App/Settings/Settings'));
 const ImportTypes = lazy(() => import('./views/App/ImportTypes/ImportTypes'));
 const ImportCols = lazy(() => import('./views/App/ImportCols/ImportCols'));
-// localStorage.clear();
+localStorage.clear();
 localStorage.setItem('projectId', '1');
 
 const Routing = function Routing() {

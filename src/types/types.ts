@@ -41,7 +41,7 @@ export type RowBuild = {
 }
 
 export type InputError = {
-  [key: string]: string | Date | undefined | false,
+  [key: string]: string | undefined | false,
   group?: string | false,
   timestamp?: string | false,
   source?: string | false,
@@ -49,7 +49,7 @@ export type InputError = {
 }
 
 export type SheetEntry = {
-  [key: string]: string | Date | number | undefined,
+  [key: string]: string | number | undefined,
   group?: string,
   source: string,
   amount: number,
@@ -61,10 +61,16 @@ export type DataSheet = {
   data: Array<SheetEntry>;
 }
 
+export type PopupElement = {
+  [key: string]: ReactElement | undefined | boolean
+  component: ReactElement,
+  exitOnClick?: boolean,
+};
+
 export type ShowPopup = {
-  [key: string]: ReactElement | undefined | false
-  income?: ReactElement | false,
-  resources?: ReactElement | false,
+  [key: string]: PopupElement | undefined | false
+  income?: PopupElement | false,
+  resources?: PopupElement,
 };
 
 export type Sheets = {
@@ -81,6 +87,6 @@ export type ShowSheetBuilder = {
 
 export type SelectedSheet = {
   [key: string]: number | undefined
-  income?: number,
-  resources?: number,
+  income: number,
+  resources: number,
 };

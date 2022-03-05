@@ -112,7 +112,7 @@ const saveUploadDatatoSheet = () => (dispatch: Function) => {
   setStorageItem(getNewSheetId(), JSON.stringify({ ...sheets, [thisTab]: newSheet }));
   dispatch(setNewSheet({ ...sheets, [thisTab]: newSheet }));
   dispatch(setShowSheetBuilder(true));
-  dispatch(setShowPopup({}));
+  dispatch(setShowPopup(false));
   sendToast();
 };
 
@@ -218,11 +218,11 @@ const saveUploadDataStart = () => (dispatch: Function) => {
     additions: additionSources,
   };
   if (parserData.length === 0) {
-    dispatch(setShowPopup({}));
+    dispatch(setShowPopup(false));
     sendToast();
   } else if (additionSources.length > 0) {
     dispatch(setShowPopup({
-      [getCurrentTab()]: <AdditionDialogue
+      component: <AdditionDialogue
         onComplete={() => dispatch(saveUploadDatatoSheet())}
         labels={additionSources}
       />,
@@ -256,7 +256,7 @@ export const getDataFromCSV = (files: any) => (dispatch: Function) => {
     step: (row: any, parser) => {
       const uploadData: any = {};
       if (!allKeysPresent) {
-        dispatch(setShowPopup({ [getCurrentTab()]: <LoadingDialogue text={`Parsing ${getImportType()}`} /> }));
+        dispatch(setShowPopup({ component: <LoadingDialogue text={`Parsing ${getImportType()}`} /> }));
         parser.pause();
         timestampFound = true;
         if (rows.timestamp) {
