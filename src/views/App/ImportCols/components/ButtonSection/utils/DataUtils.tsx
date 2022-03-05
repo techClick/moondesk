@@ -321,13 +321,7 @@ export const getDataFromCSV = (files: any) => (dispatch: Function) => {
           }
         }
         const amountIsNotANumber = getIsNotANumber(uploadData[rows.amount]);
-        if (!uploadData[rows.source] || !uploadData[rows.amount]) {
-          emptyErrors += 1;
-          totalErrors += 1;
-        } else if (amountIsNotANumber) {
-          numericalErrors += 1;
-          totalErrors += 1;
-        } else if (rows.timestamp) {
+        if (rows.timestamp) {
           if (!uploadData[rows.timestamp]) {
             emptyTimeErrors += 1;
             totalErrors += 1;
@@ -347,6 +341,12 @@ export const getDataFromCSV = (files: any) => (dispatch: Function) => {
           } else {
             parserData.push(uploadData);
           }
+        } else if (!uploadData[rows.source] || !uploadData[rows.amount]) {
+          emptyErrors += 1;
+          totalErrors += 1;
+        } else if (amountIsNotANumber) {
+          numericalErrors += 1;
+          totalErrors += 1;
         } else {
           parserData.push(uploadData);
         }

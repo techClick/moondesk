@@ -8,10 +8,10 @@ export const Container = styled.div`
   margin-top: 4px;
 `;
 
-export const DatePart = styled.div`
+export const DatePart = styled.div<any>`
   font-size: 20px;
-  width: 170px;
-  padding-left: 5px;
+  width: 175px;
+  padding-left: ${(props) => props.range && '5px'};
   font-weight: 500;
   color: ${Color(textColor).lighten(0.4).toString()};
 `;

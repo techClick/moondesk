@@ -14,44 +14,52 @@ import CalendarParts from './components/CalendarParts';
 const DateSection = function DateSection() {
   const dispatch = useDispatch();
   const selectedSheet: number = useAppSelector(selectSelectedSheet)[getCurrentTab()] || 0;
-  const allSheets: DataSheet[] = useAppSelector(selectNewSheet)[getCurrentTab()]
+  const allNewSheets: DataSheet[] = useAppSelector(selectNewSheet)[getCurrentTab()]
     || [{ date: new Date(), data: [] }];
-  const newSheet: DataSheet = allSheets[selectedSheet];
+  const newSheet: DataSheet = allNewSheets[selectedSheet];
   const selectedDate: Date = newSheet.date;
 
   return (
     <S.Container>
-      <S.IconCont1
-        onClick={() => {
-          if (selectedSheet !== allSheets.length - 1) dispatch(moveDay(selectedSheet, 1));
-        }}
-        disabled={selectedSheet === allSheets.length - 1}
-      >
-        <S.IconContainer>
-          <FontAwesomeIcon icon={faAngleLeft} size="2x" />
-        </S.IconContainer>
-      </S.IconCont1>
-      <S.DatePart>{getTodaysDate(selectedDate)}</S.DatePart>
-      <S.IconCont1
-        onClick={() => {
-          if (selectedSheet !== 0) dispatch(moveDay(selectedSheet, -1));
-        }}
-        disabled={selectedSheet === 0}
-      >
-        <S.IconContainer>
-          <FontAwesomeIcon icon={faAngleRight} size="2x" />
-        </S.IconContainer>
-      </S.IconCont1>
-      <S.CalendarCont
-        onClick={() => dispatch(setShowPopup({
-          component: <CalendarParts />,
-          exitOnClick: true,
-        }))}
-      >
-        <S.CalendarCont1>
-          <FontAwesomeIcon icon={faCalendarDays} size="2x" />
-        </S.CalendarCont1>
-      </S.CalendarCont>
+      { allNewSheets.length > 1
+      && (
+        <S.IconCont1
+          onClick={() => {
+            if (selectedSheet !== allNewSheets.length - 1) dispatch(moveDay(selectedSheet, 1));
+          }}
+          disabled={selectedSheet === allNewSheets.length - 1}
+        >
+          <S.IconContainer>
+            <FontAwesomeIcon icon={faAngleLeft} size="2x" />
+          </S.IconContainer>
+        </S.IconCont1>
+      )}
+      <S.DatePart range={allNewSheets.length > 1}>{getTodaysDate(selectedDate)}</S.DatePart>
+      { allNewSheets.length > 1
+        && (
+          <>
+            <S.IconCont1
+              onClick={() => {
+                if (selectedSheet !== 0) dispatch(moveDay(selectedSheet, -1));
+              }}
+              disabled={selectedSheet === 0}
+            >
+              <S.IconContainer>
+                <FontAwesomeIcon icon={faAngleRight} size="2x" />
+              </S.IconContainer>
+            </S.IconCont1>
+            <S.CalendarCont
+              onClick={() => dispatch(setShowPopup({
+                component: <CalendarParts />,
+                exitOnClick: true,
+              }))}
+            >
+              <S.CalendarCont1>
+                <FontAwesomeIcon icon={faCalendarDays} size="2x" />
+              </S.CalendarCont1>
+            </S.CalendarCont>
+          </>
+        )}
     </S.Container>
   );
 };

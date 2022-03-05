@@ -10,8 +10,9 @@ import * as S from './GrossPart.styled';
 const GrossPart = function GrossPart() {
   const currency = getStorageItem('currency') || '$';
   const selectedSheet: number = useAppSelector(selectSelectedSheet)?.[getCurrentTab()] || 0;
-  const newSheet: DataSheet = useAppSelector(selectNewSheet)?.[getCurrentTab()]?.[selectedSheet]
-   || { date: new Date(), data: [] };
+  const allNewSheets: DataSheet[] = useAppSelector(selectNewSheet)[getCurrentTab()]
+    || [{ date: new Date(), data: [] }];
+  const newSheet: DataSheet = allNewSheets[selectedSheet];
   let grossAmount = 0;
   for (const entry of newSheet.data) {
     grossAmount += entry.amount || 0;
@@ -24,7 +25,7 @@ const GrossPart = function GrossPart() {
           <S.GrossPart>
             &nbsp;
             <S.AbsolutePart>
-              GROSS
+              {`${allNewSheets.length > 1 ? 'ALL ' : ''}GROSS`}
             </S.AbsolutePart>
           </S.GrossPart>
           <S.GrossAmtPart>
