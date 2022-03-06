@@ -20,7 +20,7 @@ export const TotalCont1 = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  padding-left: 3px;
+  padding-left: 4px;
   border-left: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
@@ -34,9 +34,9 @@ export const TotalLabelCont = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  padding-right: 5px;
+  padding-right: 6px;
   transform: translateX(-100%);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: ${Color(panelBorderColor).darken(0.15).toString()};
 `;

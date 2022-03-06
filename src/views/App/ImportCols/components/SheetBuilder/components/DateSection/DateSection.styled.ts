@@ -47,12 +47,12 @@ export const IconContainer = styled.div<any>`
 
 export const CalendarCont = styled.div<any>`
   color: ${Color(textColor).lighten(0.3).toString()};
-  margin-left: 3px;
+  margin-left: 2px;
   cursor: pointer;
   &:hover {
     color: ${topBarColor};
   }
-  margin-top: -2px;
+  margin-top: -2.3px;
 `;
 
 export const CalendarCont1 = styled.div<any>`
