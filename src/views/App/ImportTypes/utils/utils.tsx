@@ -6,11 +6,11 @@ import { textColor } from 'views/App/styles';
 import { getCurrentTab } from 'views/App/utils/utils';
 
 type Options = {
-  [key: string]: string | ReactElement;
+  [key: string]: string | Function | ReactElement;
   uploadType: string,
   icon: ReactElement;
   color: string,
-  path: string,
+  path: Function,
 }
 
 export const importOptions: Array<Options> = [
@@ -18,24 +18,24 @@ export const importOptions: Array<Options> = [
     uploadType: 'CSV',
     icon: <FontAwesomeIcon icon={faFileCsv} size="3x" />,
     color: '#1ba13d',
-    path: `/app/${getCurrentTab()}/importcols/csv`,
+    path: () => `/app/${getCurrentTab()}/importcols/csv`,
   },
   {
     uploadType: 'Excel',
     icon: <FontAwesomeIcon icon={faFileExcel} size="3x" />,
     color: '#1ba13d',
-    path: `/app/${getCurrentTab()}/importcols/excel`,
+    path: () => `/app/${getCurrentTab()}/importcols/excel`,
   },
   {
     uploadType: 'Database',
     icon: <FontAwesomeIcon icon={faServer} size="3x" />,
     color: '#6488ec',
-    path: `/app/${getCurrentTab()}/importdb`,
+    path: () => `/app/${getCurrentTab()}/importdb`,
   },
   {
     uploadType: 'Manual',
     icon: <FontAwesomeIcon icon={faPenClip} size="3x" />,
     color: textColor,
-    path: `/app/${getCurrentTab()}/importhand`,
+    path: () => `/app/${getCurrentTab()}/importhand`,
   },
 ];

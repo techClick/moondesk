@@ -19,3 +19,7 @@ export const getRawDataId = function getRawDataId(): string {
 export const getNewSheetId = function getNewSheetId(): string {
   return `${getProjectId()}_new_${getCurrentTab()}`;
 };
+
+export const getImportTypeId = (): string => {
+  return `${getProjectId()}_importtype_${getCurrentTab()}`;
+};

@@ -3,11 +3,53 @@ import styled from 'styled-components';
 import { panelBorderColor, tableBorderColor } from 'views/App/styles';
 
 export const Container = styled.div`
-  // margin-top: 23px;
   border-top: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
   border-bottom: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
-  height: 76px;
+  height: max-content;
+`;
+
+export const TotalContainer = styled.div`
+  border-bottom: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
+  height: 40px;
+  width: 100%;
+`;
+
+export const TotalCont1 = styled.div`
+  width: 46.5%;
+  float: right;
+  height: 100%;
   display: flex;
+  align-items: center;
+  padding-left: 3px;
+  border-left: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+  position: relative;
+`;
+
+export const TotalLabelCont = styled.div`
+  position: absolute;
+  left: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-right: 5px;
+  transform: translateX(-100%);
+  font-size: 13px;
+  font-weight: 700;
+  color: ${Color(panelBorderColor).darken(0.15).toString()};
+`;
+
+export const TotalCont2 = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: -3px;
+`;
+
+export const FlexContainer = styled.div`
+  display: flex;
+  height: 76px;
 `;
 
 export const GrossPartCont = styled.div`

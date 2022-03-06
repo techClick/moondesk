@@ -80,9 +80,9 @@ export type Sheets = {
 }
 
 export type ShowSheetBuilder = {
-  [key: string]: boolean | null
-  income: boolean | null,
-  resources: boolean | null,
+  [key: string]: boolean | undefined
+  income?: boolean,
+  resources?: boolean,
 }
 
 export type SelectedSheet = {

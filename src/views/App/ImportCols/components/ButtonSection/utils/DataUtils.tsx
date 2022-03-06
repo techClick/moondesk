@@ -14,7 +14,9 @@ import { getIsNotANumber } from './utils';
 export const importType: any = {
   csv: 'CSV',
   excel: 'EXCEL',
-  dbf: '.db',
+  db: 'DATABASE',
+  dbf: '.DB',
+  hand: 'MANUALLY',
 };
 
 let rows: RowBuild;
@@ -43,13 +45,14 @@ const sendToast = function sendToast(): void {
       ${rows.timestamp?.toUpperCase()} was found`, { type: 'error', autoClose: 6000 });
   } else if (parserData.length === 0) {
     if (totalErrors > 0) {
-      toast('Data upload failed', { type: 'error', autoClose: 12000 });
+      toast('No data was uploaded', { type: 'error', autoClose: 12000 });
       if (numericalErrors > 0) {
         toast(`The ${rows.amount.toUpperCase()} row in your file contains non numerical 
           entries`, { type: 'error', autoClose: 12000 });
       }
       if (emptyErrors > 0) {
-        toast('Empty entries were found', { type: 'error', autoClose: 12000 });
+        toast(`${emptyErrors > 1 ? 'Empty entries were' : 'An empty entry was'} 
+          found`, { type: 'error', autoClose: 12000 });
       }
       if (emptyTimeErrors > 0) {
         toast(`The ${rows.timestamp?.toUpperCase()}
@@ -233,19 +236,64 @@ const saveUploadDataStart = () => (dispatch: Function) => {
   }
 };
 
-let allKeysPresent: boolean = false;
+let inputRows: string[];
+const addToParserData = (rowData: any): void => {
+  const useRange = getStorageItem(getUseRangeId());
+  let dateCheckPassed = false;
+  const uploadData: any = {};
+  for (const [key, value] of Object.entries(rowData)) {
+    if (inputRows.includes(key.toLowerCase())) {
+      uploadData[key.toLowerCase()] = value;
+    }
+  }
+  if (rows.timestamp) {
+    if (!uploadData[rows.timestamp]) {
+      emptyTimeErrors += 1;
+      totalErrors += 1;
+    } else if (isNaN(new Date(uploadData[rows.timestamp]).getTime())) {
+      dateFormatErrors += 1;
+      totalErrors += 1;
+    } else if (!useRange
+      && !getIsSameDay(new Date(uploadData[rows.timestamp]), new Date(rows.sheetDate1))
+    ) {
+      outOfDateErrors += 1;
+      totalErrors += 1;
+    } else if (useRange
+      && (getDateIsOlder(rows.sheetDate1, new Date(uploadData[rows.timestamp]))
+      || getDateIsNewer(rows.sheetDate2, new Date(uploadData[rows.timestamp])))) {
+      outOfDateErrors += 1;
+      totalErrors += 1;
+    } else {
+      dateCheckPassed = true;
+    }
+  } else {
+    dateCheckPassed = true;
+  }
+  if (dateCheckPassed) {
+    const amountIsNotANumber = getIsNotANumber(uploadData[rows.amount]);
+    if (!uploadData[rows.source] || !uploadData[rows.amount]) {
+      emptyErrors += 1;
+      totalErrors += 1;
+    } else if (amountIsNotANumber) {
+      numericalErrors += 1;
+      totalErrors += 1;
+    } else {
+      parserData.push(uploadData);
+    }
+  }
+};
+
 export const getDataFromCSV = (files: any) => (dispatch: Function) => {
   parserData = [];
-  allKeysPresent = false;
   numericalErrors = 0;
   emptyErrors = 0;
   emptyTimeErrors = 0;
   dateFormatErrors = 0;
   outOfDateErrors = 0;
   totalErrors = 0;
-  const useRange = getStorageItem(getUseRangeId());
+  let allKeysPresent: boolean = false;
   rows = JSON.parse(getStorageItem(getRowEntryId()));
-  const inputRows = [
+  inputRows = [
     rows.source,
     rows.amount,
   ];
@@ -254,7 +302,6 @@ export const getDataFromCSV = (files: any) => (dispatch: Function) => {
 
   Papa.parse(files[0], {
     step: (row: any, parser) => {
-      const uploadData: any = {};
       if (!allKeysPresent) {
         dispatch(setShowPopup({ component: <LoadingDialogue text={`Parsing ${getImportType()}`} /> }));
         parser.pause();
@@ -269,44 +316,17 @@ export const getDataFromCSV = (files: any) => (dispatch: Function) => {
         }
         if (timestampFound) {
           let keysFound = 0;
-          for (const [key, value] of Object.entries(row.data)) {
+          for (const [key] of Object.entries(row.data)) {
             if (inputRows.includes(key.toLowerCase())) {
               keysFound += 1;
-              uploadData[key.toLowerCase()] = value;
+              if (keysFound === inputRows.length) {
+                break;
+              }
             }
           }
           if (keysFound === inputRows.length) {
             allKeysPresent = true;
-            const amountIsNotANumber = getIsNotANumber(uploadData[rows.amount]);
-            if (!uploadData[rows.source] || !uploadData[rows.amount]) {
-              emptyErrors += 1;
-              totalErrors += 1;
-            } else if (amountIsNotANumber) {
-              numericalErrors += 1;
-              totalErrors += 1;
-            } else if (rows.timestamp) {
-              if (!uploadData[rows.timestamp]) {
-                emptyTimeErrors += 1;
-                totalErrors += 1;
-              } else if (isNaN(new Date(uploadData[rows.timestamp]).getTime())) {
-                dateFormatErrors += 1;
-                totalErrors += 1;
-              } else if (!useRange
-                && !getIsSameDay(new Date(uploadData[rows.timestamp]), new Date(rows.sheetDate1))
-              ) {
-                outOfDateErrors += 1;
-                totalErrors += 1;
-              } else if (useRange
-                && (getDateIsOlder(rows.sheetDate1, new Date(uploadData[rows.timestamp]))
-                || getDateIsNewer(rows.sheetDate2, new Date(uploadData[rows.timestamp])))) {
-                outOfDateErrors += 1;
-                totalErrors += 1;
-              } else {
-                parserData.push(uploadData);
-              }
-            } else {
-              parserData.push(uploadData);
-            }
+            addToParserData(row.data);
             parser.resume();
           } else {
             parser.abort();
@@ -315,41 +335,7 @@ export const getDataFromCSV = (files: any) => (dispatch: Function) => {
           parser.abort();
         }
       } else {
-        for (const [key, value] of Object.entries(row.data)) {
-          if (inputRows.includes(key.toLowerCase())) {
-            uploadData[key.toLowerCase()] = value;
-          }
-        }
-        const amountIsNotANumber = getIsNotANumber(uploadData[rows.amount]);
-        if (rows.timestamp) {
-          if (!uploadData[rows.timestamp]) {
-            emptyTimeErrors += 1;
-            totalErrors += 1;
-          } else if (isNaN(new Date(uploadData[rows.timestamp]).getTime())) {
-            dateFormatErrors += 1;
-            totalErrors += 1;
-          } else if (!useRange
-            && !getIsSameDay(new Date(uploadData[rows.timestamp]), new Date(rows.sheetDate1))
-          ) {
-            outOfDateErrors += 1;
-            totalErrors += 1;
-          } else if (useRange
-            && (getDateIsOlder(rows.sheetDate1, new Date(uploadData[rows.timestamp]))
-            || getDateIsNewer(rows.sheetDate2, new Date(uploadData[rows.timestamp])))) {
-            outOfDateErrors += 1;
-            totalErrors += 1;
-          } else {
-            parserData.push(uploadData);
-          }
-        } else if (!uploadData[rows.source] || !uploadData[rows.amount]) {
-          emptyErrors += 1;
-          totalErrors += 1;
-        } else if (amountIsNotANumber) {
-          numericalErrors += 1;
-          totalErrors += 1;
-        } else {
-          parserData.push(uploadData);
-        }
+        addToParserData(row.data);
       }
     },
     complete: () => {

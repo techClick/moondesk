@@ -4,7 +4,7 @@ import { textColor, topBarColor } from 'views/App/styles';
 import { minRes } from 'views/styles';
 
 export const Container = styled.div`
-  width: 85%;
+  width: 84%;
   height: max-content;
   background: white;
   margin-left: 40px;

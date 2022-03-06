@@ -11,14 +11,17 @@ export const TR = styled.tr<any>`
 export const TD = styled.td<any>`
   color: #525252;
   padding: 11px 
-    ${(props) => { return props.isIndex ? '6px' : '13px'; }} 
+    ${(props) => {
+    const tenary1 = props.isAmount ? '33px' : '13px';
+    return props.isIndex ? '10px' : tenary1;
+  }} 
     11px ${(props) => { return props.isIndex ? '27px' : '10px'; }};
   font-size: 14.5px;
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; 
-  max-width: 292px;
+  white-space: nowrap;
+  max-width: 132px;
   &:hover {
     text-overflow: clip;
     white-space: normal;
@@ -34,6 +37,9 @@ export const IconsDiv = styled.div<any>`
   display: flex;
   color: ${Color(panelBorderColor).darken(0.2).toString()};
   align-items: center;
+  background: white;
+  padding-left: 8px;
+  height: 100%;
 `;
 
 export const TrashIcon = styled.div<any>`

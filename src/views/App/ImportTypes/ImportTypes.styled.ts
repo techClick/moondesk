@@ -17,7 +17,7 @@ export const WhiteCard = styled.div<any>`
   width: max-content;
   width: 90%;
   max-width: 500px;
-  height: 225px;
+  height: 240px;
   position: relative;
   margin: auto;
   text-align: center;
@@ -33,24 +33,23 @@ export const Header1 = styled.div<any>`
   font-weight: 700;
   font-size: 19px;
   margin: 20px auto;
-  // padding-left: 25px;
   color: ${Color(textColor).lighten(0.2).toString()};
 `;
 
 export const Header = styled.div<any>`
-  // padding-left: 26px;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   margin: auto;
-  margin-top: 50px;
-  color: ${Color(textColor).lighten(0.55).toString()};
+  margin-top: 60px;
+  margin-left: -310px;
+  color: ${Color(textColor).lighten(0.7).toString()};
 `;
 
 export const IconCont = styled.div<any>`
   width: 100%;
   height: 100px;
   padding: 0 10px;
-  margin-top: 12px;
+  margin-top: 16px;
   display: flex;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 

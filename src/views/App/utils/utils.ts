@@ -1,4 +1,5 @@
 import { tabOptions } from 'views/App/Navigation/components/SideBar/components/utils/utils';
+import { getImportTypeId } from './GlobalUtils';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
@@ -50,10 +51,10 @@ export const getCurrentTab = function getCurrentTab(): string {
 };
 
 export const getImportType = function getImportType(): string {
-  const currentTab = ['csv', 'excel'].find((type) => (
+  const currentTab = ['csv', 'excel', 'db', 'dbf', 'hand'].find((type) => (
     window.location.href.includes(type)
   ));
-  return currentTab || '';
+  return currentTab || getStorageItem(getImportTypeId()) || 'csv';
 };
 
 export const getIsToday = function getIsToday(inputDate: Date): boolean {

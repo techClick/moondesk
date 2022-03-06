@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Routing from './Routing';
+import Routing from './routing/Routing';
 import reportWebVitals from './reportWebVitals';
 import { store } from './redux/store';
 import 'react-toastify/dist/ReactToastify.css';

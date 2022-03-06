@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DataSheet, SheetEntry } from 'types/types';
 import { useAppSelector } from 'redux/hooks';
-import { getCurrentTab } from 'views/App/utils/utils';
+import { getCurrentTab, getStorageItem } from 'views/App/utils/utils';
 import { selectNewSheet, selectSelectedSheet } from 'views/App/ImportCols/redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ const TableBody = function TableBody() {
    || { date: new Date(), data: [] };
   const [showMenu, setShowMenu] = useState<Array<boolean>>(newSheet.data.map(() => false));
   const containsGroup = Boolean(newSheet.data.find((entry) => entry.group));
+  const currency = getStorageItem('currency') || '$';
 
   const showThisMenu = function showThisMenu(index: number) {
     const newShowMenu = newSheet.data.map(() => false);
@@ -30,7 +31,8 @@ const TableBody = function TableBody() {
           { containsGroup
             && <S.TD>{entry.group || <NoGroup />}</S.TD>}
           <S.TD>{entry.source}</S.TD>
-          <S.TD>
+          <S.TD isAmount isHovered={showMenu[index]} id="amountTd">
+            {currency}
             <FormattedNumber value={entry.amount} />
             <S.IconsDiv>
               { showMenu[index] && (
