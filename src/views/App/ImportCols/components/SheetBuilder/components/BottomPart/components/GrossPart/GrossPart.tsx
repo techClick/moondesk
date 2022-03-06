@@ -27,7 +27,7 @@ const GrossPart = function GrossPart() {
 
   useEffect(() => {
     adjustTotalContWidth();
-  }, []);
+  }, [newSheet]);
 
   return (
     <S.Container>

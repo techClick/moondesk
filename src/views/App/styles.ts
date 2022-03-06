@@ -9,6 +9,7 @@ export const tableBorderColor = '#dadada';
 export const containerPadding = '40px';
 export const textColor = Color(panelBorderColor).darken(0.45).toString();
 export const sideBarColor = '#1c3f5f';
+export const sheetViewerRes = 1099.9999;
 
 export const MainButton = styled.div`
   color: ${topBarColor};

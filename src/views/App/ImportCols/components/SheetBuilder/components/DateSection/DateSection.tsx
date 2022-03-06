@@ -2,8 +2,10 @@ import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import MediaQuery from 'react-responsive';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/hooks';
+import { sheetViewerRes } from 'views/App/styles';
 import { DataSheet } from 'types/types';
 import { selectNewSheet, selectSelectedSheet, setShowPopup } from 'views/App/ImportCols/redux';
 import { getCurrentTab, getTodaysDate } from 'views/App/utils/utils';
@@ -48,16 +50,18 @@ const DateSection = function DateSection() {
                 <FontAwesomeIcon icon={faAngleRight} size="2x" />
               </S.IconContainer>
             </S.IconCont1>
-            <S.CalendarCont
-              onClick={() => dispatch(setShowPopup({
-                component: <CalendarParts />,
-                exitOnClick: true,
-              }))}
-            >
-              <S.CalendarCont1>
-                <FontAwesomeIcon icon={faCalendarDays} size="2x" />
-              </S.CalendarCont1>
-            </S.CalendarCont>
+            <MediaQuery maxWidth={sheetViewerRes}>
+              <S.CalendarCont
+                onClick={() => dispatch(setShowPopup({
+                  component: <CalendarParts />,
+                  exitOnClick: true,
+                }))}
+              >
+                <S.CalendarCont1>
+                  <FontAwesomeIcon icon={faCalendarDays} size="2x" />
+                </S.CalendarCont1>
+              </S.CalendarCont>
+            </MediaQuery>
           </>
         )}
     </S.Container>

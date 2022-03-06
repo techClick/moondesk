@@ -13,7 +13,6 @@ export const Container = styled.div<any>`
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  display: flex;
   flex-direction: column;
 `;
 
@@ -21,15 +20,18 @@ export const ButtonDiv = styled.div`
   margin-bottom: ${containerPadding};
 `;
 
-export const BuilderDiv = styled.div`
+export const ScrollDiv = styled.div`
   width: 100%;
-  height: 100%;
+  height: max-content;
+  overflow: auto;
 `;
 
-export const contentDiv = styled.div`
-  height: max-content;
+export const FlexDiv = styled.div`
+  height: 100%;
   max-height: 100%;
-  overflow: auto;
+  width: max-content;
+  display: flex;
+  margin: auto;
 `;
 
 export const WhiteCard = styled.div<any>`
@@ -41,7 +43,6 @@ export const WhiteCard = styled.div<any>`
   height: max-content;
   text-align: center;
   position: relative;
-  margin: auto;
   animation-name: ${breatheAnimation};
   animation-duration: 0.1s;
   animation-iteration-count: 1;

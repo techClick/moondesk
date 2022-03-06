@@ -20,7 +20,7 @@ export const TotalCont1 = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  padding-left: 4px;
+  padding-left: 8px;
   border-left: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
