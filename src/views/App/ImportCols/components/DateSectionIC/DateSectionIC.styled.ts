@@ -135,4 +135,5 @@ export const Input = styled.input`
   margin-right: 8px;
   background: ${textColor};
   color: ${textColor};
+  box-sizing: border-box;
 `;

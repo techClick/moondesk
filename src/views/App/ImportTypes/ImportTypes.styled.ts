@@ -17,7 +17,7 @@ export const WhiteCard = styled.div<any>`
   width: max-content;
   width: 90%;
   max-width: 500px;
-  height: 240px;
+  height: 236px;
   position: relative;
   margin: auto;
   text-align: center;
@@ -49,7 +49,7 @@ export const IconCont = styled.div<any>`
   width: 100%;
   height: 100px;
   padding: 0 10px;
-  margin-top: 16px;
+  margin-top: 7px;
   display: flex;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
