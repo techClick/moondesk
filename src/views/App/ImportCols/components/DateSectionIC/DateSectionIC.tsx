@@ -16,6 +16,7 @@ const DateSection = function DateSection() {
   const dispatch = useDispatch();
   const useRangeStore: string | null = getStorageItem(getUseRangeId());
   const [useRange, setUseRange] = useState<boolean>(Boolean(useRangeStore));
+
   if (!getStorageItem(getRowEntryId())) {
     setStorageItem(getRowEntryId(), JSON.stringify({
       sheetDate1: new Date(),
@@ -56,7 +57,7 @@ const DateSection = function DateSection() {
                 setSheetDateDate1={setSheetDateDate1}
                 setSheetDateDate2={setSheetDateDate2}
               />,
-              exitOnClick: true,
+              exitOnBgClick: true,
             }))}
           >
             <FontAwesomeIcon icon={faCalendarDays} size="2x" />
@@ -108,7 +109,7 @@ const DateSection = function DateSection() {
                     setSheetDateDate1={setSheetDateDate1}
                     setSheetDateDate2={setSheetDateDate2}
                   />,
-                  exitOnClick: true,
+                  exitOnBgClick: true,
                 }))}
               >
                 <FontAwesomeIcon icon={faCalendarDays} size="2x" />

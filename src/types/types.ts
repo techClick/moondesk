@@ -64,7 +64,7 @@ export type DataSheet = {
 export type PopupElement = {
   [key: string]: ReactElement | undefined | boolean
   component: ReactElement,
-  exitOnClick?: boolean,
+  exitOnBgClick?: boolean,
 };
 
 export type ShowPopup = {

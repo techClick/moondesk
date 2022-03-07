@@ -17,10 +17,10 @@ export const MainButton = styled.div`
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;
-  padding: 10px 20px;
+  padding: 15px 30px;
   border-radius: 4px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 15px;
   width: max-content;
   height: max-content;
   cursor: pointer;

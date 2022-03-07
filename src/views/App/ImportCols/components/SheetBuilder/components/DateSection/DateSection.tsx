@@ -54,7 +54,7 @@ const DateSection = function DateSection() {
               <S.CalendarCont
                 onClick={() => dispatch(setShowPopup({
                   component: <CalendarParts />,
-                  exitOnClick: true,
+                  exitOnBgClick: true,
                 }))}
               >
                 <S.CalendarCont1>

@@ -33,7 +33,7 @@ const ImportCols = function ImportCols() {
         && (
           <>
             <Background onClick={() => (
-              (showPopup[thisTab] as PopupElement).exitOnClick && dispatch(setShowPopup(false))
+              (showPopup[thisTab] as PopupElement).exitOnBgClick && dispatch(setShowPopup(false))
             )}
             />
             {(showPopup[thisTab] as PopupElement).component}

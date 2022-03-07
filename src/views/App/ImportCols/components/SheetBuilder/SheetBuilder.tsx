@@ -21,7 +21,7 @@ const SheetBuilder = function SheetBuilder() {
       <S.ScrollDiv>
         <S.FlexDiv>
           <MediaQuery minWidth={sheetViewerRes + 0.0001}>
-            {allNewSheets.length > 1 && <SheetViewer />}
+            {' '}{/* {allNewSheets.length > 1 && <SheetViewer />} */}
           </MediaQuery>
           <S.WhiteCard hasTable={newSheet.data.length > 0}>
             <TopPart />

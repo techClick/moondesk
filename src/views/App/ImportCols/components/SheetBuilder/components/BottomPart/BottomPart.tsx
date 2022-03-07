@@ -1,6 +1,7 @@
 import React from 'react';
 import MediaQuery from 'react-responsive';
 import { bigRes, minRes } from 'views/styles';
+import { sheetViewerRes } from 'views/App/styles';
 import * as S from './BottomPart.styled';
 import Table from './components/Table/Table';
 import GrossPart from './components/GrossPart/GrossPart';
@@ -19,7 +20,12 @@ const BottomPart = function BottomPart() {
           <Table />
         </MediaQuery>
       </S.Container>
-      <GrossPart />
+      <MediaQuery minWidth={sheetViewerRes + 0.0001}>
+        <GrossPart />
+      </MediaQuery>
+      <MediaQuery maxWidth={sheetViewerRes}>
+        <GrossPart />
+      </MediaQuery>
     </>
   );
 };

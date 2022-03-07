@@ -3,7 +3,7 @@ import { FormattedNumber } from 'react-intl';
 import { useAppSelector } from 'redux/hooks';
 import { DataSheet } from 'types/types';
 import { selectNewSheet, selectSelectedSheet } from 'views/App/ImportCols/redux';
-import { MainButton } from 'views/App/styles';
+import { MainButton, sheetViewerRes } from 'views/App/styles';
 import { getCurrentTab, getStorageItem } from 'views/App/utils/utils';
 import * as S from './GrossPart.styled';
 import { adjustTotalContWidth } from './utils';
@@ -30,36 +30,41 @@ const GrossPart = function GrossPart() {
   }, [newSheet]);
 
   return (
-    <S.Container>
-      <S.TotalContainer>
-        <S.TotalCont1 id="totalCont">
-          <S.TotalLabelCont>TOTAL</S.TotalLabelCont>
-          <S.TotalCont2>
-            {`${currency}`}
-            <FormattedNumber value={totalAmount} />
-          </S.TotalCont2>
-        </S.TotalCont1>
-      </S.TotalContainer>
-      <S.FlexContainer>
-        <S.GrossPartCont>
-          <S.GrossPartCont1>
-            <S.GrossPart>
-              &nbsp;
-              <S.AbsolutePart>
-                {`${allNewSheets.length > 1 ? 'ALL ' : ''}GROSS`}
-              </S.AbsolutePart>
-            </S.GrossPart>
-            <S.GrossAmtPart>
-              <S.GrossAmt>
-                {`${currency}`}
-                <FormattedNumber value={grossAmount} />
-              </S.GrossAmt>
-            </S.GrossAmtPart>
-          </S.GrossPartCont1>
-        </S.GrossPartCont>
-        <S.MainButtonDiv>
+    <S.Container isNoGross={allNewSheets.length > 1 && window.innerWidth >= sheetViewerRes}>
+      { allNewSheets.length > 1 && (
+        <S.TotalContainer>
+          <S.TotalCont1 id="totalCont">
+            <S.TotalLabelCont>TOTAL</S.TotalLabelCont>
+            <S.TotalCont2>
+              {`${currency}`}
+              <FormattedNumber value={totalAmount} />
+            </S.TotalCont2>
+          </S.TotalCont1>
+        </S.TotalContainer>
+      )}
+      <S.FlexContainer isNoGross={allNewSheets.length > 1 && window.innerWidth >= sheetViewerRes}>
+        { (allNewSheets.length === 1 || window.innerWidth < sheetViewerRes) && (
+          <S.GrossPartCont>
+            <S.GrossPartCont1>
+              <S.GrossPart>
+                &nbsp;
+                <S.AbsolutePart>
+                  {`${allNewSheets.length > 1 ? 'ALL ' : ''}GROSS`}
+                </S.AbsolutePart>
+              </S.GrossPart>
+              <S.GrossAmtPart>
+                <S.GrossAmt>
+                  {`${currency}`}
+                  <FormattedNumber value={grossAmount} />
+                </S.GrossAmt>
+              </S.GrossAmtPart>
+            </S.GrossPartCont1>
+          </S.GrossPartCont>
+        )}
+        <S.MainButtonDiv isNoGross={allNewSheets.length > 1 && window.innerWidth >= sheetViewerRes}>
           <MainButton>
-            Save Sheet
+            Save sheet
+            { allNewSheets.length > 1 && 's'}
           </MainButton>
         </S.MainButtonDiv>
       </S.FlexContainer>

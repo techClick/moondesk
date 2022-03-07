@@ -2,9 +2,10 @@ import Color from 'color';
 import styled from 'styled-components';
 import { panelBorderColor, tableBorderColor } from 'views/App/styles';
 
-export const Container = styled.div`
+export const Container = styled.div<any>`
   border-top: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
   border-bottom: 1px solid ${Color(tableBorderColor).lighten(0).toString()};
+  border-bottom: ${(props) => props.isNoGross && 'none'};
   height: max-content;
 `;
 
@@ -47,9 +48,9 @@ export const TotalCont2 = styled.div`
   margin-top: -3px;
 `;
 
-export const FlexContainer = styled.div`
+export const FlexContainer = styled.div<any>`
   display: flex;
-  height: 76px;
+  height: ${(props) => { return props.isNoGross ? 'max-content' : '76px'; }};
 `;
 
 export const GrossPartCont = styled.div`
@@ -110,11 +111,12 @@ export const GrossAmt = styled.div`
   }
 `;
 
-export const MainButtonDiv = styled.div`
+export const MainButtonDiv = styled.div<any>`
   height: 100%;
   display: flex;
   align-items: center;
   padding-left: 20px;
-  width: 130px;
+  width: 140px;
   border-left: 1px solid ${Color(panelBorderColor).lighten(0.2).toString()};
+  margin-top: ${(props) => props.isNoGross && '16px'};
 `;
