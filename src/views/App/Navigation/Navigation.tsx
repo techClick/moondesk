@@ -1,9 +1,9 @@
 import React from 'react';
 import MediaQuery from 'react-responsive';
 import * as S from './Navigation.styled';
-import TopBar from './components/TopBar/TopBar';
-import SideBar from './components/SideBar/SideBar';
-import { moveSideBar } from './components/utils/utils';
+import TopBar from './TopBar/TopBar';
+import SideBar from './SideBar/SideBar';
+import { moveSideBar } from './utils/utils';
 import { bigRes } from '../../styles';
 
 const Navigation = function Navigation({ children }:{ children: any}) {

@@ -4,13 +4,13 @@ import { useAppSelector } from 'redux/hooks';
 import { getCurrentTab, getStorageItem } from 'views/App/utils/utils';
 import { useDispatch } from 'react-redux';
 import { PopupElement } from 'types/types';
-import ColumnBuilder from './components/ColumnBuilder/ColumnBuilder';
-import ButtonSection from './components/ButtonSection/ButtonSection';
+import ColumnBuilder from './ColumnBuilder/ColumnBuilder';
+import ButtonSection from './ButtonSection/ButtonSection';
 import * as S from './ImportCols.styled';
-import DateSection from './components/DateSectionIC/DateSectionIC';
-import TopInfo from './components/TopInfo/TopInfo';
-import DateInfo from './components/DateInfo/DateInfo';
-import SheetBuilder from './components/SheetBuilder/SheetBuilder';
+import DateSection from './DateSectionIC/DateSectionIC';
+import TopInfo from './TopInfo/TopInfo';
+import DateInfo from './DateInfo/DateInfo';
+import SheetBuilder from './SheetBuilder/SheetBuilder';
 import { selectShowPopup, selectShowSheetBuilder, setShowPopup } from './redux';
 
 const ImportCols = function ImportCols() {
