@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './Resources.styled';
-import TopSection from './components/TopSection';
+import TopSection from './TopSection/TopSection';
 import NoData from '../components/NoData/NoData';
 
 const Resources = function Resources() {

@@ -1,4 +1,4 @@
-import { tabOptions } from 'views/App/Navigation/components/SideBar/components/utils/utils';
+import { tabOptions } from 'views/App/Navigation/SideBar/Tabs/utils/utils';
 import { getImportTypeId } from './GlobalUtils';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
