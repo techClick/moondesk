@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getStorageItem } from 'views/App/utils/utils';
 import { getRowEntryId } from 'views/App/utils/GlobalUtils';
-import { getFieldName } from 'views/App/ImportCols/components/ColumnBuilder/utils/utils';
+import { getFieldName } from 'views/App/ImportCols/ColumnBuilder/utils/utils';
 import { RowBuilderInput, InputError } from 'types/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';

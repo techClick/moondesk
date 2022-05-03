@@ -4,7 +4,7 @@ import { selectNewSheet, selectSelectedSheet } from 'views/App/ImportCols/redux'
 import { DataSheet } from 'types/types';
 import { getCurrentTab } from 'views/App/utils/utils';
 import * as S from './Table.styled';
-import TableBody from './components/TableBody/TableBody';
+import TableBody from './TableBody/TableBody';
 
 const Table = function Table() {
   const selectedSheet: number = useAppSelector(selectSelectedSheet)?.[getCurrentTab()] || 0;

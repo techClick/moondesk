@@ -3,8 +3,8 @@ import MediaQuery from 'react-responsive';
 import { bigRes, minRes } from 'views/styles';
 import { sheetViewerRes } from 'views/App/styles';
 import * as S from './BottomPart.styled';
-import Table from './components/Table/Table';
-import GrossPart from './components/GrossPart/GrossPart';
+import Table from './Table/Table';
+import GrossPart from './GrossPart/GrossPart';
 
 const BottomPart = function BottomPart() {
   return (

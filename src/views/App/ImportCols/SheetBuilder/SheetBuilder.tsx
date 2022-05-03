@@ -6,9 +6,9 @@ import { DataSheet } from 'types/types';
 import { getCurrentTab } from 'views/App/utils/utils';
 import { sheetViewerRes } from 'views/App/styles';
 import * as S from './SheetBuilder.styled';
-import TopPart from './components/TopPart/TopPart';
-import BottomPart from './components/BottomPart/BottomPart';
-import SheetViewer from './components/SheetViewer/SheetViewer';
+import TopPart from './TopPart/TopPart';
+import BottomPart from './BottomPart/BottomPart';
+import SheetViewer from './SheetViewer/SheetViewer';
 
 const SheetBuilder = function SheetBuilder() {
   const selectedSheet: number = useAppSelector(selectSelectedSheet)?.[getCurrentTab()] || 0;

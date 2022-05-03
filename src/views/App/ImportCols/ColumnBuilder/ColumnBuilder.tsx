@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCaretDown } from '@fortawesome/free-regular-svg-icons';
 import * as S from './ColumnBuilder.styled';
 import { getFieldName, saveRowEntry } from './utils/utils';
-import { selectInputError, setInputError } from '../../redux';
+import { selectInputError, setInputError } from '../redux';
 
 const ColumnBuilder = function ColumnBuilder() {
   const [input, setInput] = useState<RowBuilderInput>(

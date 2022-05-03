@@ -8,7 +8,7 @@ import {
 import { setNewSheet, setShowPopup, setShowSheetBuilder } from 'views/App/ImportCols/redux';
 import LoadingDialogue from 'views/App/components/LoadingDialogue/Loading';
 import { getNewSheetId, getRawDataId, getRowEntryId, getUseRangeId } from 'views/App/utils/GlobalUtils';
-import AdditionDialogue from '../components/AdditionDialogue';
+import AdditionDialogue from '../AdditionDialogue/AdditionDialogue';
 import { getIsNotANumber } from './utils';
 
 export const importType: any = {

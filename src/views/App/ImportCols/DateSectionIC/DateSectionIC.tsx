@@ -9,8 +9,8 @@ import {
 } from 'views/App/utils/utils';
 import * as S from './DateSectionIC.styled';
 import { getSheetDate, moveDay, saveUseRange } from './utils/utils';
-import { setShowPopup } from '../../redux';
-import CalendarParts from './components/CalendarParts';
+import { setShowPopup } from '../redux';
+import CalendarParts from './CalendarParts/CalendarParts';
 
 const DateSection = function DateSection() {
   const dispatch = useDispatch();

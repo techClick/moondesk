@@ -10,7 +10,7 @@ import { faEllipsisVertical, faPenToSquare, faTrash } from '@fortawesome/free-so
 import { FormattedNumber } from 'react-intl';
 import * as S from './TableBody.styled';
 import NoGroup from '../NoGroup/NoGroup';
-import EditEntry from './component/EditEntry';
+import EditEntry from './EditEntry/EditEntry';
 
 const TableBody = function TableBody() {
   const selectedSheet: number = useAppSelector(selectSelectedSheet)?.[getCurrentTab()] || 0;
